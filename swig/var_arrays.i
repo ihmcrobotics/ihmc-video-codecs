@@ -7,6 +7,6 @@
 
 %apply int[] { int*  };
 %typemap(out) int* SLayerBSInfo::pNalLengthInByte {
-        $result = SWIG_JavaArrayOutInt(jenv, (int *)$1, arg1->iNalCount - 1);
+        $result = SWIG_JavaArrayOutInt(jenv, (int *)$1, arg1->iNalCount);
 }
 
