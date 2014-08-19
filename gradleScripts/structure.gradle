@@ -8,7 +8,7 @@ new File(baseDir + File.separator + 'gradleScripts' + File.separator + 'dependen
 sourceSets {
     main {
         java {
-            srcDirs = ['src']
+            srcDirs = ['src', 'swig/generated']
         }
 
         resources {
