@@ -94,6 +94,17 @@ public class SLayerBSInfo {
   return codec_apiJNI.SLayerBSInfo_pBsBuf_get(swigCPtr, this);  
 }
 
+  public int getLayerSize() {
+    return codec_apiJNI.SLayerBSInfo_getLayerSize(swigCPtr, this);
+  }
+
+  public void getPBsBuf(java.nio.ByteBuffer target) {
+  assert target.isDirect() : "Buffer must be allocated direct.";
+    {
+      codec_apiJNI.SLayerBSInfo_getPBsBuf(swigCPtr, this, target);
+    }
+  }
+
   public SLayerBSInfo() {
     this(codec_apiJNI.new_SLayerBSInfo(), true);
   }

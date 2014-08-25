@@ -27,4 +27,5 @@
 %include "SSourcePicture.i"
 %include "ISVCDecoder.i"
 %include "ISVCEncoder.i"
-
+%include "SLayerInfo.i"
+%include "SFrameBSInfo.i"

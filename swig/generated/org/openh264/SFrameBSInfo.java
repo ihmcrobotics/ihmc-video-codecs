@@ -84,6 +84,22 @@ public class SFrameBSInfo {
     return codec_apiJNI.SFrameBSInfo_uiTimeStamp_get(swigCPtr, this);
   }
 
+  public SLayerBSInfo getSLayerInfo(int frame) {
+    long cPtr = codec_apiJNI.SFrameBSInfo_getSLayerInfo(swigCPtr, this, frame);
+    return (cPtr == 0) ? null : new SLayerBSInfo(cPtr, false);
+  }
+
+  public int getBufferSize() {
+    return codec_apiJNI.SFrameBSInfo_getBufferSize(swigCPtr, this);
+  }
+
+  public void getBuffer(java.nio.ByteBuffer buffer) {
+  assert buffer.isDirect() : "Buffer must be allocated direct.";
+    {
+      codec_apiJNI.SFrameBSInfo_getBuffer(swigCPtr, this, buffer);
+    }
+  }
+
   public SFrameBSInfo() {
     this(codec_apiJNI.new_SFrameBSInfo(), true);
   }

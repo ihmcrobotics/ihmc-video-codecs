@@ -220,6 +220,8 @@ public class codec_apiJNI {
   public final static native int[] SLayerBSInfo_pNalLengthInByte_get(long jarg1, SLayerBSInfo jarg1_);
   public final static native void SLayerBSInfo_pBsBuf_set(long jarg1, SLayerBSInfo jarg1_, java.nio.ByteBuffer jarg2);
   public final static native java.nio.ByteBuffer SLayerBSInfo_pBsBuf_get(long jarg1, SLayerBSInfo jarg1_);
+  public final static native int SLayerBSInfo_getLayerSize(long jarg1, SLayerBSInfo jarg1_);
+  public final static native void SLayerBSInfo_getPBsBuf(long jarg1, SLayerBSInfo jarg1_, java.nio.ByteBuffer jarg2);
   public final static native long new_SLayerBSInfo();
   public final static native void delete_SLayerBSInfo(long jarg1);
   public final static native void SFrameBSInfo_iTemporalId_set(long jarg1, SFrameBSInfo jarg1_, int jarg2);
@@ -234,6 +236,9 @@ public class codec_apiJNI {
   public final static native int SFrameBSInfo_eFrameType_get(long jarg1, SFrameBSInfo jarg1_);
   public final static native void SFrameBSInfo_uiTimeStamp_set(long jarg1, SFrameBSInfo jarg1_, long jarg2);
   public final static native long SFrameBSInfo_uiTimeStamp_get(long jarg1, SFrameBSInfo jarg1_);
+  public final static native long SFrameBSInfo_getSLayerInfo(long jarg1, SFrameBSInfo jarg1_, int jarg2);
+  public final static native int SFrameBSInfo_getBufferSize(long jarg1, SFrameBSInfo jarg1_);
+  public final static native void SFrameBSInfo_getBuffer(long jarg1, SFrameBSInfo jarg1_, java.nio.ByteBuffer jarg2);
   public final static native long new_SFrameBSInfo();
   public final static native void delete_SFrameBSInfo(long jarg1);
   public final static native void SSourcePicture_iColorFormat_set(long jarg1, SSourcePicture jarg1_, int jarg2);
