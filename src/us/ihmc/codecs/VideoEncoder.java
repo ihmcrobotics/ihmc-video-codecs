@@ -1,7 +1,9 @@
 package us.ihmc.codecs;
 
 import java.awt.image.BufferedImage;
-import java.nio.ByteBuffer;
+import java.io.IOException;
+
+import us.ihmc.codecs.h264.NALProcessor;
 
 /**
  * Common base interface for video codecs
@@ -10,5 +12,5 @@ import java.nio.ByteBuffer;
  */
 public interface VideoEncoder
 {
-    public ByteBuffer encodeFrame(BufferedImage image);
+    public void encodeFrame(BufferedImage image, NALProcessor nalProcessor) throws IOException;
 }

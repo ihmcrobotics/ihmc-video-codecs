@@ -4,7 +4,6 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
 import java.nio.ByteBuffer;
-import java.util.Arrays;
 
 /**
  * Helper methods to convert BufferedImages to YUV420 format
@@ -61,12 +60,12 @@ public class YCbCr420 {
         BufferedImage img = new BufferedImage(w, h, BufferedImage.TYPE_3BYTE_BGR);
         WritableRaster raster = img.getRaster();
         DataBufferByte buffer = (DataBufferByte) raster.getDataBuffer();
-
-        System.out.println(r(63,112,239));
-        System.out.println(g(63,112,239));
-        System.out.println(b(63,112,239));
-
+        
         for (int yi = 0; yi < h; yi += 2) {
+//            Yb.position(yi * 4 * YStride);
+//            CBb.position(yi * CbCrStride);
+//            CRb.position(yi * CbCrStride);
+            
             for(int xi = 0; xi < w; xi+=2) {
                 int Cb = CBb.get() & 0xFF;
                 int Cr = CRb.get() & 0xFF;
@@ -96,6 +95,7 @@ public class YCbCr420 {
                 buffer.setElem(bufferIndex + 2, r(Y, Cb, Cr));
 
             }
+            System.out.println(Yb.position());
         }
         return img;
     }
