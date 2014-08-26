@@ -48,6 +48,13 @@ public class SBufferInfoExt {
     return (cPtr == 0) ? null : new SBufferInfo(cPtr, false);
   }
 
+  public void getPpDst(java.nio.ByteBuffer ppDst) {
+  assert ppDst.isDirect() : "Buffer must be allocated direct.";
+    {
+      codec_apiJNI.SBufferInfoExt_getPpDst(swigCPtr, this, ppDst);
+    }
+  }
+
   public SBufferInfoExt() {
     this(codec_apiJNI.new_SBufferInfoExt(), true);
   }

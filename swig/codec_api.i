@@ -29,3 +29,4 @@
 %include "ISVCEncoder.i"
 %include "SLayerInfo.i"
 %include "SFrameBSInfo.i"
+%include "SBufferInfo.i"

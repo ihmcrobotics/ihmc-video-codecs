@@ -222,6 +222,7 @@ public class codec_apiJNI {
   public final static native java.nio.ByteBuffer SLayerBSInfo_pBsBuf_get(long jarg1, SLayerBSInfo jarg1_);
   public final static native int SLayerBSInfo_getLayerSize(long jarg1, SLayerBSInfo jarg1_);
   public final static native void SLayerBSInfo_getPBsBuf(long jarg1, SLayerBSInfo jarg1_, java.nio.ByteBuffer jarg2);
+  public final static native void SLayerBSInfo_getNAL(long jarg1, SLayerBSInfo jarg1_, int jarg2, java.nio.ByteBuffer jarg3);
   public final static native long new_SLayerBSInfo();
   public final static native void delete_SLayerBSInfo(long jarg1);
   public final static native void SFrameBSInfo_iTemporalId_set(long jarg1, SFrameBSInfo jarg1_, int jarg2);
@@ -339,6 +340,7 @@ public class codec_apiJNI {
   public final static native void delete_SSysMEMBuffer(long jarg1);
   public final static native void SBufferInfo_iBufferStatus_set(long jarg1, SBufferInfo jarg1_, int jarg2);
   public final static native int SBufferInfo_iBufferStatus_get(long jarg1, SBufferInfo jarg1_);
+  public final static native long SBufferInfo_getUsrData(long jarg1, SBufferInfo jarg1_);
   public final static native long new_SBufferInfo();
   public final static native void delete_SBufferInfo(long jarg1);
   public final static native long ksRateThrMap_get();
@@ -354,6 +356,7 @@ public class codec_apiJNI {
   public final static native int SBufferInfoExt_state_get(long jarg1, SBufferInfoExt jarg1_);
   public final static native java.nio.ByteBuffer SBufferInfoExt_ppDst_get(long jarg1, SBufferInfoExt jarg1_);
   public final static native long SBufferInfoExt_info_get(long jarg1, SBufferInfoExt jarg1_);
+  public final static native void SBufferInfoExt_getPpDst(long jarg1, SBufferInfoExt jarg1_, java.nio.ByteBuffer jarg2);
   public final static native long new_SBufferInfoExt();
   public final static native void delete_SBufferInfoExt(long jarg1);
 }

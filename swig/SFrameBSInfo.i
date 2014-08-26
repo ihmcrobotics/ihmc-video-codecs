@@ -27,7 +27,7 @@
 			for(int n = 0; n < $self->sLayerInfo[i].iNalCount; n++)
 			{
 				int layerLength = $self->sLayerInfo[i].pNalLengthInByte[n];
-				memcpy($self->sLayerInfo[i].pBsBuf, buffer + pointer, layerLength);
+				memcpy(buffer + pointer, $self->sLayerInfo[i].pBsBuf, layerLength);
 				pointer += layerLength;	
 			}
 		}

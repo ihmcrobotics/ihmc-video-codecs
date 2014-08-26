@@ -105,6 +105,13 @@ public class SLayerBSInfo {
     }
   }
 
+  public void getNAL(int nal, java.nio.ByteBuffer target) {
+  assert target.isDirect() : "Buffer must be allocated direct.";
+    {
+      codec_apiJNI.SLayerBSInfo_getNAL(swigCPtr, this, nal, target);
+    }
+  }
+
   public SLayerBSInfo() {
     this(codec_apiJNI.new_SLayerBSInfo(), true);
   }

@@ -10,10 +10,19 @@
                 int iColorFormat;
         };
 
-        struct SBufferInfoExt {
+        class SBufferInfoExt {
+	public:
                 DECODING_STATE state;
                 unsigned char* ppDst;
                 SBufferInfo info;
+		
+		void getPpDst(unsigned char* ppDst)
+		{
+			SSysMEMBuffer* buf = (SSysMEMBuffer*) &this->info.UsrData;
+			int size = buf->iStride[0] * buf->iHeight + 2 * buf->iStride[1] * buf->iHeight;
+			memcpy(ppDst, this->ppDst, size); 
+		}
+
         };
 #ifdef SWIG
 %mutable;

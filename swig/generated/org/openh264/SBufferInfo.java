@@ -43,6 +43,11 @@ public class SBufferInfo {
     return codec_apiJNI.SBufferInfo_iBufferStatus_get(swigCPtr, this);
   }
 
+  public SSysMEMBuffer getUsrData() {
+    long cPtr = codec_apiJNI.SBufferInfo_getUsrData(swigCPtr, this);
+    return (cPtr == 0) ? null : new SSysMEMBuffer(cPtr, false);
+  }
+
   public SBufferInfo() {
     this(codec_apiJNI.new_SBufferInfo(), true);
   }

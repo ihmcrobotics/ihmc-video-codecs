@@ -6,3 +6,5 @@
 %ignore ISVCDecoder::GetOption(DECODER_OPTION, void*);
 %ignore ISVCEncoder::SetOption(ENCODER_OPTION, void*);
 %ignore ISVCEncoder::GetOption(ENCODER_OPTION, void*);
+%ignore SFrameBSInfo::sLayerInfo;
+%ignore SLayerBSInfo::pBsBuf;
