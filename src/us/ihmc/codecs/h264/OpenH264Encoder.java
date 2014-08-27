@@ -1,10 +1,7 @@
 package us.ihmc.codecs.h264;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.util.Arrays;
 
 import org.openh264.EVideoFormatType;
 import org.openh264.ISVCDecoder;
@@ -17,7 +14,7 @@ import org.openh264.SLayerBSInfo;
 import org.openh264.SSourcePicture;
 import org.openh264.codec_api;
 
-import us.ihmc.codecs.colorSpace.YCbCr420;
+import us.ihmc.codecs.YUVPicture;
 
 /**
  * Created by jesper on 8/19/14.
@@ -47,33 +44,19 @@ public class OpenH264Encoder implements H264Encoder {
 
 
     @Override
-    public void encodeFrame(BufferedImage frame, NALProcessor nalProcessor) throws IOException
+    public void encodeFrame(YUVPicture frame, NALProcessor nalProcessor) throws IOException
     {
         SSourcePicture picture = new SSourcePicture();
-
-        ByteBuffer Yb = ByteBuffer.allocateDirect(frame.getWidth() * frame.getHeight());
-        ByteBuffer CBb = ByteBuffer.allocateDirect(Yb.capacity() >> 2);
-        ByteBuffer CRb = ByteBuffer.allocateDirect(Yb.capacity() >> 2);
-
-        // This should not be required
-        Yb.order(ByteOrder.nativeOrder());
-        CBb.order(ByteOrder.nativeOrder());
-        CRb.order(ByteOrder.nativeOrder());
-
-
-        YCbCr420.convert(frame, Yb, CBb, CRb);
 
         picture.setIPicWidth(frame.getWidth());
         picture.setIPicHeight(frame.getHeight());
         picture.setIColorFormat(EVideoFormatType.videoFormatI420.swigValue());
 
-        int YStride = frame.getWidth();
-        int CbCrStride = YStride >> 1;
-        int[] stride = { YStride, CbCrStride, CbCrStride, 0 };
+        int[] stride = { frame.getYStride(), frame.getUStride(), frame.getVStride(), 0 };
         picture.setIStride(stride);
-        picture.setPData(0, Yb);
-        picture.setPData(1, CBb);
-        picture.setPData(2, CRb);
+        picture.setPData(0, frame.getY());
+        picture.setPData(1, frame.getU());
+        picture.setPData(2, frame.getV());
 
         SFrameBSInfo info = new SFrameBSInfo();
         int e = isvcEncoder.EncodeFrame(picture, info);
@@ -81,9 +64,6 @@ public class OpenH264Encoder implements H264Encoder {
         {
            throw new IOException("Cannot encode frame: " + e);
         }
-        
-        ByteBuffer buf = ByteBuffer.allocateDirect(info.getBufferSize());
-        info.getBuffer(buf);
         
         for(int i = 0; i < info.getILayerNum(); i++)
         {

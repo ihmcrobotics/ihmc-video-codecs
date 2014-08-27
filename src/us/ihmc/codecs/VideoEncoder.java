@@ -12,5 +12,5 @@ import us.ihmc.codecs.h264.NALProcessor;
  */
 public interface VideoEncoder
 {
-    public void encodeFrame(BufferedImage image, NALProcessor nalProcessor) throws IOException;
+   void encodeFrame(YUVPicture picture, NALProcessor nalProcessor) throws IOException;
 }

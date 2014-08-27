@@ -20,6 +20,7 @@
 		{
 			SSysMEMBuffer* buf = (SSysMEMBuffer*) &this->info.UsrData;
 			int size = buf->iStride[0] * buf->iHeight + 2 * buf->iStride[1] * buf->iHeight;
+			fprintf(stderr, "Copying %d\n", size);
 			memcpy(ppDst, this->ppDst, size); 
 		}
 

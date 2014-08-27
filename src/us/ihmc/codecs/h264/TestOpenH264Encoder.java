@@ -3,17 +3,15 @@ package us.ihmc.codecs.h264;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import us.ihmc.codecs.colorSpace.YCbCr420;
+import us.ihmc.codecs.YUVPicture;
 
 /**
  *
@@ -24,7 +22,6 @@ import us.ihmc.codecs.colorSpace.YCbCr420;
 public class TestOpenH264Encoder
 {
 
-   public static final String testFrame = "out_1743.png";
 
    public static void showImage(BufferedImage img)
    {
@@ -39,8 +36,6 @@ public class TestOpenH264Encoder
 
    public static void main(String[] args) throws IOException
    {
-      FileChannel channel = new FileOutputStream(new File("test.h264")).getChannel();
-
       OpenH264Encoder encoder = new OpenH264Encoder(1920, 1080);
       final OpenH264Decoder decoder = new OpenH264Decoder();
 
@@ -54,25 +49,18 @@ public class TestOpenH264Encoder
          //        g.dispose();
          //        showImage(img);
 
-         ByteBuffer Yb = ByteBuffer.allocateDirect(img.getWidth() * img.getHeight());
-         ByteBuffer CBb = ByteBuffer.allocateDirect(Yb.capacity() >> 2);
-         ByteBuffer CRb = ByteBuffer.allocateDirect(Yb.capacity() >> 2);
-
-         YCbCr420.convert(img, Yb, CBb, CRb);
-
-         encoder.encodeFrame(img, new NALProcessor()
+         YUVPicture pic = new YUVPicture(img);
+         encoder.encodeFrame(pic, new NALProcessor()
          {
 
             @Override
             public void processNAL(ByteBuffer nal)
             {
+               System.out.println("ENCODED");
                try
                {
-                  BufferedImage img = decoder.decodeFrame(nal);
-                  if(img != null)
-                  {
-                     
-                  }
+                  YUVPicture img = decoder.decodeFrame(nal);
+                  System.out.println("Decoded 1 frame");
                }
                catch (IOException e)
                {
@@ -89,7 +77,6 @@ public class TestOpenH264Encoder
          //        BufferedImage out = YCbCr420.convertYCbCr420ToRGB888(Yb, CBb, CRb, img.getWidth(), img.getHeight(), -1, -1);
          //        showImage(out);
       }
-      channel.close();
    }
    
 
