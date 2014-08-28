@@ -1,6 +1,5 @@
 package us.ihmc.codecs.h264;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
@@ -8,8 +7,8 @@ import org.openh264.DECODING_STATE;
 import org.openh264.ERROR_CON_IDC;
 import org.openh264.EVideoFormatType;
 import org.openh264.ISVCDecoder;
-import org.openh264.SBufferInfoExt;
 import org.openh264.SDecodingParam;
+import org.openh264.STargetPicture;
 import org.openh264.VIDEO_BITSTREAM_TYPE;
 import org.openh264.codec_api;
 
@@ -19,6 +18,7 @@ public class OpenH264Decoder
 {
 
    private final ISVCDecoder isvcDecoder;
+   private final STargetPicture pic = new STargetPicture();
 
    public OpenH264Decoder() throws IOException
    {
@@ -30,47 +30,51 @@ public class OpenH264Decoder
       pParam.setEEcActiveIdc(ERROR_CON_IDC.ERROR_CON_SLICE_COPY);
       pParam.getSVideoProperty().setEVideoBsType(VIDEO_BITSTREAM_TYPE.VIDEO_BITSTREAM_DEFAULT);
       isvcDecoder.Initialize(pParam);
+      pParam.delete();
    }
 
    public YUVPicture decodeFrame(ByteBuffer frame) throws IOException
    {
-      SBufferInfoExt pic = isvcDecoder.DecodeFrame2(frame, frame.limit());
-      if (pic.getState() != DECODING_STATE.dsErrorFree)
+      DECODING_STATE state = isvcDecoder.DecodeFrame2(frame, frame.limit(), pic);
+      
+      if (state != DECODING_STATE.dsErrorFree)
       {
-         throw new IOException("Cannot decode frame: " + pic.getState());
+         throw new IOException("Cannot decode frame: " + state);
       }
       else if (pic.getInfo().getIBufferStatus() == 1)
       {
          int width = pic.getInfo().getUsrData().getIWidth();
          int height = pic.getInfo().getUsrData().getIHeight();
          int[] stride = pic.getInfo().getUsrData().getIStride();
+
+         ByteBuffer Y = ByteBuffer.allocateDirect(stride[0] * height);
+         ByteBuffer U = ByteBuffer.allocateDirect(stride[1] * (height >> 1));
+         ByteBuffer V = ByteBuffer.allocateDirect(stride[1] * (height >> 1));
+
+         pic.getY(Y);
+         pic.getU(U);
+         pic.getV(V);
+
+         YUVPicture yuvPicture = new YUVPicture(Y, U, V, stride[0], stride[1], stride[1], width, height);
          
-         System.out.println(width);
-         System.out.println(height);
-//         
-//         ByteBuffer data = ByteBuffer.allocateDirect(stride[0] * height + 2 * stride[1] * height);
-//         System.out.println(data);
-//         pic.getPpDst(data);
-         
-         
-//         YUVPicture yuvPicture = new YUVPicture(data, stride[0], stride[1], stride[1], width, height);
-         
-         //         
-         //         ByteBuffer data = ByteBuffer.allocateDirect(stride[0] * height + 2 * stride[1] * height);
-         //         pic.getPpDst(data);
-         //         ByteBuffer Yb = data.slice();
-         //         data.position(stride[0] * height);
-         //         ByteBuffer CBb = data.slice();
-         //         data.position(stride[0] * height + stride[1] * height);
-         //         ByteBuffer CRb = data.slice();
-         //         
-         //         return YCbCr420.convertYCbCr420ToRGB888(Yb, CBb, CRb, width, height, stride[0], stride[1]);
-         return null;
+         return yuvPicture;
       }
       else
       {
          return null;
       }
 
+   }
+   
+   public void delete()
+   {
+      pic.delete();
+      isvcDecoder.delete();
+   }
+   
+   @Override
+   public void finalize()
+   {
+      delete();
    }
 }

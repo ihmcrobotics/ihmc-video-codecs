@@ -16,6 +16,8 @@
 %enddef
 
 %extend ISVCEncoder {
+
+
     long SetOption(ENCODER_OPTION eOptionId, int option)		
 	{
 		return $self->SetOption(eOptionId, &option);

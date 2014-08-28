@@ -4,32 +4,4 @@
 		return &$self->sLayerInfo[frame];
 
 	}
-
-	int getBufferSize()
-	{
-		int size = 0;
-		for(int i = 0; i < $self->iLayerNum; i++)
-		{
-			for(int n = 0; n < $self->sLayerInfo[i].iNalCount; n++)
-			{
-				size += $self->sLayerInfo[i].pNalLengthInByte[n];
-			}
-		}
-		return size;
-	}
-
-	void getBuffer(unsigned char* buffer)
-	{
-		int pointer = 0;
-		
-		for(int i = 0; i < $self->iLayerNum; i++)
-		{
-			for(int n = 0; n < $self->sLayerInfo[i].iNalCount; n++)
-			{
-				int layerLength = $self->sLayerInfo[i].pNalLengthInByte[n];
-				memcpy(buffer + pointer, $self->sLayerInfo[i].pBsBuf, layerLength);
-				pointer += layerLength;	
-			}
-		}
-	}
 }

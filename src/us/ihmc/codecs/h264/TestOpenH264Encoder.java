@@ -15,13 +15,10 @@ import us.ihmc.codecs.YUVPicture;
 
 /**
  *
- * // Colors that break: 255,0,21
- *
  * Created by jesper on 8/19/14.
  */
 public class TestOpenH264Encoder
 {
-
 
    public static void showImage(BufferedImage img)
    {
@@ -42,12 +39,6 @@ public class TestOpenH264Encoder
       for (int i = 1000; i < 5000; i += 100)
       {
          BufferedImage img = ImageIO.read(new File("data/out_" + i + ".png"));
-         //        BufferedImage img = new BufferedImage(100, 100, BufferedImage.TYPE_3BYTE_BGR);
-         //        Graphics2D g = img.createGraphics();
-         //        g.setColor(new Color(255, 0, 21));
-         //        g.fillRect(0, 0, 100, 100);
-         //        g.dispose();
-         //        showImage(img);
 
          YUVPicture pic = new YUVPicture(img);
          encoder.encodeFrame(pic, new NALProcessor()
@@ -56,11 +47,13 @@ public class TestOpenH264Encoder
             @Override
             public void processNAL(ByteBuffer nal)
             {
-               System.out.println("ENCODED");
                try
                {
                   YUVPicture img = decoder.decodeFrame(nal);
-                  System.out.println("Decoded 1 frame");
+                  if (img != null)
+                  {
+                     showImage(img.getImage());
+                  }
                }
                catch (IOException e)
                {
@@ -69,15 +62,10 @@ public class TestOpenH264Encoder
 
             }
          });
-         //           channel.write(buf);
-
-         //        Yb.clear(); CBb.clear(); CRb.clear();
-         //
-         //
-         //        BufferedImage out = YCbCr420.convertYCbCr420ToRGB888(Yb, CBb, CRb, img.getWidth(), img.getHeight(), -1, -1);
-         //        showImage(out);
       }
+      
+      encoder.delete();
+      decoder.delete();
    }
-   
 
 }

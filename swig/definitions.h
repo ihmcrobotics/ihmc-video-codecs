@@ -1,27 +1,34 @@
 #ifdef SWIG
 %immutable;
 #endif
-        struct STargetPicture {
-                DECODING_STATE state;
-                unsigned char* ppDst;
-                int pStride[2];
-                int iWidth;
-                int iHeight;
-                int iColorFormat;
-        };
-
-        class SBufferInfoExt {
+        class STargetPicture {
 	public:
-                DECODING_STATE state;
-                unsigned char* ppDst;
-                SBufferInfo info;
-		
-		void getPpDst(unsigned char* ppDst)
+                unsigned char* ppDst[3];
+		SBufferInfo info;
+		STargetPicture()
 		{
-			SSysMEMBuffer* buf = (SSysMEMBuffer*) &this->info.UsrData;
-			int size = buf->iStride[0] * buf->iHeight + 2 * buf->iStride[1] * buf->iHeight;
-			fprintf(stderr, "Copying %d\n", size);
-			memcpy(ppDst, this->ppDst, size); 
+			ppDst[0] = NULL;
+			ppDst[1] = NULL;
+			ppDst[2] = NULL;
+		}
+	
+		void getY(unsigned char* Y)
+		{
+			SSysMEMBuffer* buf = (SSysMEMBuffer*) &info.UsrData;
+			int size = buf->iStride[0] * buf->iHeight;
+			memcpy(Y, this->ppDst[0], size); 
+		}
+		void getU(unsigned char* U)
+		{
+			SSysMEMBuffer* buf = (SSysMEMBuffer*) &info.UsrData;
+			int size = buf->iStride[1] * (buf->iHeight >> 1);
+			memcpy(U, this->ppDst[1], size); 
+		}
+		void getV(unsigned char* V)
+		{
+			SSysMEMBuffer* buf = (SSysMEMBuffer*) &info.UsrData;
+			int size = buf->iStride[1] * (buf->iHeight >> 1);
+			memcpy(V, this->ppDst[2], size); 
 		}
 
         };

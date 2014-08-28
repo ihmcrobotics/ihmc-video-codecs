@@ -43,19 +43,10 @@ public class ISVCDecoder {
     return codec_apiJNI.ISVCDecoder_Uninitialize(swigCPtr, this);
   }
 
-  public STargetPicture DecodeFrame(java.nio.ByteBuffer pSrc, int iSrcLen) {
+  public DECODING_STATE DecodeFrame2(java.nio.ByteBuffer pSrc, int iSrcLen, STargetPicture target) {
   assert pSrc.isDirect() : "Buffer must be allocated direct.";
     {
-      long cPtr = codec_apiJNI.ISVCDecoder_DecodeFrame(swigCPtr, this, pSrc, iSrcLen);
-      return (cPtr == 0) ? null : new STargetPicture(cPtr, true);
-    }
-  }
-
-  public SBufferInfoExt DecodeFrame2(java.nio.ByteBuffer pSrc, int iSrcLen) {
-  assert pSrc.isDirect() : "Buffer must be allocated direct.";
-    {
-      long cPtr = codec_apiJNI.ISVCDecoder_DecodeFrame2(swigCPtr, this, pSrc, iSrcLen);
-      return (cPtr == 0) ? null : new SBufferInfoExt(cPtr, true);
+      return DECODING_STATE.swigToEnum(codec_apiJNI.ISVCDecoder_DecodeFrame2(swigCPtr, this, pSrc, iSrcLen, STargetPicture.getCPtr(target), target));
     }
   }
 

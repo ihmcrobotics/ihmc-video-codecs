@@ -40,8 +40,7 @@ public class codec_apiJNI {
   public final static native int ISVCDecoder_Initialize(long jarg1, ISVCDecoder jarg1_, long jarg2, SDecodingParam jarg2_);
   public final static native int ISVCDecoder_Uninitialize(long jarg1, ISVCDecoder jarg1_);
   public final static native void delete_ISVCDecoder(long jarg1);
-  public final static native long ISVCDecoder_DecodeFrame(long jarg1, ISVCDecoder jarg1_, java.nio.ByteBuffer jarg2, int jarg3);
-  public final static native long ISVCDecoder_DecodeFrame2(long jarg1, ISVCDecoder jarg1_, java.nio.ByteBuffer jarg2, int jarg3);
+  public final static native int ISVCDecoder_DecodeFrame2(long jarg1, ISVCDecoder jarg1_, java.nio.ByteBuffer jarg2, int jarg3, long jarg4, STargetPicture jarg4_);
   public final static native int ISVCDecoder_SetOption__SWIG_0(long jarg1, ISVCDecoder jarg1_, int jarg2, int jarg3);
   public final static native int ISVCDecoder_SetOption__SWIG_1(long jarg1, ISVCDecoder jarg1_, int jarg2, boolean jarg3);
   public final static native int ISVCDecoder_GetIntOption(long jarg1, ISVCDecoder jarg1_, int jarg2);
@@ -238,8 +237,6 @@ public class codec_apiJNI {
   public final static native void SFrameBSInfo_uiTimeStamp_set(long jarg1, SFrameBSInfo jarg1_, long jarg2);
   public final static native long SFrameBSInfo_uiTimeStamp_get(long jarg1, SFrameBSInfo jarg1_);
   public final static native long SFrameBSInfo_getSLayerInfo(long jarg1, SFrameBSInfo jarg1_, int jarg2);
-  public final static native int SFrameBSInfo_getBufferSize(long jarg1, SFrameBSInfo jarg1_);
-  public final static native void SFrameBSInfo_getBuffer(long jarg1, SFrameBSInfo jarg1_, java.nio.ByteBuffer jarg2);
   public final static native long new_SFrameBSInfo();
   public final static native void delete_SFrameBSInfo(long jarg1);
   public final static native void SSourcePicture_iColorFormat_set(long jarg1, SSourcePicture jarg1_, int jarg2);
@@ -345,18 +342,11 @@ public class codec_apiJNI {
   public final static native void delete_SBufferInfo(long jarg1);
   public final static native long ksRateThrMap_get();
   public final static native String kiKeyNumMultiple_get();
-  public final static native int STargetPicture_state_get(long jarg1, STargetPicture jarg1_);
-  public final static native java.nio.ByteBuffer STargetPicture_ppDst_get(long jarg1, STargetPicture jarg1_);
-  public final static native int[] STargetPicture_pStride_get(long jarg1, STargetPicture jarg1_);
-  public final static native int STargetPicture_iWidth_get(long jarg1, STargetPicture jarg1_);
-  public final static native int STargetPicture_iHeight_get(long jarg1, STargetPicture jarg1_);
-  public final static native int STargetPicture_iColorFormat_get(long jarg1, STargetPicture jarg1_);
+  public final static native long STargetPicture_ppDst_get(long jarg1, STargetPicture jarg1_);
+  public final static native long STargetPicture_info_get(long jarg1, STargetPicture jarg1_);
   public final static native long new_STargetPicture();
+  public final static native void STargetPicture_getY(long jarg1, STargetPicture jarg1_, java.nio.ByteBuffer jarg2);
+  public final static native void STargetPicture_getU(long jarg1, STargetPicture jarg1_, java.nio.ByteBuffer jarg2);
+  public final static native void STargetPicture_getV(long jarg1, STargetPicture jarg1_, java.nio.ByteBuffer jarg2);
   public final static native void delete_STargetPicture(long jarg1);
-  public final static native int SBufferInfoExt_state_get(long jarg1, SBufferInfoExt jarg1_);
-  public final static native java.nio.ByteBuffer SBufferInfoExt_ppDst_get(long jarg1, SBufferInfoExt jarg1_);
-  public final static native long SBufferInfoExt_info_get(long jarg1, SBufferInfoExt jarg1_);
-  public final static native void SBufferInfoExt_getPpDst(long jarg1, SBufferInfoExt jarg1_, java.nio.ByteBuffer jarg2);
-  public final static native long new_SBufferInfoExt();
-  public final static native void delete_SBufferInfoExt(long jarg1);
 }

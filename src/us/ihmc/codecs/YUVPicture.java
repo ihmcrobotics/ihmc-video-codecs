@@ -36,8 +36,8 @@ public class YUVPicture
       uStride = vStride = yStride >> 1;
 
       Y = ByteBuffer.allocateDirect(yStride * h);
-      U = ByteBuffer.allocateDirect(uStride * h);
-      V = ByteBuffer.allocateDirect(vStride * h);
+      U = ByteBuffer.allocateDirect(uStride * (h >> 1));
+      V = ByteBuffer.allocateDirect(vStride * (h >> 1));
 
       ByteBuffer src = getBuffer(orig);
 
@@ -52,7 +52,7 @@ public class YUVPicture
       Y = src.slice();
       src.position(yStride * h);
       U = src.slice();
-      src.position(yStride * h + uStride * h);
+      src.position(yStride * h + uStride * (h >> 1));
       V = src.slice();
       
       System.out.println(Y);
@@ -85,8 +85,8 @@ public class YUVPicture
       int vStrideDest = yStrideDest >> 1;
 
       ByteBuffer Ydest = ByteBuffer.allocateDirect(yStrideDest * newHeight);
-      ByteBuffer Udest = ByteBuffer.allocateDirect(uStrideDest * newHeight);
-      ByteBuffer Vdest = ByteBuffer.allocateDirect(vStrideDest * newHeight);
+      ByteBuffer Udest = ByteBuffer.allocateDirect(uStrideDest * (newHeight >> 1));
+      ByteBuffer Vdest = ByteBuffer.allocateDirect(vStrideDest * (newHeight >> 1));
 
       libyuv.I420Scale(Y, yStride, U, uStride, V, vStride, w, h, Ydest, yStrideDest, Udest, uStrideDest, Vdest, vStrideDest, newWidth, newHeight, filterMode);
 

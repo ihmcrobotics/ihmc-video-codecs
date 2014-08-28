@@ -89,17 +89,6 @@ public class SFrameBSInfo {
     return (cPtr == 0) ? null : new SLayerBSInfo(cPtr, false);
   }
 
-  public int getBufferSize() {
-    return codec_apiJNI.SFrameBSInfo_getBufferSize(swigCPtr, this);
-  }
-
-  public void getBuffer(java.nio.ByteBuffer buffer) {
-  assert buffer.isDirect() : "Buffer must be allocated direct.";
-    {
-      codec_apiJNI.SFrameBSInfo_getBuffer(swigCPtr, this, buffer);
-    }
-  }
-
   public SFrameBSInfo() {
     this(codec_apiJNI.new_SFrameBSInfo(), true);
   }

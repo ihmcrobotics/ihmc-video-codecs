@@ -35,32 +35,39 @@ public class STargetPicture {
     }
   }
 
-  public DECODING_STATE getState() {
-    return DECODING_STATE.swigToEnum(codec_apiJNI.STargetPicture_state_get(swigCPtr, this));
+  public SWIGTYPE_p_p_unsigned_char getPpDst() {
+    long cPtr = codec_apiJNI.STargetPicture_ppDst_get(swigCPtr, this);
+    return (cPtr == 0) ? null : new SWIGTYPE_p_p_unsigned_char(cPtr, false);
   }
 
-  public java.nio.ByteBuffer getPpDst() {  
-  return codec_apiJNI.STargetPicture_ppDst_get(swigCPtr, this);  
-}
-
-  public int[] getPStride() {
-    return codec_apiJNI.STargetPicture_pStride_get(swigCPtr, this);
-  }
-
-  public int getIWidth() {
-    return codec_apiJNI.STargetPicture_iWidth_get(swigCPtr, this);
-  }
-
-  public int getIHeight() {
-    return codec_apiJNI.STargetPicture_iHeight_get(swigCPtr, this);
-  }
-
-  public int getIColorFormat() {
-    return codec_apiJNI.STargetPicture_iColorFormat_get(swigCPtr, this);
+  public SBufferInfo getInfo() {
+    long cPtr = codec_apiJNI.STargetPicture_info_get(swigCPtr, this);
+    return (cPtr == 0) ? null : new SBufferInfo(cPtr, false);
   }
 
   public STargetPicture() {
     this(codec_apiJNI.new_STargetPicture(), true);
+  }
+
+  public void getY(java.nio.ByteBuffer Y) {
+  assert Y.isDirect() : "Buffer must be allocated direct.";
+    {
+      codec_apiJNI.STargetPicture_getY(swigCPtr, this, Y);
+    }
+  }
+
+  public void getU(java.nio.ByteBuffer U) {
+  assert U.isDirect() : "Buffer must be allocated direct.";
+    {
+      codec_apiJNI.STargetPicture_getU(swigCPtr, this, U);
+    }
+  }
+
+  public void getV(java.nio.ByteBuffer V) {
+  assert V.isDirect() : "Buffer must be allocated direct.";
+    {
+      codec_apiJNI.STargetPicture_getV(swigCPtr, this, V);
+    }
   }
 
 }

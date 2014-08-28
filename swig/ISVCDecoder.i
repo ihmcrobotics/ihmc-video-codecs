@@ -1,20 +1,8 @@
 %extend ISVCDecoder {
 
-	%newobject DecodeFrame;
-	STargetPicture* DecodeFrame(const unsigned char* pSrc, const int iSrcLen)
-	{
-		STargetPicture* ret = new STargetPicture;
-		ret->state = $self->DecodeFrame(pSrc, iSrcLen, &ret->ppDst, ret->pStride, ret->iWidth, ret->iHeight);
-		ret->iColorFormat = videoFormatI420;
-		return ret;
-	}
-
-	%newobject DecodeFrame2;
-	SBufferInfoExt* DecodeFrame2(const unsigned char* pSrc, const int iSrcLen)
-	{
-		SBufferInfoExt* ret = new SBufferInfoExt;
-		ret->state = $self->DecodeFrame2(pSrc, iSrcLen, &ret->ppDst, &ret->info);
-		return ret;
+	DECODING_STATE DecodeFrame2(const unsigned char* pSrc, const int iSrcLen, STargetPicture* target)
+	{	
+		return $self->DecodeFrame2(pSrc, iSrcLen, target->ppDst, &target->info);
 	}
 	long SetOption(DECODER_OPTION eOptionId, int option)		
 	{
