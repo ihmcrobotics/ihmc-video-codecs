@@ -29,31 +29,31 @@ public class SSliceConfig {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        codec_apiJNI.delete_SSliceConfig(swigCPtr);
+        OpenH264JNI.delete_SSliceConfig(swigCPtr);
       }
       swigCPtr = 0;
     }
   }
 
   public void setUiSliceMode(SliceModeEnum value) {
-    codec_apiJNI.SSliceConfig_uiSliceMode_set(swigCPtr, this, value.swigValue());
+    OpenH264JNI.SSliceConfig_uiSliceMode_set(swigCPtr, this, value.swigValue());
   }
 
   public SliceModeEnum getUiSliceMode() {
-    return SliceModeEnum.swigToEnum(codec_apiJNI.SSliceConfig_uiSliceMode_get(swigCPtr, this));
+    return SliceModeEnum.swigToEnum(OpenH264JNI.SSliceConfig_uiSliceMode_get(swigCPtr, this));
   }
 
   public void setSSliceArgument(SSliceArgument value) {
-    codec_apiJNI.SSliceConfig_sSliceArgument_set(swigCPtr, this, SSliceArgument.getCPtr(value), value);
+    OpenH264JNI.SSliceConfig_sSliceArgument_set(swigCPtr, this, SSliceArgument.getCPtr(value), value);
   }
 
   public SSliceArgument getSSliceArgument() {
-    long cPtr = codec_apiJNI.SSliceConfig_sSliceArgument_get(swigCPtr, this);
+    long cPtr = OpenH264JNI.SSliceConfig_sSliceArgument_get(swigCPtr, this);
     return (cPtr == 0) ? null : new SSliceArgument(cPtr, false);
   }
 
   public SSliceConfig() {
-    this(codec_apiJNI.new_SSliceConfig(), true);
+    this(OpenH264JNI.new_SSliceConfig(), true);
   }
 
 }

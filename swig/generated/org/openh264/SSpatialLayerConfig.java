@@ -29,87 +29,87 @@ public class SSpatialLayerConfig {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        codec_apiJNI.delete_SSpatialLayerConfig(swigCPtr);
+        OpenH264JNI.delete_SSpatialLayerConfig(swigCPtr);
       }
       swigCPtr = 0;
     }
   }
 
   public void setIVideoWidth(int value) {
-    codec_apiJNI.SSpatialLayerConfig_iVideoWidth_set(swigCPtr, this, value);
+    OpenH264JNI.SSpatialLayerConfig_iVideoWidth_set(swigCPtr, this, value);
   }
 
   public int getIVideoWidth() {
-    return codec_apiJNI.SSpatialLayerConfig_iVideoWidth_get(swigCPtr, this);
+    return OpenH264JNI.SSpatialLayerConfig_iVideoWidth_get(swigCPtr, this);
   }
 
   public void setIVideoHeight(int value) {
-    codec_apiJNI.SSpatialLayerConfig_iVideoHeight_set(swigCPtr, this, value);
+    OpenH264JNI.SSpatialLayerConfig_iVideoHeight_set(swigCPtr, this, value);
   }
 
   public int getIVideoHeight() {
-    return codec_apiJNI.SSpatialLayerConfig_iVideoHeight_get(swigCPtr, this);
+    return OpenH264JNI.SSpatialLayerConfig_iVideoHeight_get(swigCPtr, this);
   }
 
   public void setFFrameRate(float value) {
-    codec_apiJNI.SSpatialLayerConfig_fFrameRate_set(swigCPtr, this, value);
+    OpenH264JNI.SSpatialLayerConfig_fFrameRate_set(swigCPtr, this, value);
   }
 
   public float getFFrameRate() {
-    return codec_apiJNI.SSpatialLayerConfig_fFrameRate_get(swigCPtr, this);
+    return OpenH264JNI.SSpatialLayerConfig_fFrameRate_get(swigCPtr, this);
   }
 
   public void setISpatialBitrate(int value) {
-    codec_apiJNI.SSpatialLayerConfig_iSpatialBitrate_set(swigCPtr, this, value);
+    OpenH264JNI.SSpatialLayerConfig_iSpatialBitrate_set(swigCPtr, this, value);
   }
 
   public int getISpatialBitrate() {
-    return codec_apiJNI.SSpatialLayerConfig_iSpatialBitrate_get(swigCPtr, this);
+    return OpenH264JNI.SSpatialLayerConfig_iSpatialBitrate_get(swigCPtr, this);
   }
 
   public void setIMaxSpatialBitrate(int value) {
-    codec_apiJNI.SSpatialLayerConfig_iMaxSpatialBitrate_set(swigCPtr, this, value);
+    OpenH264JNI.SSpatialLayerConfig_iMaxSpatialBitrate_set(swigCPtr, this, value);
   }
 
   public int getIMaxSpatialBitrate() {
-    return codec_apiJNI.SSpatialLayerConfig_iMaxSpatialBitrate_get(swigCPtr, this);
+    return OpenH264JNI.SSpatialLayerConfig_iMaxSpatialBitrate_get(swigCPtr, this);
   }
 
   public void setUiProfileIdc(EProfileIdc value) {
-    codec_apiJNI.SSpatialLayerConfig_uiProfileIdc_set(swigCPtr, this, value.swigValue());
+    OpenH264JNI.SSpatialLayerConfig_uiProfileIdc_set(swigCPtr, this, value.swigValue());
   }
 
   public EProfileIdc getUiProfileIdc() {
-    return EProfileIdc.swigToEnum(codec_apiJNI.SSpatialLayerConfig_uiProfileIdc_get(swigCPtr, this));
+    return EProfileIdc.swigToEnum(OpenH264JNI.SSpatialLayerConfig_uiProfileIdc_get(swigCPtr, this));
   }
 
   public void setUiLevelIdc(ELevelIdc value) {
-    codec_apiJNI.SSpatialLayerConfig_uiLevelIdc_set(swigCPtr, this, value.swigValue());
+    OpenH264JNI.SSpatialLayerConfig_uiLevelIdc_set(swigCPtr, this, value.swigValue());
   }
 
   public ELevelIdc getUiLevelIdc() {
-    return ELevelIdc.swigToEnum(codec_apiJNI.SSpatialLayerConfig_uiLevelIdc_get(swigCPtr, this));
+    return ELevelIdc.swigToEnum(OpenH264JNI.SSpatialLayerConfig_uiLevelIdc_get(swigCPtr, this));
   }
 
   public void setIDLayerQp(int value) {
-    codec_apiJNI.SSpatialLayerConfig_iDLayerQp_set(swigCPtr, this, value);
+    OpenH264JNI.SSpatialLayerConfig_iDLayerQp_set(swigCPtr, this, value);
   }
 
   public int getIDLayerQp() {
-    return codec_apiJNI.SSpatialLayerConfig_iDLayerQp_get(swigCPtr, this);
+    return OpenH264JNI.SSpatialLayerConfig_iDLayerQp_get(swigCPtr, this);
   }
 
   public void setSSliceCfg(SSliceConfig value) {
-    codec_apiJNI.SSpatialLayerConfig_sSliceCfg_set(swigCPtr, this, SSliceConfig.getCPtr(value), value);
+    OpenH264JNI.SSpatialLayerConfig_sSliceCfg_set(swigCPtr, this, SSliceConfig.getCPtr(value), value);
   }
 
   public SSliceConfig getSSliceCfg() {
-    long cPtr = codec_apiJNI.SSpatialLayerConfig_sSliceCfg_get(swigCPtr, this);
+    long cPtr = OpenH264JNI.SSpatialLayerConfig_sSliceCfg_get(swigCPtr, this);
     return (cPtr == 0) ? null : new SSliceConfig(cPtr, false);
   }
 
   public SSpatialLayerConfig() {
-    this(codec_apiJNI.new_SSpatialLayerConfig(), true);
+    this(OpenH264JNI.new_SSpatialLayerConfig(), true);
   }
 
 }

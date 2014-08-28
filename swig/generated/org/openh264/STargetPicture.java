@@ -29,39 +29,39 @@ public class STargetPicture {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        codec_apiJNI.delete_STargetPicture(swigCPtr);
+        OpenH264JNI.delete_STargetPicture(swigCPtr);
       }
       swigCPtr = 0;
     }
   }
 
   public SBufferInfo getInfo() {
-    long cPtr = codec_apiJNI.STargetPicture_info_get(swigCPtr, this);
+    long cPtr = OpenH264JNI.STargetPicture_info_get(swigCPtr, this);
     return (cPtr == 0) ? null : new SBufferInfo(cPtr, false);
   }
 
   public STargetPicture() {
-    this(codec_apiJNI.new_STargetPicture(), true);
+    this(OpenH264JNI.new_STargetPicture(), true);
   }
 
   public void getY(java.nio.ByteBuffer Y) {
   assert Y.isDirect() : "Buffer must be allocated direct.";
     {
-      codec_apiJNI.STargetPicture_getY(swigCPtr, this, Y);
+      OpenH264JNI.STargetPicture_getY(swigCPtr, this, Y);
     }
   }
 
   public void getU(java.nio.ByteBuffer U) {
   assert U.isDirect() : "Buffer must be allocated direct.";
     {
-      codec_apiJNI.STargetPicture_getU(swigCPtr, this, U);
+      OpenH264JNI.STargetPicture_getU(swigCPtr, this, U);
     }
   }
 
   public void getV(java.nio.ByteBuffer V) {
   assert V.isDirect() : "Buffer must be allocated direct.";
     {
-      codec_apiJNI.STargetPicture_getV(swigCPtr, this, V);
+      OpenH264JNI.STargetPicture_getV(swigCPtr, this, V);
     }
   }
 

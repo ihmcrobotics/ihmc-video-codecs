@@ -80,6 +80,11 @@ public class YUVPicture
 
    public YUVPicture scale(int newWidth, int newHeight, FilterModeEnum filterMode)
    {
+      if((newWidth >> 1) << 1 != newWidth || (newHeight >> 1) << 1 != newHeight)
+      {
+         throw new RuntimeException("Resolution not divisible by 2");
+      }
+      
       int yStrideDest = newWidth;
       int uStrideDest = yStrideDest >> 1;
       int vStrideDest = yStrideDest >> 1;

@@ -29,46 +29,46 @@ public class SSysMEMBuffer {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        codec_apiJNI.delete_SSysMEMBuffer(swigCPtr);
+        OpenH264JNI.delete_SSysMEMBuffer(swigCPtr);
       }
       swigCPtr = 0;
     }
   }
 
   public void setIWidth(int value) {
-    codec_apiJNI.SSysMEMBuffer_iWidth_set(swigCPtr, this, value);
+    OpenH264JNI.SSysMEMBuffer_iWidth_set(swigCPtr, this, value);
   }
 
   public int getIWidth() {
-    return codec_apiJNI.SSysMEMBuffer_iWidth_get(swigCPtr, this);
+    return OpenH264JNI.SSysMEMBuffer_iWidth_get(swigCPtr, this);
   }
 
   public void setIHeight(int value) {
-    codec_apiJNI.SSysMEMBuffer_iHeight_set(swigCPtr, this, value);
+    OpenH264JNI.SSysMEMBuffer_iHeight_set(swigCPtr, this, value);
   }
 
   public int getIHeight() {
-    return codec_apiJNI.SSysMEMBuffer_iHeight_get(swigCPtr, this);
+    return OpenH264JNI.SSysMEMBuffer_iHeight_get(swigCPtr, this);
   }
 
   public void setIFormat(int value) {
-    codec_apiJNI.SSysMEMBuffer_iFormat_set(swigCPtr, this, value);
+    OpenH264JNI.SSysMEMBuffer_iFormat_set(swigCPtr, this, value);
   }
 
   public int getIFormat() {
-    return codec_apiJNI.SSysMEMBuffer_iFormat_get(swigCPtr, this);
+    return OpenH264JNI.SSysMEMBuffer_iFormat_get(swigCPtr, this);
   }
 
   public void setIStride(int[] value) {
-    codec_apiJNI.SSysMEMBuffer_iStride_set(swigCPtr, this, value);
+    OpenH264JNI.SSysMEMBuffer_iStride_set(swigCPtr, this, value);
   }
 
   public int[] getIStride() {
-    return codec_apiJNI.SSysMEMBuffer_iStride_get(swigCPtr, this);
+    return OpenH264JNI.SSysMEMBuffer_iStride_get(swigCPtr, this);
   }
 
   public SSysMEMBuffer() {
-    this(codec_apiJNI.new_SSysMEMBuffer(), true);
+    this(OpenH264JNI.new_SSysMEMBuffer(), true);
   }
 
 }

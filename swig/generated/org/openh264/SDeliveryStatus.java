@@ -29,38 +29,38 @@ public class SDeliveryStatus {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        codec_apiJNI.delete_SDeliveryStatus(swigCPtr);
+        OpenH264JNI.delete_SDeliveryStatus(swigCPtr);
       }
       swigCPtr = 0;
     }
   }
 
   public void setIDropNum(int value) {
-    codec_apiJNI.SDeliveryStatus_iDropNum_set(swigCPtr, this, value);
+    OpenH264JNI.SDeliveryStatus_iDropNum_set(swigCPtr, this, value);
   }
 
   public int getIDropNum() {
-    return codec_apiJNI.SDeliveryStatus_iDropNum_get(swigCPtr, this);
+    return OpenH264JNI.SDeliveryStatus_iDropNum_get(swigCPtr, this);
   }
 
   public void setIDropFrameType(int value) {
-    codec_apiJNI.SDeliveryStatus_iDropFrameType_set(swigCPtr, this, value);
+    OpenH264JNI.SDeliveryStatus_iDropFrameType_set(swigCPtr, this, value);
   }
 
   public int getIDropFrameType() {
-    return codec_apiJNI.SDeliveryStatus_iDropFrameType_get(swigCPtr, this);
+    return OpenH264JNI.SDeliveryStatus_iDropFrameType_get(swigCPtr, this);
   }
 
   public void setIDropFrameSize(int value) {
-    codec_apiJNI.SDeliveryStatus_iDropFrameSize_set(swigCPtr, this, value);
+    OpenH264JNI.SDeliveryStatus_iDropFrameSize_set(swigCPtr, this, value);
   }
 
   public int getIDropFrameSize() {
-    return codec_apiJNI.SDeliveryStatus_iDropFrameSize_get(swigCPtr, this);
+    return OpenH264JNI.SDeliveryStatus_iDropFrameSize_get(swigCPtr, this);
   }
 
   public SDeliveryStatus() {
-    this(codec_apiJNI.new_SDeliveryStatus(), true);
+    this(OpenH264JNI.new_SDeliveryStatus(), true);
   }
 
 }

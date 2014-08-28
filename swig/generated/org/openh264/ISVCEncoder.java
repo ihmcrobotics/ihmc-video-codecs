@@ -29,126 +29,135 @@ public class ISVCEncoder {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        codec_apiJNI.delete_ISVCEncoder(swigCPtr);
+        OpenH264JNI.delete_ISVCEncoder(swigCPtr);
       }
       swigCPtr = 0;
     }
   }
 
   public int Initialize(SEncParamBase pParam) {
-    return codec_apiJNI.ISVCEncoder_Initialize(swigCPtr, this, SEncParamBase.getCPtr(pParam), pParam);
+    return OpenH264JNI.ISVCEncoder_Initialize(swigCPtr, this, SEncParamBase.getCPtr(pParam), pParam);
   }
 
   public int InitializeExt(SEncParamExt pParam) {
-    return codec_apiJNI.ISVCEncoder_InitializeExt(swigCPtr, this, SEncParamExt.getCPtr(pParam), pParam);
+    return OpenH264JNI.ISVCEncoder_InitializeExt(swigCPtr, this, SEncParamExt.getCPtr(pParam), pParam);
   }
 
   public int GetDefaultParams(SEncParamExt pParam) {
-    return codec_apiJNI.ISVCEncoder_GetDefaultParams(swigCPtr, this, SEncParamExt.getCPtr(pParam), pParam);
+    return OpenH264JNI.ISVCEncoder_GetDefaultParams(swigCPtr, this, SEncParamExt.getCPtr(pParam), pParam);
   }
 
   public int Uninitialize() {
-    return codec_apiJNI.ISVCEncoder_Uninitialize(swigCPtr, this);
+    return OpenH264JNI.ISVCEncoder_Uninitialize(swigCPtr, this);
   }
 
   public int EncodeFrame(SSourcePicture kpSrcPic, SFrameBSInfo pBsInfo) {
-    return codec_apiJNI.ISVCEncoder_EncodeFrame(swigCPtr, this, SSourcePicture.getCPtr(kpSrcPic), kpSrcPic, SFrameBSInfo.getCPtr(pBsInfo), pBsInfo);
+    return OpenH264JNI.ISVCEncoder_EncodeFrame(swigCPtr, this, SSourcePicture.getCPtr(kpSrcPic), kpSrcPic, SFrameBSInfo.getCPtr(pBsInfo), pBsInfo);
   }
 
   public int EncodeParameterSets(SFrameBSInfo pBsInfo) {
-    return codec_apiJNI.ISVCEncoder_EncodeParameterSets(swigCPtr, this, SFrameBSInfo.getCPtr(pBsInfo), pBsInfo);
+    return OpenH264JNI.ISVCEncoder_EncodeParameterSets(swigCPtr, this, SFrameBSInfo.getCPtr(pBsInfo), pBsInfo);
   }
 
   public int ForceIntraFrame(boolean bIDR) {
-    return codec_apiJNI.ISVCEncoder_ForceIntraFrame(swigCPtr, this, bIDR);
+    return OpenH264JNI.ISVCEncoder_ForceIntraFrame(swigCPtr, this, bIDR);
   }
 
   public int SetOption(ENCODER_OPTION eOptionId, int option) {
-    return codec_apiJNI.ISVCEncoder_SetOption__SWIG_0(swigCPtr, this, eOptionId.swigValue(), option);
+    return OpenH264JNI.ISVCEncoder_SetOption__SWIG_0(swigCPtr, this, eOptionId.swigValue(), option);
   }
 
   public int SetOption(ENCODER_OPTION eOptionId, boolean option) {
-    return codec_apiJNI.ISVCEncoder_SetOption__SWIG_1(swigCPtr, this, eOptionId.swigValue(), option);
+    return OpenH264JNI.ISVCEncoder_SetOption__SWIG_1(swigCPtr, this, eOptionId.swigValue(), option);
   }
 
   public int SetOption(ENCODER_OPTION eOptionId, SEncParamBase option) {
-    return codec_apiJNI.ISVCEncoder_SetOption__SWIG_2(swigCPtr, this, eOptionId.swigValue(), SEncParamBase.getCPtr(option), option);
+    return OpenH264JNI.ISVCEncoder_SetOption__SWIG_2(swigCPtr, this, eOptionId.swigValue(), SEncParamBase.getCPtr(option), option);
   }
 
   public SEncParamBase GetSEncParamBaseOption(ENCODER_OPTION eOptionId) {
-    long cPtr = codec_apiJNI.ISVCEncoder_GetSEncParamBaseOption(swigCPtr, this, eOptionId.swigValue());
+    long cPtr = OpenH264JNI.ISVCEncoder_GetSEncParamBaseOption(swigCPtr, this, eOptionId.swigValue());
     return (cPtr == 0) ? null : new SEncParamBase(cPtr, true);
   }
 
   public int SetOption(ENCODER_OPTION eOptionId, SEncParamExt option) {
-    return codec_apiJNI.ISVCEncoder_SetOption__SWIG_3(swigCPtr, this, eOptionId.swigValue(), SEncParamExt.getCPtr(option), option);
+    return OpenH264JNI.ISVCEncoder_SetOption__SWIG_3(swigCPtr, this, eOptionId.swigValue(), SEncParamExt.getCPtr(option), option);
   }
 
   public SEncParamExt GetSEncParamExtOption(ENCODER_OPTION eOptionId) {
-    long cPtr = codec_apiJNI.ISVCEncoder_GetSEncParamExtOption(swigCPtr, this, eOptionId.swigValue());
+    long cPtr = OpenH264JNI.ISVCEncoder_GetSEncParamExtOption(swigCPtr, this, eOptionId.swigValue());
     return (cPtr == 0) ? null : new SEncParamExt(cPtr, true);
   }
 
   public int SetOption(ENCODER_OPTION eOptionId, SProfileInfo option) {
-    return codec_apiJNI.ISVCEncoder_SetOption__SWIG_4(swigCPtr, this, eOptionId.swigValue(), SProfileInfo.getCPtr(option), option);
+    return OpenH264JNI.ISVCEncoder_SetOption__SWIG_4(swigCPtr, this, eOptionId.swigValue(), SProfileInfo.getCPtr(option), option);
   }
 
   public SProfileInfo GetSProfileInfoOption(ENCODER_OPTION eOptionId) {
-    long cPtr = codec_apiJNI.ISVCEncoder_GetSProfileInfoOption(swigCPtr, this, eOptionId.swigValue());
+    long cPtr = OpenH264JNI.ISVCEncoder_GetSProfileInfoOption(swigCPtr, this, eOptionId.swigValue());
     return (cPtr == 0) ? null : new SProfileInfo(cPtr, true);
   }
 
   public int SetOption(ENCODER_OPTION eOptionId, SLevelInfo option) {
-    return codec_apiJNI.ISVCEncoder_SetOption__SWIG_5(swigCPtr, this, eOptionId.swigValue(), SLevelInfo.getCPtr(option), option);
+    return OpenH264JNI.ISVCEncoder_SetOption__SWIG_5(swigCPtr, this, eOptionId.swigValue(), SLevelInfo.getCPtr(option), option);
   }
 
   public SLevelInfo GetSLevelInfoOption(ENCODER_OPTION eOptionId) {
-    long cPtr = codec_apiJNI.ISVCEncoder_GetSLevelInfoOption(swigCPtr, this, eOptionId.swigValue());
+    long cPtr = OpenH264JNI.ISVCEncoder_GetSLevelInfoOption(swigCPtr, this, eOptionId.swigValue());
     return (cPtr == 0) ? null : new SLevelInfo(cPtr, true);
   }
 
   public int SetOption(ENCODER_OPTION eOptionId, SDeliveryStatus option) {
-    return codec_apiJNI.ISVCEncoder_SetOption__SWIG_6(swigCPtr, this, eOptionId.swigValue(), SDeliveryStatus.getCPtr(option), option);
+    return OpenH264JNI.ISVCEncoder_SetOption__SWIG_6(swigCPtr, this, eOptionId.swigValue(), SDeliveryStatus.getCPtr(option), option);
   }
 
   public SDeliveryStatus GetSDeliveryStatusOption(ENCODER_OPTION eOptionId) {
-    long cPtr = codec_apiJNI.ISVCEncoder_GetSDeliveryStatusOption(swigCPtr, this, eOptionId.swigValue());
+    long cPtr = OpenH264JNI.ISVCEncoder_GetSDeliveryStatusOption(swigCPtr, this, eOptionId.swigValue());
     return (cPtr == 0) ? null : new SDeliveryStatus(cPtr, true);
   }
 
   public int SetOption(ENCODER_OPTION eOptionId, SLTRRecoverRequest option) {
-    return codec_apiJNI.ISVCEncoder_SetOption__SWIG_7(swigCPtr, this, eOptionId.swigValue(), SLTRRecoverRequest.getCPtr(option), option);
+    return OpenH264JNI.ISVCEncoder_SetOption__SWIG_7(swigCPtr, this, eOptionId.swigValue(), SLTRRecoverRequest.getCPtr(option), option);
   }
 
   public SLTRRecoverRequest GetSLTRRecoverRequestOption(ENCODER_OPTION eOptionId) {
-    long cPtr = codec_apiJNI.ISVCEncoder_GetSLTRRecoverRequestOption(swigCPtr, this, eOptionId.swigValue());
+    long cPtr = OpenH264JNI.ISVCEncoder_GetSLTRRecoverRequestOption(swigCPtr, this, eOptionId.swigValue());
     return (cPtr == 0) ? null : new SLTRRecoverRequest(cPtr, true);
   }
 
   public int SetOption(ENCODER_OPTION eOptionId, SLTRMarkingFeedback option) {
-    return codec_apiJNI.ISVCEncoder_SetOption__SWIG_8(swigCPtr, this, eOptionId.swigValue(), SLTRMarkingFeedback.getCPtr(option), option);
+    return OpenH264JNI.ISVCEncoder_SetOption__SWIG_8(swigCPtr, this, eOptionId.swigValue(), SLTRMarkingFeedback.getCPtr(option), option);
   }
 
   public SLTRMarkingFeedback GetSLTRMarkingFeedbackOption(ENCODER_OPTION eOptionId) {
-    long cPtr = codec_apiJNI.ISVCEncoder_GetSLTRMarkingFeedbackOption(swigCPtr, this, eOptionId.swigValue());
+    long cPtr = OpenH264JNI.ISVCEncoder_GetSLTRMarkingFeedbackOption(swigCPtr, this, eOptionId.swigValue());
     return (cPtr == 0) ? null : new SLTRMarkingFeedback(cPtr, true);
   }
 
   public int SetOption(ENCODER_OPTION eOptionId, SDumpLayer option) {
-    return codec_apiJNI.ISVCEncoder_SetOption__SWIG_9(swigCPtr, this, eOptionId.swigValue(), SDumpLayer.getCPtr(option), option);
+    return OpenH264JNI.ISVCEncoder_SetOption__SWIG_9(swigCPtr, this, eOptionId.swigValue(), SDumpLayer.getCPtr(option), option);
   }
 
   public SDumpLayer GetSDumpLayerOption(ENCODER_OPTION eOptionId) {
-    long cPtr = codec_apiJNI.ISVCEncoder_GetSDumpLayerOption(swigCPtr, this, eOptionId.swigValue());
+    long cPtr = OpenH264JNI.ISVCEncoder_GetSDumpLayerOption(swigCPtr, this, eOptionId.swigValue());
     return (cPtr == 0) ? null : new SDumpLayer(cPtr, true);
   }
 
+  public int SetOption(ENCODER_OPTION eOptionId, SBitrateInfo option) {
+    return OpenH264JNI.ISVCEncoder_SetOption__SWIG_10(swigCPtr, this, eOptionId.swigValue(), SBitrateInfo.getCPtr(option), option);
+  }
+
+  public SBitrateInfo GetSBitrateInfoOption(ENCODER_OPTION eOptionId) {
+    long cPtr = OpenH264JNI.ISVCEncoder_GetSBitrateInfoOption(swigCPtr, this, eOptionId.swigValue());
+    return (cPtr == 0) ? null : new SBitrateInfo(cPtr, true);
+  }
+
   public int GetIntOption(ENCODER_OPTION eOptionId) {
-    return codec_apiJNI.ISVCEncoder_GetIntOption(swigCPtr, this, eOptionId.swigValue());
+    return OpenH264JNI.ISVCEncoder_GetIntOption(swigCPtr, this, eOptionId.swigValue());
   }
 
   public boolean GetBoolOption(ENCODER_OPTION eOptionId) {
-    return codec_apiJNI.ISVCEncoder_GetBoolOption(swigCPtr, this, eOptionId.swigValue());
+    return OpenH264JNI.ISVCEncoder_GetBoolOption(swigCPtr, this, eOptionId.swigValue());
   }
 
 }

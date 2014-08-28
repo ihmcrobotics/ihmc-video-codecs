@@ -4,6 +4,11 @@
 	{	
 		return $self->DecodeFrame2(pSrc, iSrcLen, target->ppDst, &target->info);
 	}
+
+	DECODING_STATE DecodeFrame2(STargetPicture* target)
+	{
+		return $self->DecodeFrame2(NULL, 0, target->ppDst, &target->info);
+	}
 	long SetOption(DECODER_OPTION eOptionId, int option)		
 	{
 		return $self->SetOption(eOptionId, &option);

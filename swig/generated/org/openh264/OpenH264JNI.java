@@ -8,7 +8,7 @@
 
 package org.openh264;
 
-public class codec_apiJNI {
+public class OpenH264JNI {
   public final static native int ISVCEncoder_Initialize(long jarg1, ISVCEncoder jarg1_, long jarg2, SEncParamBase jarg2_);
   public final static native int ISVCEncoder_InitializeExt(long jarg1, ISVCEncoder jarg1_, long jarg2, SEncParamExt jarg2_);
   public final static native int ISVCEncoder_GetDefaultParams(long jarg1, ISVCEncoder jarg1_, long jarg2, SEncParamExt jarg2_);
@@ -35,12 +35,15 @@ public class codec_apiJNI {
   public final static native long ISVCEncoder_GetSLTRMarkingFeedbackOption(long jarg1, ISVCEncoder jarg1_, int jarg2);
   public final static native int ISVCEncoder_SetOption__SWIG_9(long jarg1, ISVCEncoder jarg1_, int jarg2, long jarg3, SDumpLayer jarg3_);
   public final static native long ISVCEncoder_GetSDumpLayerOption(long jarg1, ISVCEncoder jarg1_, int jarg2);
+  public final static native int ISVCEncoder_SetOption__SWIG_10(long jarg1, ISVCEncoder jarg1_, int jarg2, long jarg3, SBitrateInfo jarg3_);
+  public final static native long ISVCEncoder_GetSBitrateInfoOption(long jarg1, ISVCEncoder jarg1_, int jarg2);
   public final static native int ISVCEncoder_GetIntOption(long jarg1, ISVCEncoder jarg1_, int jarg2);
   public final static native boolean ISVCEncoder_GetBoolOption(long jarg1, ISVCEncoder jarg1_, int jarg2);
   public final static native int ISVCDecoder_Initialize(long jarg1, ISVCDecoder jarg1_, long jarg2, SDecodingParam jarg2_);
   public final static native int ISVCDecoder_Uninitialize(long jarg1, ISVCDecoder jarg1_);
   public final static native void delete_ISVCDecoder(long jarg1);
-  public final static native int ISVCDecoder_DecodeFrame2(long jarg1, ISVCDecoder jarg1_, java.nio.ByteBuffer jarg2, int jarg3, long jarg4, STargetPicture jarg4_);
+  public final static native int ISVCDecoder_DecodeFrame2__SWIG_0(long jarg1, ISVCDecoder jarg1_, java.nio.ByteBuffer jarg2, int jarg3, long jarg4, STargetPicture jarg4_);
+  public final static native int ISVCDecoder_DecodeFrame2__SWIG_1(long jarg1, ISVCDecoder jarg1_, long jarg2, STargetPicture jarg2_);
   public final static native int ISVCDecoder_SetOption__SWIG_0(long jarg1, ISVCDecoder jarg1_, int jarg2, int jarg3);
   public final static native int ISVCDecoder_SetOption__SWIG_1(long jarg1, ISVCDecoder jarg1_, int jarg2, boolean jarg3);
   public final static native int ISVCDecoder_GetIntOption(long jarg1, ISVCDecoder jarg1_, int jarg2);
@@ -129,8 +132,6 @@ public class codec_apiJNI {
   public final static native int SEncParamExt_iTemporalLayerNum_get(long jarg1, SEncParamExt jarg1_);
   public final static native void SEncParamExt_iSpatialLayerNum_set(long jarg1, SEncParamExt jarg1_, int jarg2);
   public final static native int SEncParamExt_iSpatialLayerNum_get(long jarg1, SEncParamExt jarg1_);
-  public final static native void SEncParamExt_sSpatialLayers_set(long jarg1, SEncParamExt jarg1_, long jarg2, SSpatialLayerConfig jarg2_);
-  public final static native long SEncParamExt_sSpatialLayers_get(long jarg1, SEncParamExt jarg1_);
   public final static native void SEncParamExt_iComplexityMode_set(long jarg1, SEncParamExt jarg1_, int jarg2);
   public final static native int SEncParamExt_iComplexityMode_get(long jarg1, SEncParamExt jarg1_);
   public final static native void SEncParamExt_uiIntraPeriod_set(long jarg1, SEncParamExt jarg1_, long jarg2);
@@ -181,6 +182,7 @@ public class codec_apiJNI {
   public final static native boolean SEncParamExt_bEnableFrameCroppingFlag_get(long jarg1, SEncParamExt jarg1_);
   public final static native void SEncParamExt_bEnableSceneChangeDetect_set(long jarg1, SEncParamExt jarg1_, boolean jarg2);
   public final static native boolean SEncParamExt_bEnableSceneChangeDetect_get(long jarg1, SEncParamExt jarg1_);
+  public final static native long SEncParamExt_getSpatialLayer(long jarg1, SEncParamExt jarg1_, int jarg2);
   public final static native long new_SEncParamExt();
   public final static native void delete_SEncParamExt(long jarg1);
   public final static native void SVideoProperty_size_set(long jarg1, SVideoProperty jarg1_, long jarg2);

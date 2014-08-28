@@ -29,89 +29,89 @@ public class SliceInfo {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        codec_apiJNI.delete_SliceInfo(swigCPtr);
+        OpenH264JNI.delete_SliceInfo(swigCPtr);
       }
       swigCPtr = 0;
     }
   }
 
   public void setICodedSliceCount(int value) {
-    codec_apiJNI.SliceInfo_iCodedSliceCount_set(swigCPtr, this, value);
+    OpenH264JNI.SliceInfo_iCodedSliceCount_set(swigCPtr, this, value);
   }
 
   public int getICodedSliceCount() {
-    return codec_apiJNI.SliceInfo_iCodedSliceCount_get(swigCPtr, this);
+    return OpenH264JNI.SliceInfo_iCodedSliceCount_get(swigCPtr, this);
   }
 
   public void setIFecType(int value) {
-    codec_apiJNI.SliceInfo_iFecType_set(swigCPtr, this, value);
+    OpenH264JNI.SliceInfo_iFecType_set(swigCPtr, this, value);
   }
 
   public int getIFecType() {
-    return codec_apiJNI.SliceInfo_iFecType_get(swigCPtr, this);
+    return OpenH264JNI.SliceInfo_iFecType_get(swigCPtr, this);
   }
 
   public void setUiSliceIdx(short value) {
-    codec_apiJNI.SliceInfo_uiSliceIdx_set(swigCPtr, this, value);
+    OpenH264JNI.SliceInfo_uiSliceIdx_set(swigCPtr, this, value);
   }
 
   public short getUiSliceIdx() {
-    return codec_apiJNI.SliceInfo_uiSliceIdx_get(swigCPtr, this);
+    return OpenH264JNI.SliceInfo_uiSliceIdx_get(swigCPtr, this);
   }
 
   public void setUiSliceCount(short value) {
-    codec_apiJNI.SliceInfo_uiSliceCount_set(swigCPtr, this, value);
+    OpenH264JNI.SliceInfo_uiSliceCount_set(swigCPtr, this, value);
   }
 
   public short getUiSliceCount() {
-    return codec_apiJNI.SliceInfo_uiSliceCount_get(swigCPtr, this);
+    return OpenH264JNI.SliceInfo_uiSliceCount_get(swigCPtr, this);
   }
 
   public void setIFrameIndex(char value) {
-    codec_apiJNI.SliceInfo_iFrameIndex_set(swigCPtr, this, value);
+    OpenH264JNI.SliceInfo_iFrameIndex_set(swigCPtr, this, value);
   }
 
   public char getIFrameIndex() {
-    return codec_apiJNI.SliceInfo_iFrameIndex_get(swigCPtr, this);
+    return OpenH264JNI.SliceInfo_iFrameIndex_get(swigCPtr, this);
   }
 
   public void setUiNalRefIdc(short value) {
-    codec_apiJNI.SliceInfo_uiNalRefIdc_set(swigCPtr, this, value);
+    OpenH264JNI.SliceInfo_uiNalRefIdc_set(swigCPtr, this, value);
   }
 
   public short getUiNalRefIdc() {
-    return codec_apiJNI.SliceInfo_uiNalRefIdc_get(swigCPtr, this);
+    return OpenH264JNI.SliceInfo_uiNalRefIdc_get(swigCPtr, this);
   }
 
   public void setUiNalType(short value) {
-    codec_apiJNI.SliceInfo_uiNalType_set(swigCPtr, this, value);
+    OpenH264JNI.SliceInfo_uiNalType_set(swigCPtr, this, value);
   }
 
   public short getUiNalType() {
-    return codec_apiJNI.SliceInfo_uiNalType_get(swigCPtr, this);
+    return OpenH264JNI.SliceInfo_uiNalType_get(swigCPtr, this);
   }
 
   public void setUiContainingFinalNal(short value) {
-    codec_apiJNI.SliceInfo_uiContainingFinalNal_set(swigCPtr, this, value);
+    OpenH264JNI.SliceInfo_uiContainingFinalNal_set(swigCPtr, this, value);
   }
 
   public short getUiContainingFinalNal() {
-    return codec_apiJNI.SliceInfo_uiContainingFinalNal_get(swigCPtr, this);
+    return OpenH264JNI.SliceInfo_uiContainingFinalNal_get(swigCPtr, this);
   }
 
   public int getLengthOfSlices(int slice) {
-    return codec_apiJNI.SliceInfo_getLengthOfSlices(swigCPtr, this, slice);
+    return OpenH264JNI.SliceInfo_getLengthOfSlices(swigCPtr, this, slice);
   }
 
   public void getSlice(int slice, java.nio.ByteBuffer target) {
   assert target.isDirect() : "Buffer must be allocated direct.";
     {
-      codec_apiJNI.SliceInfo_getSlice(swigCPtr, this, slice, target);
+      OpenH264JNI.SliceInfo_getSlice(swigCPtr, this, slice, target);
     }
   }
 
   public SliceInfo() {
-    this(codec_apiJNI.new_SliceInfo(), true);
+    this(OpenH264JNI.new_SliceInfo(), true);
   }
 
 }

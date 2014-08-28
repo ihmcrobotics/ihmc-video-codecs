@@ -1,4 +1,4 @@
-%module codec_api
+%module OpenH264
 %include "enums.swg"
 %include "typemaps.i"
 %include "various.i"
@@ -27,3 +27,4 @@
 %include "SFrameBSInfo.i"
 %include "SBufferInfo.i"
 %include "SliceInformation.i"
+%include "SEncParamExt.i"

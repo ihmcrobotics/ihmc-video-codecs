@@ -8,31 +8,31 @@
 
 package org.openh264;
 
-public class codec_api implements codec_apiConstants {
+public class OpenH264 implements OpenH264Constants {
   public static void WelsDestroySVCEncoder(ISVCEncoder pEncoder) {
-    codec_apiJNI.WelsDestroySVCEncoder(ISVCEncoder.getCPtr(pEncoder), pEncoder);
+    OpenH264JNI.WelsDestroySVCEncoder(ISVCEncoder.getCPtr(pEncoder), pEncoder);
   }
 
   public static void WelsDestroyDecoder(ISVCDecoder pDecoder) {
-    codec_apiJNI.WelsDestroyDecoder(ISVCDecoder.getCPtr(pDecoder), pDecoder);
+    OpenH264JNI.WelsDestroyDecoder(ISVCDecoder.getCPtr(pDecoder), pDecoder);
   }
 
   public static SRateThresholds getKsRateThrMap() {
-    long cPtr = codec_apiJNI.ksRateThrMap_get();
+    long cPtr = OpenH264JNI.ksRateThrMap_get();
     return (cPtr == 0) ? null : new SRateThresholds(cPtr, false);
   }
 
   public static String getKiKeyNumMultiple() {
-    return codec_apiJNI.kiKeyNumMultiple_get();
+    return OpenH264JNI.kiKeyNumMultiple_get();
   }
 
   public static ISVCEncoder WelsCreateSVCEncoder() {
-    long cPtr = codec_apiJNI.WelsCreateSVCEncoder();
+    long cPtr = OpenH264JNI.WelsCreateSVCEncoder();
     return (cPtr == 0) ? null : new ISVCEncoder(cPtr, false);
   }
 
   public static ISVCDecoder WelsCreateDecoder() {
-    long cPtr = codec_apiJNI.WelsCreateDecoder();
+    long cPtr = OpenH264JNI.WelsCreateDecoder();
     return (cPtr == 0) ? null : new ISVCDecoder(cPtr, false);
   }
 

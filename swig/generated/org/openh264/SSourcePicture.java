@@ -29,61 +29,61 @@ public class SSourcePicture {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        codec_apiJNI.delete_SSourcePicture(swigCPtr);
+        OpenH264JNI.delete_SSourcePicture(swigCPtr);
       }
       swigCPtr = 0;
     }
   }
 
   public void setIColorFormat(int value) {
-    codec_apiJNI.SSourcePicture_iColorFormat_set(swigCPtr, this, value);
+    OpenH264JNI.SSourcePicture_iColorFormat_set(swigCPtr, this, value);
   }
 
   public int getIColorFormat() {
-    return codec_apiJNI.SSourcePicture_iColorFormat_get(swigCPtr, this);
+    return OpenH264JNI.SSourcePicture_iColorFormat_get(swigCPtr, this);
   }
 
   public void setIStride(int[] value) {
-    codec_apiJNI.SSourcePicture_iStride_set(swigCPtr, this, value);
+    OpenH264JNI.SSourcePicture_iStride_set(swigCPtr, this, value);
   }
 
   public int[] getIStride() {
-    return codec_apiJNI.SSourcePicture_iStride_get(swigCPtr, this);
+    return OpenH264JNI.SSourcePicture_iStride_get(swigCPtr, this);
   }
 
   public void setIPicWidth(int value) {
-    codec_apiJNI.SSourcePicture_iPicWidth_set(swigCPtr, this, value);
+    OpenH264JNI.SSourcePicture_iPicWidth_set(swigCPtr, this, value);
   }
 
   public int getIPicWidth() {
-    return codec_apiJNI.SSourcePicture_iPicWidth_get(swigCPtr, this);
+    return OpenH264JNI.SSourcePicture_iPicWidth_get(swigCPtr, this);
   }
 
   public void setIPicHeight(int value) {
-    codec_apiJNI.SSourcePicture_iPicHeight_set(swigCPtr, this, value);
+    OpenH264JNI.SSourcePicture_iPicHeight_set(swigCPtr, this, value);
   }
 
   public int getIPicHeight() {
-    return codec_apiJNI.SSourcePicture_iPicHeight_get(swigCPtr, this);
+    return OpenH264JNI.SSourcePicture_iPicHeight_get(swigCPtr, this);
   }
 
   public void setUiTimeStamp(long value) {
-    codec_apiJNI.SSourcePicture_uiTimeStamp_set(swigCPtr, this, value);
+    OpenH264JNI.SSourcePicture_uiTimeStamp_set(swigCPtr, this, value);
   }
 
   public long getUiTimeStamp() {
-    return codec_apiJNI.SSourcePicture_uiTimeStamp_get(swigCPtr, this);
+    return OpenH264JNI.SSourcePicture_uiTimeStamp_get(swigCPtr, this);
   }
 
   public void setPData(int plane, java.nio.ByteBuffer data) {
   assert data.isDirect() : "Buffer must be allocated direct.";
     {
-      codec_apiJNI.SSourcePicture_setPData(swigCPtr, this, plane, data);
+      OpenH264JNI.SSourcePicture_setPData(swigCPtr, this, plane, data);
     }
   }
 
   public SSourcePicture() {
-    this(codec_apiJNI.new_SSourcePicture(), true);
+    this(OpenH264JNI.new_SSourcePicture(), true);
   }
 
 }

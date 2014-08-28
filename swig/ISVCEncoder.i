@@ -36,6 +36,7 @@
     SET_ENCODER_OPTION(SLTRRecoverRequest)
     SET_ENCODER_OPTION(SLTRMarkingFeedback)
     SET_ENCODER_OPTION(SDumpLayer)
+    SET_ENCODER_OPTION(SBitrateInfo)
 
 	int GetIntOption(ENCODER_OPTION eOptionId)
 	{

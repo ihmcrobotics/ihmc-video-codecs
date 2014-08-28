@@ -29,68 +29,68 @@ public class SFrameBSInfo {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        codec_apiJNI.delete_SFrameBSInfo(swigCPtr);
+        OpenH264JNI.delete_SFrameBSInfo(swigCPtr);
       }
       swigCPtr = 0;
     }
   }
 
   public void setITemporalId(int value) {
-    codec_apiJNI.SFrameBSInfo_iTemporalId_set(swigCPtr, this, value);
+    OpenH264JNI.SFrameBSInfo_iTemporalId_set(swigCPtr, this, value);
   }
 
   public int getITemporalId() {
-    return codec_apiJNI.SFrameBSInfo_iTemporalId_get(swigCPtr, this);
+    return OpenH264JNI.SFrameBSInfo_iTemporalId_get(swigCPtr, this);
   }
 
   public void setISubSeqId(int value) {
-    codec_apiJNI.SFrameBSInfo_iSubSeqId_set(swigCPtr, this, value);
+    OpenH264JNI.SFrameBSInfo_iSubSeqId_set(swigCPtr, this, value);
   }
 
   public int getISubSeqId() {
-    return codec_apiJNI.SFrameBSInfo_iSubSeqId_get(swigCPtr, this);
+    return OpenH264JNI.SFrameBSInfo_iSubSeqId_get(swigCPtr, this);
   }
 
   public void setILayerNum(int value) {
-    codec_apiJNI.SFrameBSInfo_iLayerNum_set(swigCPtr, this, value);
+    OpenH264JNI.SFrameBSInfo_iLayerNum_set(swigCPtr, this, value);
   }
 
   public int getILayerNum() {
-    return codec_apiJNI.SFrameBSInfo_iLayerNum_get(swigCPtr, this);
+    return OpenH264JNI.SFrameBSInfo_iLayerNum_get(swigCPtr, this);
   }
 
   public void setSLayerInfo(SLayerBSInfo value) {
-    codec_apiJNI.SFrameBSInfo_sLayerInfo_set(swigCPtr, this, SLayerBSInfo.getCPtr(value), value);
+    OpenH264JNI.SFrameBSInfo_sLayerInfo_set(swigCPtr, this, SLayerBSInfo.getCPtr(value), value);
   }
 
   public SLayerBSInfo getSLayerInfo() {
-    long cPtr = codec_apiJNI.SFrameBSInfo_sLayerInfo_get(swigCPtr, this);
+    long cPtr = OpenH264JNI.SFrameBSInfo_sLayerInfo_get(swigCPtr, this);
     return (cPtr == 0) ? null : new SLayerBSInfo(cPtr, false);
   }
 
   public void setEFrameType(EVideoFrameType value) {
-    codec_apiJNI.SFrameBSInfo_eFrameType_set(swigCPtr, this, value.swigValue());
+    OpenH264JNI.SFrameBSInfo_eFrameType_set(swigCPtr, this, value.swigValue());
   }
 
   public EVideoFrameType getEFrameType() {
-    return EVideoFrameType.swigToEnum(codec_apiJNI.SFrameBSInfo_eFrameType_get(swigCPtr, this));
+    return EVideoFrameType.swigToEnum(OpenH264JNI.SFrameBSInfo_eFrameType_get(swigCPtr, this));
   }
 
   public void setUiTimeStamp(long value) {
-    codec_apiJNI.SFrameBSInfo_uiTimeStamp_set(swigCPtr, this, value);
+    OpenH264JNI.SFrameBSInfo_uiTimeStamp_set(swigCPtr, this, value);
   }
 
   public long getUiTimeStamp() {
-    return codec_apiJNI.SFrameBSInfo_uiTimeStamp_get(swigCPtr, this);
+    return OpenH264JNI.SFrameBSInfo_uiTimeStamp_get(swigCPtr, this);
   }
 
   public SLayerBSInfo getSLayerInfo(int frame) {
-    long cPtr = codec_apiJNI.SFrameBSInfo_getSLayerInfo(swigCPtr, this, frame);
+    long cPtr = OpenH264JNI.SFrameBSInfo_getSLayerInfo(swigCPtr, this, frame);
     return (cPtr == 0) ? null : new SLayerBSInfo(cPtr, false);
   }
 
   public SFrameBSInfo() {
-    this(codec_apiJNI.new_SFrameBSInfo(), true);
+    this(OpenH264JNI.new_SFrameBSInfo(), true);
   }
 
 }

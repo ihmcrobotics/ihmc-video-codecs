@@ -10,7 +10,7 @@ import org.openh264.ISVCDecoder;
 import org.openh264.SDecodingParam;
 import org.openh264.STargetPicture;
 import org.openh264.VIDEO_BITSTREAM_TYPE;
-import org.openh264.codec_api;
+import org.openh264.OpenH264;
 
 import us.ihmc.codecs.YUVPicture;
 
@@ -22,8 +22,8 @@ public class OpenH264Decoder
 
    public OpenH264Decoder() throws IOException
    {
-      System.loadLibrary("codec_api");
-      isvcDecoder = codec_api.WelsCreateDecoder();
+      System.loadLibrary("openh264bridge");
+      isvcDecoder = OpenH264.WelsCreateDecoder();
       if(isvcDecoder == null)
       {
          throw new IOException("Cannot create Wels decoder");
@@ -50,7 +50,7 @@ public class OpenH264Decoder
          int width = pic.getInfo().getUsrData().getIWidth();
          int height = pic.getInfo().getUsrData().getIHeight();
          int[] stride = pic.getInfo().getUsrData().getIStride();
-
+         
          ByteBuffer Y = ByteBuffer.allocateDirect(stride[0] * height);
          ByteBuffer U = ByteBuffer.allocateDirect(stride[1] * (height >> 1));
          ByteBuffer V = ByteBuffer.allocateDirect(stride[1] * (height >> 1));
@@ -59,12 +59,14 @@ public class OpenH264Decoder
          pic.getU(U);
          pic.getV(V);
 
+         
          YUVPicture yuvPicture = new YUVPicture(Y, U, V, stride[0], stride[1], stride[1], width, height);
          
          return yuvPicture;
       }
       else
       {
+         System.out.println("Got header NAL");
          return null;
       }
 
@@ -73,7 +75,7 @@ public class OpenH264Decoder
    public void delete()
    {
       isvcDecoder.Uninitialize();
-      codec_api.WelsDestroyDecoder(isvcDecoder);
+      OpenH264.WelsDestroyDecoder(isvcDecoder);
       pic.delete();
    }
    

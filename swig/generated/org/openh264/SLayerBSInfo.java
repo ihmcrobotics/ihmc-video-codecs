@@ -29,76 +29,76 @@ public class SLayerBSInfo {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        codec_apiJNI.delete_SLayerBSInfo(swigCPtr);
+        OpenH264JNI.delete_SLayerBSInfo(swigCPtr);
       }
       swigCPtr = 0;
     }
   }
 
   public void setUiTemporalId(short value) {
-    codec_apiJNI.SLayerBSInfo_uiTemporalId_set(swigCPtr, this, value);
+    OpenH264JNI.SLayerBSInfo_uiTemporalId_set(swigCPtr, this, value);
   }
 
   public short getUiTemporalId() {
-    return codec_apiJNI.SLayerBSInfo_uiTemporalId_get(swigCPtr, this);
+    return OpenH264JNI.SLayerBSInfo_uiTemporalId_get(swigCPtr, this);
   }
 
   public void setUiSpatialId(short value) {
-    codec_apiJNI.SLayerBSInfo_uiSpatialId_set(swigCPtr, this, value);
+    OpenH264JNI.SLayerBSInfo_uiSpatialId_set(swigCPtr, this, value);
   }
 
   public short getUiSpatialId() {
-    return codec_apiJNI.SLayerBSInfo_uiSpatialId_get(swigCPtr, this);
+    return OpenH264JNI.SLayerBSInfo_uiSpatialId_get(swigCPtr, this);
   }
 
   public void setUiQualityId(short value) {
-    codec_apiJNI.SLayerBSInfo_uiQualityId_set(swigCPtr, this, value);
+    OpenH264JNI.SLayerBSInfo_uiQualityId_set(swigCPtr, this, value);
   }
 
   public short getUiQualityId() {
-    return codec_apiJNI.SLayerBSInfo_uiQualityId_get(swigCPtr, this);
+    return OpenH264JNI.SLayerBSInfo_uiQualityId_get(swigCPtr, this);
   }
 
   public void setUiLayerType(short value) {
-    codec_apiJNI.SLayerBSInfo_uiLayerType_set(swigCPtr, this, value);
+    OpenH264JNI.SLayerBSInfo_uiLayerType_set(swigCPtr, this, value);
   }
 
   public short getUiLayerType() {
-    return codec_apiJNI.SLayerBSInfo_uiLayerType_get(swigCPtr, this);
+    return OpenH264JNI.SLayerBSInfo_uiLayerType_get(swigCPtr, this);
   }
 
   public void setINalCount(int value) {
-    codec_apiJNI.SLayerBSInfo_iNalCount_set(swigCPtr, this, value);
+    OpenH264JNI.SLayerBSInfo_iNalCount_set(swigCPtr, this, value);
   }
 
   public int getINalCount() {
-    return codec_apiJNI.SLayerBSInfo_iNalCount_get(swigCPtr, this);
+    return OpenH264JNI.SLayerBSInfo_iNalCount_get(swigCPtr, this);
   }
 
   public int getPBsBufSize() {
-    return codec_apiJNI.SLayerBSInfo_getPBsBufSize(swigCPtr, this);
+    return OpenH264JNI.SLayerBSInfo_getPBsBufSize(swigCPtr, this);
   }
 
   public void getPBsBuf(java.nio.ByteBuffer target) {
   assert target.isDirect() : "Buffer must be allocated direct.";
     {
-      codec_apiJNI.SLayerBSInfo_getPBsBuf(swigCPtr, this, target);
+      OpenH264JNI.SLayerBSInfo_getPBsBuf(swigCPtr, this, target);
     }
   }
 
   public int getNalLengthInByte(int nal) {
-    return codec_apiJNI.SLayerBSInfo_getNalLengthInByte(swigCPtr, this, nal);
+    return OpenH264JNI.SLayerBSInfo_getNalLengthInByte(swigCPtr, this, nal);
   }
 
   public void getNal(int nal, java.nio.ByteBuffer target) {
   assert target.isDirect() : "Buffer must be allocated direct.";
     {
-      codec_apiJNI.SLayerBSInfo_getNal(swigCPtr, this, nal, target);
+      OpenH264JNI.SLayerBSInfo_getNal(swigCPtr, this, nal, target);
     }
   }
 
   public SLayerBSInfo() {
-    this(codec_apiJNI.new_SLayerBSInfo(), true);
+    this(OpenH264JNI.new_SLayerBSInfo(), true);
   }
 
 }

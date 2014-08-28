@@ -29,62 +29,62 @@ public class SEncParamBase {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        codec_apiJNI.delete_SEncParamBase(swigCPtr);
+        OpenH264JNI.delete_SEncParamBase(swigCPtr);
       }
       swigCPtr = 0;
     }
   }
 
   public void setIUsageType(EUsageType value) {
-    codec_apiJNI.SEncParamBase_iUsageType_set(swigCPtr, this, value.swigValue());
+    OpenH264JNI.SEncParamBase_iUsageType_set(swigCPtr, this, value.swigValue());
   }
 
   public EUsageType getIUsageType() {
-    return EUsageType.swigToEnum(codec_apiJNI.SEncParamBase_iUsageType_get(swigCPtr, this));
+    return EUsageType.swigToEnum(OpenH264JNI.SEncParamBase_iUsageType_get(swigCPtr, this));
   }
 
   public void setIPicWidth(int value) {
-    codec_apiJNI.SEncParamBase_iPicWidth_set(swigCPtr, this, value);
+    OpenH264JNI.SEncParamBase_iPicWidth_set(swigCPtr, this, value);
   }
 
   public int getIPicWidth() {
-    return codec_apiJNI.SEncParamBase_iPicWidth_get(swigCPtr, this);
+    return OpenH264JNI.SEncParamBase_iPicWidth_get(swigCPtr, this);
   }
 
   public void setIPicHeight(int value) {
-    codec_apiJNI.SEncParamBase_iPicHeight_set(swigCPtr, this, value);
+    OpenH264JNI.SEncParamBase_iPicHeight_set(swigCPtr, this, value);
   }
 
   public int getIPicHeight() {
-    return codec_apiJNI.SEncParamBase_iPicHeight_get(swigCPtr, this);
+    return OpenH264JNI.SEncParamBase_iPicHeight_get(swigCPtr, this);
   }
 
   public void setITargetBitrate(int value) {
-    codec_apiJNI.SEncParamBase_iTargetBitrate_set(swigCPtr, this, value);
+    OpenH264JNI.SEncParamBase_iTargetBitrate_set(swigCPtr, this, value);
   }
 
   public int getITargetBitrate() {
-    return codec_apiJNI.SEncParamBase_iTargetBitrate_get(swigCPtr, this);
+    return OpenH264JNI.SEncParamBase_iTargetBitrate_get(swigCPtr, this);
   }
 
   public void setIRCMode(RC_MODES value) {
-    codec_apiJNI.SEncParamBase_iRCMode_set(swigCPtr, this, value.swigValue());
+    OpenH264JNI.SEncParamBase_iRCMode_set(swigCPtr, this, value.swigValue());
   }
 
   public RC_MODES getIRCMode() {
-    return RC_MODES.swigToEnum(codec_apiJNI.SEncParamBase_iRCMode_get(swigCPtr, this));
+    return RC_MODES.swigToEnum(OpenH264JNI.SEncParamBase_iRCMode_get(swigCPtr, this));
   }
 
   public void setFMaxFrameRate(float value) {
-    codec_apiJNI.SEncParamBase_fMaxFrameRate_set(swigCPtr, this, value);
+    OpenH264JNI.SEncParamBase_fMaxFrameRate_set(swigCPtr, this, value);
   }
 
   public float getFMaxFrameRate() {
-    return codec_apiJNI.SEncParamBase_fMaxFrameRate_get(swigCPtr, this);
+    return OpenH264JNI.SEncParamBase_fMaxFrameRate_get(swigCPtr, this);
   }
 
   public SEncParamBase() {
-    this(codec_apiJNI.new_SEncParamBase(), true);
+    this(OpenH264JNI.new_SEncParamBase(), true);
   }
 
 }

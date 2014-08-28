@@ -1,8 +1,20 @@
 package us.ihmc.codecs.h264;
 
-import us.ihmc.codecs.VideoDecoder;
+import java.io.IOException;
+import java.nio.ByteBuffer;
 
-public interface H264Decoder extends VideoDecoder
+import us.ihmc.codecs.YUVPicture;
+
+public interface H264Decoder
 {
+   /**
+    * Decode a single video frame. 
+    * 
+    * @param input A single nal.
+    * @throws IOException
+    * 
+    * @return YUVPicture. Can be null when decoder is not ready.
+    */
+   public YUVPicture decodeFrame(ByteBuffer input) throws IOException;
 
 }

@@ -29,30 +29,30 @@ public class SLevelInfo {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        codec_apiJNI.delete_SLevelInfo(swigCPtr);
+        OpenH264JNI.delete_SLevelInfo(swigCPtr);
       }
       swigCPtr = 0;
     }
   }
 
   public void setILayer(int value) {
-    codec_apiJNI.SLevelInfo_iLayer_set(swigCPtr, this, value);
+    OpenH264JNI.SLevelInfo_iLayer_set(swigCPtr, this, value);
   }
 
   public int getILayer() {
-    return codec_apiJNI.SLevelInfo_iLayer_get(swigCPtr, this);
+    return OpenH264JNI.SLevelInfo_iLayer_get(swigCPtr, this);
   }
 
   public void setUiLevelIdc(ELevelIdc value) {
-    codec_apiJNI.SLevelInfo_uiLevelIdc_set(swigCPtr, this, value.swigValue());
+    OpenH264JNI.SLevelInfo_uiLevelIdc_set(swigCPtr, this, value.swigValue());
   }
 
   public ELevelIdc getUiLevelIdc() {
-    return ELevelIdc.swigToEnum(codec_apiJNI.SLevelInfo_uiLevelIdc_get(swigCPtr, this));
+    return ELevelIdc.swigToEnum(OpenH264JNI.SLevelInfo_uiLevelIdc_get(swigCPtr, this));
   }
 
   public SLevelInfo() {
-    this(codec_apiJNI.new_SLevelInfo(), true);
+    this(OpenH264JNI.new_SLevelInfo(), true);
   }
 
 }

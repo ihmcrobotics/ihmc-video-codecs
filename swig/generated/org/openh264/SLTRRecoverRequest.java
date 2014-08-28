@@ -29,46 +29,46 @@ public class SLTRRecoverRequest {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        codec_apiJNI.delete_SLTRRecoverRequest(swigCPtr);
+        OpenH264JNI.delete_SLTRRecoverRequest(swigCPtr);
       }
       swigCPtr = 0;
     }
   }
 
   public void setUiFeedbackType(long value) {
-    codec_apiJNI.SLTRRecoverRequest_uiFeedbackType_set(swigCPtr, this, value);
+    OpenH264JNI.SLTRRecoverRequest_uiFeedbackType_set(swigCPtr, this, value);
   }
 
   public long getUiFeedbackType() {
-    return codec_apiJNI.SLTRRecoverRequest_uiFeedbackType_get(swigCPtr, this);
+    return OpenH264JNI.SLTRRecoverRequest_uiFeedbackType_get(swigCPtr, this);
   }
 
   public void setUiIDRPicId(long value) {
-    codec_apiJNI.SLTRRecoverRequest_uiIDRPicId_set(swigCPtr, this, value);
+    OpenH264JNI.SLTRRecoverRequest_uiIDRPicId_set(swigCPtr, this, value);
   }
 
   public long getUiIDRPicId() {
-    return codec_apiJNI.SLTRRecoverRequest_uiIDRPicId_get(swigCPtr, this);
+    return OpenH264JNI.SLTRRecoverRequest_uiIDRPicId_get(swigCPtr, this);
   }
 
   public void setILastCorrectFrameNum(int value) {
-    codec_apiJNI.SLTRRecoverRequest_iLastCorrectFrameNum_set(swigCPtr, this, value);
+    OpenH264JNI.SLTRRecoverRequest_iLastCorrectFrameNum_set(swigCPtr, this, value);
   }
 
   public int getILastCorrectFrameNum() {
-    return codec_apiJNI.SLTRRecoverRequest_iLastCorrectFrameNum_get(swigCPtr, this);
+    return OpenH264JNI.SLTRRecoverRequest_iLastCorrectFrameNum_get(swigCPtr, this);
   }
 
   public void setICurrentFrameNum(int value) {
-    codec_apiJNI.SLTRRecoverRequest_iCurrentFrameNum_set(swigCPtr, this, value);
+    OpenH264JNI.SLTRRecoverRequest_iCurrentFrameNum_set(swigCPtr, this, value);
   }
 
   public int getICurrentFrameNum() {
-    return codec_apiJNI.SLTRRecoverRequest_iCurrentFrameNum_get(swigCPtr, this);
+    return OpenH264JNI.SLTRRecoverRequest_iCurrentFrameNum_get(swigCPtr, this);
   }
 
   public SLTRRecoverRequest() {
-    this(codec_apiJNI.new_SLTRRecoverRequest(), true);
+    this(OpenH264JNI.new_SLTRRecoverRequest(), true);
   }
 
 }

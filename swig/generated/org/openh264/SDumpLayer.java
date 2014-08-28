@@ -29,30 +29,30 @@ public class SDumpLayer {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        codec_apiJNI.delete_SDumpLayer(swigCPtr);
+        OpenH264JNI.delete_SDumpLayer(swigCPtr);
       }
       swigCPtr = 0;
     }
   }
 
   public void setILayer(int value) {
-    codec_apiJNI.SDumpLayer_iLayer_set(swigCPtr, this, value);
+    OpenH264JNI.SDumpLayer_iLayer_set(swigCPtr, this, value);
   }
 
   public int getILayer() {
-    return codec_apiJNI.SDumpLayer_iLayer_get(swigCPtr, this);
+    return OpenH264JNI.SDumpLayer_iLayer_get(swigCPtr, this);
   }
 
   public void setPFileName(String value) {
-    codec_apiJNI.SDumpLayer_pFileName_set(swigCPtr, this, value);
+    OpenH264JNI.SDumpLayer_pFileName_set(swigCPtr, this, value);
   }
 
   public String getPFileName() {
-    return codec_apiJNI.SDumpLayer_pFileName_get(swigCPtr, this);
+    return OpenH264JNI.SDumpLayer_pFileName_get(swigCPtr, this);
   }
 
   public SDumpLayer() {
-    this(codec_apiJNI.new_SDumpLayer(), true);
+    this(OpenH264JNI.new_SDumpLayer(), true);
   }
 
 }

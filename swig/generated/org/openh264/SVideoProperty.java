@@ -29,30 +29,30 @@ public class SVideoProperty {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        codec_apiJNI.delete_SVideoProperty(swigCPtr);
+        OpenH264JNI.delete_SVideoProperty(swigCPtr);
       }
       swigCPtr = 0;
     }
   }
 
   public void setSize(long value) {
-    codec_apiJNI.SVideoProperty_size_set(swigCPtr, this, value);
+    OpenH264JNI.SVideoProperty_size_set(swigCPtr, this, value);
   }
 
   public long getSize() {
-    return codec_apiJNI.SVideoProperty_size_get(swigCPtr, this);
+    return OpenH264JNI.SVideoProperty_size_get(swigCPtr, this);
   }
 
   public void setEVideoBsType(VIDEO_BITSTREAM_TYPE value) {
-    codec_apiJNI.SVideoProperty_eVideoBsType_set(swigCPtr, this, value.swigValue());
+    OpenH264JNI.SVideoProperty_eVideoBsType_set(swigCPtr, this, value.swigValue());
   }
 
   public VIDEO_BITSTREAM_TYPE getEVideoBsType() {
-    return VIDEO_BITSTREAM_TYPE.swigToEnum(codec_apiJNI.SVideoProperty_eVideoBsType_get(swigCPtr, this));
+    return VIDEO_BITSTREAM_TYPE.swigToEnum(OpenH264JNI.SVideoProperty_eVideoBsType_get(swigCPtr, this));
   }
 
   public SVideoProperty() {
-    this(codec_apiJNI.new_SVideoProperty(), true);
+    this(OpenH264JNI.new_SVideoProperty(), true);
   }
 
 }

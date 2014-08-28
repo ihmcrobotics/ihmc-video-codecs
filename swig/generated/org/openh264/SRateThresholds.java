@@ -29,78 +29,78 @@ public class SRateThresholds {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        codec_apiJNI.delete_SRateThresholds(swigCPtr);
+        OpenH264JNI.delete_SRateThresholds(swigCPtr);
       }
       swigCPtr = 0;
     }
   }
 
   public void setIWidth(int value) {
-    codec_apiJNI.SRateThresholds_iWidth_set(swigCPtr, this, value);
+    OpenH264JNI.SRateThresholds_iWidth_set(swigCPtr, this, value);
   }
 
   public int getIWidth() {
-    return codec_apiJNI.SRateThresholds_iWidth_get(swigCPtr, this);
+    return OpenH264JNI.SRateThresholds_iWidth_get(swigCPtr, this);
   }
 
   public void setIHeight(int value) {
-    codec_apiJNI.SRateThresholds_iHeight_set(swigCPtr, this, value);
+    OpenH264JNI.SRateThresholds_iHeight_set(swigCPtr, this, value);
   }
 
   public int getIHeight() {
-    return codec_apiJNI.SRateThresholds_iHeight_get(swigCPtr, this);
+    return OpenH264JNI.SRateThresholds_iHeight_get(swigCPtr, this);
   }
 
   public void setIThresholdOfInitRate(int value) {
-    codec_apiJNI.SRateThresholds_iThresholdOfInitRate_set(swigCPtr, this, value);
+    OpenH264JNI.SRateThresholds_iThresholdOfInitRate_set(swigCPtr, this, value);
   }
 
   public int getIThresholdOfInitRate() {
-    return codec_apiJNI.SRateThresholds_iThresholdOfInitRate_get(swigCPtr, this);
+    return OpenH264JNI.SRateThresholds_iThresholdOfInitRate_get(swigCPtr, this);
   }
 
   public void setIThresholdOfMaxRate(int value) {
-    codec_apiJNI.SRateThresholds_iThresholdOfMaxRate_set(swigCPtr, this, value);
+    OpenH264JNI.SRateThresholds_iThresholdOfMaxRate_set(swigCPtr, this, value);
   }
 
   public int getIThresholdOfMaxRate() {
-    return codec_apiJNI.SRateThresholds_iThresholdOfMaxRate_get(swigCPtr, this);
+    return OpenH264JNI.SRateThresholds_iThresholdOfMaxRate_get(swigCPtr, this);
   }
 
   public void setIThresholdOfMinRate(int value) {
-    codec_apiJNI.SRateThresholds_iThresholdOfMinRate_set(swigCPtr, this, value);
+    OpenH264JNI.SRateThresholds_iThresholdOfMinRate_set(swigCPtr, this, value);
   }
 
   public int getIThresholdOfMinRate() {
-    return codec_apiJNI.SRateThresholds_iThresholdOfMinRate_get(swigCPtr, this);
+    return OpenH264JNI.SRateThresholds_iThresholdOfMinRate_get(swigCPtr, this);
   }
 
   public void setIMinThresholdFrameRate(int value) {
-    codec_apiJNI.SRateThresholds_iMinThresholdFrameRate_set(swigCPtr, this, value);
+    OpenH264JNI.SRateThresholds_iMinThresholdFrameRate_set(swigCPtr, this, value);
   }
 
   public int getIMinThresholdFrameRate() {
-    return codec_apiJNI.SRateThresholds_iMinThresholdFrameRate_get(swigCPtr, this);
+    return OpenH264JNI.SRateThresholds_iMinThresholdFrameRate_get(swigCPtr, this);
   }
 
   public void setISkipFrameRate(int value) {
-    codec_apiJNI.SRateThresholds_iSkipFrameRate_set(swigCPtr, this, value);
+    OpenH264JNI.SRateThresholds_iSkipFrameRate_set(swigCPtr, this, value);
   }
 
   public int getISkipFrameRate() {
-    return codec_apiJNI.SRateThresholds_iSkipFrameRate_get(swigCPtr, this);
+    return OpenH264JNI.SRateThresholds_iSkipFrameRate_get(swigCPtr, this);
   }
 
   public void setISkipFrameStep(int value) {
-    codec_apiJNI.SRateThresholds_iSkipFrameStep_set(swigCPtr, this, value);
+    OpenH264JNI.SRateThresholds_iSkipFrameStep_set(swigCPtr, this, value);
   }
 
   public int getISkipFrameStep() {
-    return codec_apiJNI.SRateThresholds_iSkipFrameStep_get(swigCPtr, this);
+    return OpenH264JNI.SRateThresholds_iSkipFrameStep_get(swigCPtr, this);
   }
 
   public SRateThresholds() {
-    this(codec_apiJNI.new_SRateThresholds(), true);
+    this(OpenH264JNI.new_SRateThresholds(), true);
   }
 
 }

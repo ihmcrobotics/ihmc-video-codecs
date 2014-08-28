@@ -8,7 +8,7 @@
 
 package org.openh264;
 
-public interface codec_apiConstants {
+public interface OpenH264Constants {
   public final static int MAX_TEMPORAL_LAYER_NUM = 4;
   public final static int MAX_SPATIAL_LAYER_NUM = 4;
   public final static int MAX_QUALITY_LAYER_NUM = 4;

@@ -29,27 +29,27 @@ public class SBufferInfo {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        codec_apiJNI.delete_SBufferInfo(swigCPtr);
+        OpenH264JNI.delete_SBufferInfo(swigCPtr);
       }
       swigCPtr = 0;
     }
   }
 
   public void setIBufferStatus(int value) {
-    codec_apiJNI.SBufferInfo_iBufferStatus_set(swigCPtr, this, value);
+    OpenH264JNI.SBufferInfo_iBufferStatus_set(swigCPtr, this, value);
   }
 
   public int getIBufferStatus() {
-    return codec_apiJNI.SBufferInfo_iBufferStatus_get(swigCPtr, this);
+    return OpenH264JNI.SBufferInfo_iBufferStatus_get(swigCPtr, this);
   }
 
   public SSysMEMBuffer getUsrData() {
-    long cPtr = codec_apiJNI.SBufferInfo_getUsrData(swigCPtr, this);
+    long cPtr = OpenH264JNI.SBufferInfo_getUsrData(swigCPtr, this);
     return (cPtr == 0) ? null : new SSysMEMBuffer(cPtr, false);
   }
 
   public SBufferInfo() {
-    this(codec_apiJNI.new_SBufferInfo(), true);
+    this(OpenH264JNI.new_SBufferInfo(), true);
   }
 
 }

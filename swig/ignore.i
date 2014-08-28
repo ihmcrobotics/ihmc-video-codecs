@@ -9,6 +9,7 @@
 %ignore WelsCreateDecoder(ISVCDecoder**);
 %ignore WelsCreateSVCEncoder(ISVCEncoder**);
 %ignore SFrameBSInfo::sLayerInfo;
+%ignore TagEncParamExt::sSpatialLayers;
 
 // SLayerBSInfo
 %ignore pBsBuf;

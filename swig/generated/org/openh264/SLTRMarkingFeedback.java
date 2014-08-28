@@ -29,38 +29,38 @@ public class SLTRMarkingFeedback {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        codec_apiJNI.delete_SLTRMarkingFeedback(swigCPtr);
+        OpenH264JNI.delete_SLTRMarkingFeedback(swigCPtr);
       }
       swigCPtr = 0;
     }
   }
 
   public void setUiFeedbackType(long value) {
-    codec_apiJNI.SLTRMarkingFeedback_uiFeedbackType_set(swigCPtr, this, value);
+    OpenH264JNI.SLTRMarkingFeedback_uiFeedbackType_set(swigCPtr, this, value);
   }
 
   public long getUiFeedbackType() {
-    return codec_apiJNI.SLTRMarkingFeedback_uiFeedbackType_get(swigCPtr, this);
+    return OpenH264JNI.SLTRMarkingFeedback_uiFeedbackType_get(swigCPtr, this);
   }
 
   public void setUiIDRPicId(long value) {
-    codec_apiJNI.SLTRMarkingFeedback_uiIDRPicId_set(swigCPtr, this, value);
+    OpenH264JNI.SLTRMarkingFeedback_uiIDRPicId_set(swigCPtr, this, value);
   }
 
   public long getUiIDRPicId() {
-    return codec_apiJNI.SLTRMarkingFeedback_uiIDRPicId_get(swigCPtr, this);
+    return OpenH264JNI.SLTRMarkingFeedback_uiIDRPicId_get(swigCPtr, this);
   }
 
   public void setILTRFrameNum(int value) {
-    codec_apiJNI.SLTRMarkingFeedback_iLTRFrameNum_set(swigCPtr, this, value);
+    OpenH264JNI.SLTRMarkingFeedback_iLTRFrameNum_set(swigCPtr, this, value);
   }
 
   public int getILTRFrameNum() {
-    return codec_apiJNI.SLTRMarkingFeedback_iLTRFrameNum_get(swigCPtr, this);
+    return OpenH264JNI.SLTRMarkingFeedback_iLTRFrameNum_get(swigCPtr, this);
   }
 
   public SLTRMarkingFeedback() {
-    this(codec_apiJNI.new_SLTRMarkingFeedback(), true);
+    this(OpenH264JNI.new_SLTRMarkingFeedback(), true);
   }
 
 }

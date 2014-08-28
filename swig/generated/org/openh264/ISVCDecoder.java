@@ -29,41 +29,45 @@ public class ISVCDecoder {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        codec_apiJNI.delete_ISVCDecoder(swigCPtr);
+        OpenH264JNI.delete_ISVCDecoder(swigCPtr);
       }
       swigCPtr = 0;
     }
   }
 
   public int Initialize(SDecodingParam pParam) {
-    return codec_apiJNI.ISVCDecoder_Initialize(swigCPtr, this, SDecodingParam.getCPtr(pParam), pParam);
+    return OpenH264JNI.ISVCDecoder_Initialize(swigCPtr, this, SDecodingParam.getCPtr(pParam), pParam);
   }
 
   public int Uninitialize() {
-    return codec_apiJNI.ISVCDecoder_Uninitialize(swigCPtr, this);
+    return OpenH264JNI.ISVCDecoder_Uninitialize(swigCPtr, this);
   }
 
   public DECODING_STATE DecodeFrame2(java.nio.ByteBuffer pSrc, int iSrcLen, STargetPicture target) {
   assert pSrc.isDirect() : "Buffer must be allocated direct.";
     {
-      return DECODING_STATE.swigToEnum(codec_apiJNI.ISVCDecoder_DecodeFrame2(swigCPtr, this, pSrc, iSrcLen, STargetPicture.getCPtr(target), target));
+      return DECODING_STATE.swigToEnum(OpenH264JNI.ISVCDecoder_DecodeFrame2__SWIG_0(swigCPtr, this, pSrc, iSrcLen, STargetPicture.getCPtr(target), target));
     }
   }
 
+  public DECODING_STATE DecodeFrame2(STargetPicture target) {
+    return DECODING_STATE.swigToEnum(OpenH264JNI.ISVCDecoder_DecodeFrame2__SWIG_1(swigCPtr, this, STargetPicture.getCPtr(target), target));
+  }
+
   public int SetOption(DECODER_OPTION eOptionId, int option) {
-    return codec_apiJNI.ISVCDecoder_SetOption__SWIG_0(swigCPtr, this, eOptionId.swigValue(), option);
+    return OpenH264JNI.ISVCDecoder_SetOption__SWIG_0(swigCPtr, this, eOptionId.swigValue(), option);
   }
 
   public int SetOption(DECODER_OPTION eOptionId, boolean option) {
-    return codec_apiJNI.ISVCDecoder_SetOption__SWIG_1(swigCPtr, this, eOptionId.swigValue(), option);
+    return OpenH264JNI.ISVCDecoder_SetOption__SWIG_1(swigCPtr, this, eOptionId.swigValue(), option);
   }
 
   public int GetIntOption(DECODER_OPTION eOptionId) {
-    return codec_apiJNI.ISVCDecoder_GetIntOption(swigCPtr, this, eOptionId.swigValue());
+    return OpenH264JNI.ISVCDecoder_GetIntOption(swigCPtr, this, eOptionId.swigValue());
   }
 
   public boolean GetBoolOption(DECODER_OPTION eOptionId) {
-    return codec_apiJNI.ISVCDecoder_GetBoolOption(swigCPtr, this, eOptionId.swigValue());
+    return OpenH264JNI.ISVCDecoder_GetBoolOption(swigCPtr, this, eOptionId.swigValue());
   }
 
 }
