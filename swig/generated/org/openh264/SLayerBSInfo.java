@@ -75,27 +75,8 @@ public class SLayerBSInfo {
     return codec_apiJNI.SLayerBSInfo_iNalCount_get(swigCPtr, this);
   }
 
-  public void setPNalLengthInByte(int[] value) {
-    codec_apiJNI.SLayerBSInfo_pNalLengthInByte_set(swigCPtr, this, value);
-  }
-
-  public int[] getPNalLengthInByte() {
-    return codec_apiJNI.SLayerBSInfo_pNalLengthInByte_get(swigCPtr, this);
-  }
-
-  public void setPBsBuf(java.nio.ByteBuffer value) {
-  assert value.isDirect() : "Buffer must be allocated direct.";
-    {
-      codec_apiJNI.SLayerBSInfo_pBsBuf_set(swigCPtr, this, value);
-    }
-  }
-
-  public java.nio.ByteBuffer getPBsBuf() {  
-  return codec_apiJNI.SLayerBSInfo_pBsBuf_get(swigCPtr, this);  
-}
-
-  public int getLayerSize() {
-    return codec_apiJNI.SLayerBSInfo_getLayerSize(swigCPtr, this);
+  public int getPBsBufSize() {
+    return codec_apiJNI.SLayerBSInfo_getPBsBufSize(swigCPtr, this);
   }
 
   public void getPBsBuf(java.nio.ByteBuffer target) {
@@ -105,10 +86,14 @@ public class SLayerBSInfo {
     }
   }
 
-  public void getNAL(int nal, java.nio.ByteBuffer target) {
+  public int getNalLengthInByte(int nal) {
+    return codec_apiJNI.SLayerBSInfo_getNalLengthInByte(swigCPtr, this, nal);
+  }
+
+  public void getNal(int nal, java.nio.ByteBuffer target) {
   assert target.isDirect() : "Buffer must be allocated direct.";
     {
-      codec_apiJNI.SLayerBSInfo_getNAL(swigCPtr, this, nal, target);
+      codec_apiJNI.SLayerBSInfo_getNal(swigCPtr, this, nal, target);
     }
   }
 

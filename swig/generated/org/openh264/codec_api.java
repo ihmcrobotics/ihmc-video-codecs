@@ -9,18 +9,8 @@
 package org.openh264;
 
 public class codec_api implements codec_apiConstants {
-  public static ISVCEncoder WelsCreateSVCEncoder() throws java.io.IOException {
-    long cPtr = codec_apiJNI.WelsCreateSVCEncoder();
-    return (cPtr == 0) ? null : new ISVCEncoder(cPtr, true);
-  }
-
   public static void WelsDestroySVCEncoder(ISVCEncoder pEncoder) {
     codec_apiJNI.WelsDestroySVCEncoder(ISVCEncoder.getCPtr(pEncoder), pEncoder);
-  }
-
-  public static ISVCDecoder WelsCreateDecoder() throws java.io.IOException {
-    long cPtr = codec_apiJNI.WelsCreateDecoder();
-    return (cPtr == 0) ? null : new ISVCDecoder(cPtr, true);
   }
 
   public static void WelsDestroyDecoder(ISVCDecoder pDecoder) {
@@ -34,6 +24,16 @@ public class codec_api implements codec_apiConstants {
 
   public static String getKiKeyNumMultiple() {
     return codec_apiJNI.kiKeyNumMultiple_get();
+  }
+
+  public static ISVCEncoder WelsCreateSVCEncoder() {
+    long cPtr = codec_apiJNI.WelsCreateSVCEncoder();
+    return (cPtr == 0) ? null : new ISVCEncoder(cPtr, false);
+  }
+
+  public static ISVCDecoder WelsCreateDecoder() {
+    long cPtr = codec_apiJNI.WelsCreateDecoder();
+    return (cPtr == 0) ? null : new ISVCDecoder(cPtr, false);
   }
 
 }

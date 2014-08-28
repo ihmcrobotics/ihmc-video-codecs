@@ -24,6 +24,10 @@ public class OpenH264Decoder
    {
       System.loadLibrary("codec_api");
       isvcDecoder = codec_api.WelsCreateDecoder();
+      if(isvcDecoder == null)
+      {
+         throw new IOException("Cannot create Wels decoder");
+      }
       SDecodingParam pParam = new SDecodingParam();
       pParam.setEOutputColorFormat(EVideoFormatType.videoFormatI420);
       pParam.setUiTargetDqLayer((short) 255);
@@ -68,8 +72,9 @@ public class OpenH264Decoder
    
    public void delete()
    {
+      isvcDecoder.Uninitialize();
+      codec_api.WelsDestroyDecoder(isvcDecoder);
       pic.delete();
-      isvcDecoder.delete();
    }
    
    @Override

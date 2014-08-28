@@ -4,5 +4,5 @@ import java.nio.ByteBuffer;
 
 public interface NALProcessor
 {
-   public void processNAL(ByteBuffer nal);
+   public void processNal(ByteBuffer nal);
 }

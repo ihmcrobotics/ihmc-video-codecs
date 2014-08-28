@@ -1,5 +1,6 @@
 #ifdef SWIG
 %immutable;
+%ignore STargetPicture::ppDst;
 #endif
         class STargetPicture {
 	public:

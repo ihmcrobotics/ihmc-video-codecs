@@ -36,7 +36,7 @@ public class TestOpenH264Encoder
       OpenH264Encoder encoder = new OpenH264Encoder(1920, 1080);
       final OpenH264Decoder decoder = new OpenH264Decoder();
 
-      for (int i = 1000; i < 5000; i += 100)
+      for (int i = 1000; i < 5000; i += 1)
       {
          BufferedImage img = ImageIO.read(new File("data/out_" + i + ".png"));
 
@@ -45,14 +45,14 @@ public class TestOpenH264Encoder
          {
 
             @Override
-            public void processNAL(ByteBuffer nal)
+            public void processNal(ByteBuffer nal)
             {
                try
                {
                   YUVPicture img = decoder.decodeFrame(nal);
                   if (img != null)
                   {
-                     showImage(img.getImage());
+//                     showImage(img.getImage());
                   }
                }
                catch (IOException e)

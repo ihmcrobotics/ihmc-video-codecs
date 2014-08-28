@@ -1,6 +1,6 @@
 %extend SLayerBSInfo {
 	
-	int getLayerSize()
+	int getPBsBufSize()
 	{
 	   int layerSize = 0;
            for (int j = 0; j < $self->iNalCount; ++j) {
@@ -18,10 +18,23 @@
             }
 	    memcpy(target, $self->pBsBuf, layerSize);
 	
-	}	
+	}
+	
+	int getNalLengthInByte(int nal)
+	{	
+		if(nal >= $self->iNalCount)
+		{
+			return -1;
+		}
+		return $self->pNalLengthInByte[nal];
+	}
 
-	void getNAL(int nal, unsigned char* target)
+	void getNal(int nal, unsigned char* target)
 	{
+		if(nal >= $self->iNalCount)
+		{
+			return;
+		}
 		int offset = 0;
 		for(int j = 0; j < nal; j++)
 		{

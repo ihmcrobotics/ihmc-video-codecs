@@ -45,9 +45,7 @@ public class codec_apiJNI {
   public final static native int ISVCDecoder_SetOption__SWIG_1(long jarg1, ISVCDecoder jarg1_, int jarg2, boolean jarg3);
   public final static native int ISVCDecoder_GetIntOption(long jarg1, ISVCDecoder jarg1_, int jarg2);
   public final static native boolean ISVCDecoder_GetBoolOption(long jarg1, ISVCDecoder jarg1_, int jarg2);
-  public final static native long WelsCreateSVCEncoder() throws java.io.IOException;
   public final static native void WelsDestroySVCEncoder(long jarg1, ISVCEncoder jarg1_);
-  public final static native long WelsCreateDecoder() throws java.io.IOException;
   public final static native void WelsDestroyDecoder(long jarg1, ISVCDecoder jarg1_);
   public final static native void SLTRRecoverRequest_uiFeedbackType_set(long jarg1, SLTRRecoverRequest jarg1_, long jarg2);
   public final static native long SLTRRecoverRequest_uiFeedbackType_get(long jarg1, SLTRRecoverRequest jarg1_);
@@ -215,13 +213,10 @@ public class codec_apiJNI {
   public final static native short SLayerBSInfo_uiLayerType_get(long jarg1, SLayerBSInfo jarg1_);
   public final static native void SLayerBSInfo_iNalCount_set(long jarg1, SLayerBSInfo jarg1_, int jarg2);
   public final static native int SLayerBSInfo_iNalCount_get(long jarg1, SLayerBSInfo jarg1_);
-  public final static native void SLayerBSInfo_pNalLengthInByte_set(long jarg1, SLayerBSInfo jarg1_, int[] jarg2);
-  public final static native int[] SLayerBSInfo_pNalLengthInByte_get(long jarg1, SLayerBSInfo jarg1_);
-  public final static native void SLayerBSInfo_pBsBuf_set(long jarg1, SLayerBSInfo jarg1_, java.nio.ByteBuffer jarg2);
-  public final static native java.nio.ByteBuffer SLayerBSInfo_pBsBuf_get(long jarg1, SLayerBSInfo jarg1_);
-  public final static native int SLayerBSInfo_getLayerSize(long jarg1, SLayerBSInfo jarg1_);
+  public final static native int SLayerBSInfo_getPBsBufSize(long jarg1, SLayerBSInfo jarg1_);
   public final static native void SLayerBSInfo_getPBsBuf(long jarg1, SLayerBSInfo jarg1_, java.nio.ByteBuffer jarg2);
-  public final static native void SLayerBSInfo_getNAL(long jarg1, SLayerBSInfo jarg1_, int jarg2, java.nio.ByteBuffer jarg3);
+  public final static native int SLayerBSInfo_getNalLengthInByte(long jarg1, SLayerBSInfo jarg1_, int jarg2);
+  public final static native void SLayerBSInfo_getNal(long jarg1, SLayerBSInfo jarg1_, int jarg2, java.nio.ByteBuffer jarg3);
   public final static native long new_SLayerBSInfo();
   public final static native void delete_SLayerBSInfo(long jarg1);
   public final static native void SFrameBSInfo_iTemporalId_set(long jarg1, SFrameBSInfo jarg1_, int jarg2);
@@ -250,7 +245,6 @@ public class codec_apiJNI {
   public final static native void SSourcePicture_uiTimeStamp_set(long jarg1, SSourcePicture jarg1_, long jarg2);
   public final static native long SSourcePicture_uiTimeStamp_get(long jarg1, SSourcePicture jarg1_);
   public final static native void SSourcePicture_setPData(long jarg1, SSourcePicture jarg1_, int jarg2, java.nio.ByteBuffer jarg3);
-  public final static native java.nio.ByteBuffer SSourcePicture_getPData(long jarg1, SSourcePicture jarg1_, int jarg2);
   public final static native long new_SSourcePicture();
   public final static native void delete_SSourcePicture(long jarg1);
   public final static native void SBitrateInfo_iLayer_set(long jarg1, SBitrateInfo jarg1_, int jarg2);
@@ -285,12 +279,8 @@ public class codec_apiJNI {
   public final static native int SDeliveryStatus_iDropFrameSize_get(long jarg1, SDeliveryStatus jarg1_);
   public final static native long new_SDeliveryStatus();
   public final static native void delete_SDeliveryStatus(long jarg1);
-  public final static native void SliceInfo_pBufferOfSlices_set(long jarg1, SliceInfo jarg1_, java.nio.ByteBuffer jarg2);
-  public final static native java.nio.ByteBuffer SliceInfo_pBufferOfSlices_get(long jarg1, SliceInfo jarg1_);
   public final static native void SliceInfo_iCodedSliceCount_set(long jarg1, SliceInfo jarg1_, int jarg2);
   public final static native int SliceInfo_iCodedSliceCount_get(long jarg1, SliceInfo jarg1_);
-  public final static native void SliceInfo_pLengthOfSlices_set(long jarg1, SliceInfo jarg1_, long[] jarg2);
-  public final static native long[] SliceInfo_pLengthOfSlices_get(long jarg1, SliceInfo jarg1_);
   public final static native void SliceInfo_iFecType_set(long jarg1, SliceInfo jarg1_, int jarg2);
   public final static native int SliceInfo_iFecType_get(long jarg1, SliceInfo jarg1_);
   public final static native void SliceInfo_uiSliceIdx_set(long jarg1, SliceInfo jarg1_, short jarg2);
@@ -305,6 +295,8 @@ public class codec_apiJNI {
   public final static native short SliceInfo_uiNalType_get(long jarg1, SliceInfo jarg1_);
   public final static native void SliceInfo_uiContainingFinalNal_set(long jarg1, SliceInfo jarg1_, short jarg2);
   public final static native short SliceInfo_uiContainingFinalNal_get(long jarg1, SliceInfo jarg1_);
+  public final static native int SliceInfo_getLengthOfSlices(long jarg1, SliceInfo jarg1_, int jarg2);
+  public final static native void SliceInfo_getSlice(long jarg1, SliceInfo jarg1_, int jarg2, java.nio.ByteBuffer jarg3);
   public final static native long new_SliceInfo();
   public final static native void delete_SliceInfo(long jarg1);
   public final static native void SRateThresholds_iWidth_set(long jarg1, SRateThresholds jarg1_, int jarg2);
@@ -342,11 +334,12 @@ public class codec_apiJNI {
   public final static native void delete_SBufferInfo(long jarg1);
   public final static native long ksRateThrMap_get();
   public final static native String kiKeyNumMultiple_get();
-  public final static native long STargetPicture_ppDst_get(long jarg1, STargetPicture jarg1_);
   public final static native long STargetPicture_info_get(long jarg1, STargetPicture jarg1_);
   public final static native long new_STargetPicture();
   public final static native void STargetPicture_getY(long jarg1, STargetPicture jarg1_, java.nio.ByteBuffer jarg2);
   public final static native void STargetPicture_getU(long jarg1, STargetPicture jarg1_, java.nio.ByteBuffer jarg2);
   public final static native void STargetPicture_getV(long jarg1, STargetPicture jarg1_, java.nio.ByteBuffer jarg2);
   public final static native void delete_STargetPicture(long jarg1);
+  public final static native long WelsCreateSVCEncoder();
+  public final static native long WelsCreateDecoder();
 }

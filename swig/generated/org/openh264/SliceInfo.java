@@ -35,31 +35,12 @@ public class SliceInfo {
     }
   }
 
-  public void setPBufferOfSlices(java.nio.ByteBuffer value) {
-  assert value.isDirect() : "Buffer must be allocated direct.";
-    {
-      codec_apiJNI.SliceInfo_pBufferOfSlices_set(swigCPtr, this, value);
-    }
-  }
-
-  public java.nio.ByteBuffer getPBufferOfSlices() {  
-  return codec_apiJNI.SliceInfo_pBufferOfSlices_get(swigCPtr, this);  
-}
-
   public void setICodedSliceCount(int value) {
     codec_apiJNI.SliceInfo_iCodedSliceCount_set(swigCPtr, this, value);
   }
 
   public int getICodedSliceCount() {
     return codec_apiJNI.SliceInfo_iCodedSliceCount_get(swigCPtr, this);
-  }
-
-  public void setPLengthOfSlices(long[] value) {
-    codec_apiJNI.SliceInfo_pLengthOfSlices_set(swigCPtr, this, value);
-  }
-
-  public long[] getPLengthOfSlices() {
-    return codec_apiJNI.SliceInfo_pLengthOfSlices_get(swigCPtr, this);
   }
 
   public void setIFecType(int value) {
@@ -116,6 +97,17 @@ public class SliceInfo {
 
   public short getUiContainingFinalNal() {
     return codec_apiJNI.SliceInfo_uiContainingFinalNal_get(swigCPtr, this);
+  }
+
+  public int getLengthOfSlices(int slice) {
+    return codec_apiJNI.SliceInfo_getLengthOfSlices(swigCPtr, this, slice);
+  }
+
+  public void getSlice(int slice, java.nio.ByteBuffer target) {
+  assert target.isDirect() : "Buffer must be allocated direct.";
+    {
+      codec_apiJNI.SliceInfo_getSlice(swigCPtr, this, slice, target);
+    }
   }
 
   public SliceInfo() {

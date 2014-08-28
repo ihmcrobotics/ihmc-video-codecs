@@ -1,28 +1,24 @@
 %module codec_api
 %include "enums.swg"
-%include "arrays_java.i"
 %include "typemaps.i"
 %include "various.i"
+%include "arrays_java.i"
 
-
-
-
-%include "outargs.i"
 %include "ignore.i"
 %apply unsigned char *NIOBUFFER { unsigned char* };
-%include "var_arrays.i"
-
 
 %javaconst(1);
 %{
 #include "codec_api.h"
-#include "definitions.h"
+#include "STargetPicture.hpp"
+#include "wels.hpp"
 %}
 
 %include "codec_api.h"
 %include "codec_app_def.h"
 %include "codec_def.h"
-%include "definitions.h"
+%include "STargetPicture.hpp"
+%include "wels.hpp"
 
 %include "SSourcePicture.i"
 %include "ISVCDecoder.i"
@@ -30,3 +26,4 @@
 %include "SLayerInfo.i"
 %include "SFrameBSInfo.i"
 %include "SBufferInfo.i"
+%include "SliceInformation.i"

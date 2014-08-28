@@ -35,11 +35,6 @@ public class STargetPicture {
     }
   }
 
-  public SWIGTYPE_p_p_unsigned_char getPpDst() {
-    long cPtr = codec_apiJNI.STargetPicture_ppDst_get(swigCPtr, this);
-    return (cPtr == 0) ? null : new SWIGTYPE_p_p_unsigned_char(cPtr, false);
-  }
-
   public SBufferInfo getInfo() {
     long cPtr = codec_apiJNI.STargetPicture_info_get(swigCPtr, this);
     return (cPtr == 0) ? null : new SBufferInfo(cPtr, false);

@@ -82,10 +82,6 @@ public class SSourcePicture {
     }
   }
 
-  public java.nio.ByteBuffer getPData(int plane) {  
-  return codec_apiJNI.SSourcePicture_getPData(swigCPtr, this, plane);  
-}
-
   public SSourcePicture() {
     this(codec_apiJNI.new_SSourcePicture(), true);
   }

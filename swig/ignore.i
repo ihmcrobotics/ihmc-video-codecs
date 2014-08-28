@@ -6,5 +6,14 @@
 %ignore ISVCDecoder::GetOption(DECODER_OPTION, void*);
 %ignore ISVCEncoder::SetOption(ENCODER_OPTION, void*);
 %ignore ISVCEncoder::GetOption(ENCODER_OPTION, void*);
+%ignore WelsCreateDecoder(ISVCDecoder**);
+%ignore WelsCreateSVCEncoder(ISVCEncoder**);
 %ignore SFrameBSInfo::sLayerInfo;
-%ignore SLayerBSInfo::pBsBuf;
+
+// SLayerBSInfo
+%ignore pBsBuf;
+%ignore pNalLengthInByte;
+
+// SliceInformation
+%ignore SliceInformation::pBufferOfSlices;
+%ignore SliceInformation::pLengthOfSlices;

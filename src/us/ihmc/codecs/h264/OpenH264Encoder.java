@@ -28,6 +28,10 @@ public class OpenH264Encoder implements H264Encoder
    {
       System.loadLibrary("codec_api");
       isvcEncoder = codec_api.WelsCreateSVCEncoder();
+      if(isvcEncoder == null)
+      {
+         throw new IOException("Cannot create wels encoder");
+      }
       SEncParamBase paramBase = new SEncParamBase();
       initializeDefaultParams(paramBase);
       paramBase.setIPicWidth(width);
@@ -91,13 +95,12 @@ public class OpenH264Encoder implements H264Encoder
       for (int i = 0; i < info.getILayerNum(); i++)
       {
          SLayerBSInfo sLayerInfo = info.getSLayerInfo(i);
-         int[] nalLengthInByte = sLayerInfo.getPNalLengthInByte();
 
          for (int n = 0; n < sLayerInfo.getINalCount(); n++)
          {
-            ByteBuffer nalBuffer = ByteBuffer.allocateDirect(nalLengthInByte[n]);
-            sLayerInfo.getNAL(n, nalBuffer);
-            nalProcessor.processNAL(nalBuffer);
+            ByteBuffer nalBuffer = ByteBuffer.allocateDirect(sLayerInfo.getNalLengthInByte(n));
+            sLayerInfo.getNal(n, nalBuffer);
+            nalProcessor.processNal(nalBuffer);
          }
       }
 
@@ -107,7 +110,8 @@ public class OpenH264Encoder implements H264Encoder
 
    public void delete()
    {
-      isvcEncoder.delete();
+      isvcEncoder.Uninitialize();
+      codec_api.WelsDestroySVCEncoder(isvcEncoder);
    }
 
    @Override
