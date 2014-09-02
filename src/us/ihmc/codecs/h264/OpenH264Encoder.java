@@ -217,7 +217,8 @@ public class OpenH264Encoder implements H264Encoder
             {
                ByteBuffer nalBuffer = ByteBuffer.allocateDirect(sLayerInfo.getNalLengthInByte(n));
                sLayerInfo.getNal(n, nalBuffer);
-               nalProcessor.processNal(nalBuffer);
+               NALType type = NALType.fromBitStream(nalBuffer);
+               nalProcessor.processNal(type, nalBuffer);
             }
          }
       }

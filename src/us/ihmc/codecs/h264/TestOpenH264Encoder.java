@@ -75,8 +75,12 @@ public class TestOpenH264Encoder
          {
 
             @Override
-            public void processNal(ByteBuffer nal)
+            public void processNal(NALType type, ByteBuffer nal)
             {
+               if(type == NALType.SPS || type == NALType.PPS)
+               {
+                  System.out.println(type);
+               }
                try
                {
                   final YUVPicture img = decoder.decodeFrame(nal);
