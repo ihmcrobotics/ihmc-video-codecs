@@ -16,13 +16,16 @@ import us.ihmc.codecs.YUVPicture;
 
 public class OpenH264Decoder
 {
+   static
+   {
+      System.loadLibrary("openh264bridge");
+   }
 
    private final ISVCDecoder isvcDecoder;
    private final STargetPicture pic = new STargetPicture();
 
    public OpenH264Decoder() throws IOException
    {
-      System.loadLibrary("openh264bridge");
       isvcDecoder = OpenH264.WelsCreateDecoder();
       if(isvcDecoder == null)
       {
@@ -45,7 +48,25 @@ public class OpenH264Decoder
       {
          throw new IOException("Cannot decode frame: " + state);
       }
-      else if (pic.getInfo().getIBufferStatus() == 1)
+      
+      
+      // Sometimes the encoder is not ready. Send an empty decode command will make it work.
+      if(pic.getInfo().getIBufferStatus() == 0)
+      {
+         NALType type = NALType.fromBitStream(frame);
+         if( 
+             type == NALType.CODED_SLICE_NON_IDR_PICTURE   ||
+             type == NALType.CODED_SLICE_DATA_PARTITION_A  ||
+             type == NALType.CODED_SLICE_DATA_PARTITION_B  ||
+             type == NALType.CODED_SLICE_DATA_PARTITION_C  ||
+             type == NALType.CODED_SLICE_IDR_PICTURE)
+         {
+            isvcDecoder.DecodeFrame2(pic);            
+         }
+
+      }
+      
+      if (pic.getInfo().getIBufferStatus() == 1)
       {
          int width = pic.getInfo().getUsrData().getIWidth();
          int height = pic.getInfo().getUsrData().getIHeight();
@@ -64,9 +85,14 @@ public class OpenH264Decoder
          
          return yuvPicture;
       }
+//      else if(NALType.fromBitStream(frame) == NALType.CODED_SLICE_IDR_PICTURE)
+//      {
+//         isvcDecoder.DecodeFrame2(pic);
+//         System.out.println(pic.getInfo().getIBufferStatus());
+//         return null;
+//      }
       else
       {
-         System.out.println("Got header NAL");
          return null;
       }
 
