@@ -1,4 +1,4 @@
-package us.ihmc.codecs.h264;
+package us.ihmc.codecs;
 
 import java.awt.Container;
 import java.awt.Dimension;
@@ -20,6 +20,10 @@ import javax.swing.SwingUtilities;
 import org.openh264.RC_MODES;
 
 import us.ihmc.codecs.YUVPicture;
+import us.ihmc.codecs.h264.NALProcessor;
+import us.ihmc.codecs.h264.NALType;
+import us.ihmc.codecs.h264.OpenH264Decoder;
+import us.ihmc.codecs.h264.OpenH264Encoder;
 
 import com.google.code.libyuv.FilterModeEnum;
 
@@ -27,11 +31,11 @@ import com.google.code.libyuv.FilterModeEnum;
  *
  * Created by jesper on 8/19/14.
  */
-public class TestOpenH264Encoder
+public class OpenH264EncoderExample
 {
    public static void main(String[] args) throws IOException, InvocationTargetException, InterruptedException
    {
-      new TestOpenH264Encoder();
+      new OpenH264EncoderExample();
    }
 
    private JFrame window;
@@ -45,7 +49,7 @@ public class TestOpenH264Encoder
    private int width = 1920, height = 1080;
    private int bitrate = 5000000;
 
-   public TestOpenH264Encoder() throws IOException, InvocationTargetException, InterruptedException
+   public OpenH264EncoderExample() throws IOException, InvocationTargetException, InterruptedException
    {
       
       encoder.initialize(width, height, bitrate, RC_MODES.RC_LOW_BW_MODE);

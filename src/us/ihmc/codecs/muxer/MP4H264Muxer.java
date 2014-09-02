@@ -1,15 +1,11 @@
 package us.ihmc.codecs.muxer;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
 
 import org.jcodec.codecs.h264.mp4.AvcCBox;
 import org.jcodec.common.NIOUtils;
@@ -20,13 +16,9 @@ import org.jcodec.containers.mp4.TrackType;
 import org.jcodec.containers.mp4.boxes.SampleEntry;
 import org.jcodec.containers.mp4.muxer.FramesMP4MuxerTrack;
 import org.jcodec.containers.mp4.muxer.MP4Muxer;
-import org.openh264.RC_MODES;
-import org.openh264.SEncParamExt;
 
-import us.ihmc.codecs.YUVPicture;
 import us.ihmc.codecs.h264.NALProcessor;
 import us.ihmc.codecs.h264.NALType;
-import us.ihmc.codecs.h264.OpenH264Encoder;
 
 public class MP4H264Muxer implements NALProcessor
 {
@@ -44,7 +36,7 @@ public class MP4H264Muxer implements NALProcessor
    private long pts = 0;
    private long dts = 0;
    private long frameNo = 0;
-   
+
    private final FileChannel out = new FileOutputStream("test.h264").getChannel();
 
    /**
@@ -68,14 +60,14 @@ public class MP4H264Muxer implements NALProcessor
       track = muxer.addTrack(TrackType.VIDEO, timescale);
    }
 
-   public void compareAndAddUniqueSPS(ByteBuffer nalIn)
+   private void compareAndAddUniqueSPS(ByteBuffer nalIn)
    {
       ByteBuffer nal = nalIn.duplicate();
 
       LIST: for (ByteBuffer sps : spsList)
       {
          sps = sps.duplicate();
-         
+
          if (sps.remaining() == nal.remaining())
          {
             while (sps.remaining() > 0)
@@ -92,7 +84,7 @@ public class MP4H264Muxer implements NALProcessor
       spsList.add(nalIn);
    }
 
-   public void compareAndAddUniquePPS(ByteBuffer nalIn)
+   private void compareAndAddUniquePPS(ByteBuffer nalIn)
    {
       ByteBuffer nal = nalIn.duplicate();
 
@@ -124,15 +116,15 @@ public class MP4H264Muxer implements NALProcessor
          nal.position(1);
          nal = nal.slice();
       }
-      
+
       out.write(nal);
       nal.clear();
-      
+
       switch (type)
       {
       case SPS:
          nal.position(5); // Skip header
-         compareAndAddUniqueSPS(nal); 
+         compareAndAddUniqueSPS(nal);
          break;
       case PPS:
          nal.position(5); // Skip header
@@ -167,14 +159,14 @@ public class MP4H264Muxer implements NALProcessor
       int profile = sps.get(5);
       int level = sps.get(7);
 
-      if(spsList.size() > 31)
+      if (spsList.size() > 31)
       {
          throw new IOException("Cannot handle more than 31 unique SPS NALs. Set EnableSpsPpsIdAddition to false");
       }
-      
-      if(ppsList.size() > 255)
+
+      if (ppsList.size() > 255)
       {
-         throw new IOException("Cannot handle more than 255 unique PPS NALs. Set EnableSpsPpsIdAddition to false");         
+         throw new IOException("Cannot handle more than 255 unique PPS NALs. Set EnableSpsPpsIdAddition to false");
       }
 
       AvcCBox avcCBox = new AvcCBox(profile, 0, level, spsList, ppsList);
@@ -186,61 +178,8 @@ public class MP4H264Muxer implements NALProcessor
       muxer.writeHeader();
 
       channel.close();
-      
+
       out.close();
-      
-     
+
    }
-
-   public static void main(String[] args) throws IOException
-   {
-      int w = 1920;
-      int h = 1080;
-
-      MP4H264Muxer muxer = new MP4H264Muxer(new File("test.mp4"), 30, w, h);
-      OpenH264Encoder encoder = new OpenH264Encoder();
-      SEncParamExt params = encoder.createParamExt(w, h, Integer.MAX_VALUE, RC_MODES.RC_OFF_MODE);
-      params.setUiIntraPeriod(100);
-      params.setBEnableSpsPpsIdAddition(false);
-      encoder.initialize(params);
-
-      for (int i = 1; i < 1000; i += 1)
-      {
-         BufferedImage img = ImageIO.read(new File("data/image_" + i + ".jpg"));
-         YUVPicture picture = new YUVPicture(img);
-         encoder.encodeFrame(picture, muxer);
-      }
-
-      encoder.delete();
-      muxer.close();
-   }
-   
-   public class ByteBufferBackedInputStream extends InputStream {
-
-      private final ByteBuffer buf;
-
-      public ByteBufferBackedInputStream(ByteBuffer buf) {
-          // make a coy of the buffer
-          this.buf = buf.duplicate();
-      }
-
-      public int read() throws IOException {
-          if (!buf.hasRemaining()) {
-              return -1;
-          }
-          return buf.get() & 0xFF;
-      }
-
-      public int read(byte[] bytes, int off, int len)
-              throws IOException {
-          if (!buf.hasRemaining()) {
-              return -1;
-          }
-
-          len = Math.min(len, buf.remaining());
-          buf.get(bytes, off, len);
-          return len;
-      }
-  }
-
 }
