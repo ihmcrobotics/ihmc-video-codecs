@@ -1,3 +1,21 @@
+/*
+ *   Copyright 2014 Florida Institute for Human and Machine Cognition (IHMC)
+ *    
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *    
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *    
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ *    
+ *    Written by Jesper Smith with assistance from IHMC team members
+ */
+
 package us.ihmc.codecs.yuv;
 
 import java.awt.image.BufferedImage;
@@ -6,12 +24,20 @@ import java.nio.ByteBuffer;
 import com.google.code.libyuv.FilterModeEnum;
 import com.google.code.libyuv.libyuv;
 
+/**
+ * Implementation of a YUV 4:2:0 format
+ * @author Jesper Smith
+ *
+ */
 public class YUV420Picture extends YUVPicture
 {
 
-
    private final ByteBuffer Y, U, V;
 
+   /**
+    * Create YUV 4:2:0 picture from a BufferedImage
+    * @param orig BufferedImage of TYPE_3_BYTE_BGR
+    */
    public YUV420Picture(BufferedImage orig)
    {
       super(orig.getWidth(), orig.getHeight(), orig.getWidth(), orig.getWidth() >> 1, orig.getWidth() >> 1);

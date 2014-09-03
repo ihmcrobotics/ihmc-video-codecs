@@ -1,3 +1,21 @@
+/*
+ *   Copyright 2014 Florida Institute for Human and Machine Cognition (IHMC)
+ *    
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *    
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *    
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ *    
+ *    Written by Jesper Smith with assistance from IHMC team members
+ */
+
 package us.ihmc.codecs.yuv;
 
 import java.awt.image.BufferedImage;
@@ -57,6 +75,11 @@ public abstract class YUVPicture
       }
    }
 
+   /**
+    * Convert BufferedImage to a ByteBuffer
+    * @param in 
+    * @return ByteBuffer with B, G, R channels
+    */
    public static ByteBuffer getRGBBuffer(BufferedImage in)
    {
       switch (in.getType())
@@ -76,6 +99,12 @@ public abstract class YUVPicture
       }
    }
 
+   /**
+    * Convert BufferedImage to a ByteBuffer
+    * 
+    * @param in
+    * @return ByteBuffer with B, G, R, A channels
+    */
    public static ByteBuffer getARGBBuffer(BufferedImage in)
    {
       switch (in.getType())
@@ -100,7 +129,7 @@ public abstract class YUVPicture
    protected final int uStride;
    protected final int vStride;
 
-   public YUVPicture(int w, int h, int yStride, int uStride, int vStride)
+   protected YUVPicture(int w, int h, int yStride, int uStride, int vStride)
    {
       this.w = w;
       this.h = h;
@@ -109,11 +138,18 @@ public abstract class YUVPicture
       this.vStride = vStride;
    }
 
+   /**
+    * @return Width of picture
+    */
    public int getWidth()
    {
       return w;
    }
 
+   /**
+    * 
+    * @return Height of picture
+    */
    public int getHeight()
    {
       return h;
@@ -149,26 +185,62 @@ public abstract class YUVPicture
       return img;
    }
 
+   /**
+    * Resize this picture
+    * 
+    * @param newWidth Desired width, must be a multiple of two
+    * @param newHeight Desired height, must be a multiple of two
+    * @param filterMode Fitler method to use
+    * @return New YUVPicture with the desired dimensions
+    */
    public abstract YUVPicture scale(int newWidth, int newHeight, FilterModeEnum filterMode);
 
+   /**
+    * Convert this picture to a BufferedImage
+    * @return BufferedImage in TYPE_3_BYTE_BGR
+    */
    public abstract BufferedImage getImage();
 
+   /**
+    * 
+    * @return Buffer with Y plane data of size getYStride() * getHeight()
+    */
    public abstract ByteBuffer getY();
 
+   /**
+    * 
+    * @return Buffer with U plane data of size getUStride() * getHeight()
+    */
    public abstract ByteBuffer getU();
 
+   /**
+    * 
+    * @return Buffer with V plane data of size getVStride() * getHeight()
+    */
    public abstract ByteBuffer getV();
 
+   /**
+    * 
+    * @return Y Stride of the the internal buffer
+    */
    public int getYStride()
    {
       return yStride;
    }
 
+   /**
+    * 
+    * @return U Stride of the the internal buffer
+    */
    public int getUStride()
    {
       return uStride;
    }
 
+   /**
+    * 
+    * @return V Stride of the the internal buffer
+    */
    public int getVStride()
    {
       return vStride;

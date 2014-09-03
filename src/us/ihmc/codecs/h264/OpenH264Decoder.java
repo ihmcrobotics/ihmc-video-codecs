@@ -1,3 +1,21 @@
+/*
+ *   Copyright 2014 Florida Institute for Human and Machine Cognition (IHMC)
+ *    
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *    
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *    
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ *    
+ *    Written by Jesper Smith with assistance from IHMC team members
+ */
+
 package us.ihmc.codecs.h264;
 
 import java.io.IOException;
@@ -15,6 +33,15 @@ import org.openh264.OpenH264;
 import us.ihmc.codecs.yuv.YUV420Picture;
 import us.ihmc.codecs.yuv.YUVPicture;
 
+/**
+ * Wrapper class for the OpenH264 Decoder. Easy to use functions for decoding H264 streams. 
+ * 
+ * Make sure to call delete() after use.
+ * 
+ * 
+ * @author Jesper Smith
+ *
+ */
 public class OpenH264Decoder
 {
    static
@@ -25,6 +52,11 @@ public class OpenH264Decoder
    private final ISVCDecoder isvcDecoder;
    private final STargetPicture pic = new STargetPicture();
 
+   /**
+    * Create a new decoder
+    * 
+    * @throws IOException
+    */
    public OpenH264Decoder() throws IOException
    {
       isvcDecoder = OpenH264.WelsCreateDecoder();
@@ -41,6 +73,13 @@ public class OpenH264Decoder
       pParam.delete();
    }
 
+   /**
+    * Decode a frame.
+    * 
+    * @param frame Single NAL packet including header ( 0x00 0x00 0x00 0x01 )
+    * @return YUVPicture if a frame was successfully decoded, null if no image was generated (does not mean an error)
+    * @throws IOException An error occurred decoding the NAL
+    */
    public YUVPicture decodeFrame(ByteBuffer frame) throws IOException
    {
       DECODING_STATE state = isvcDecoder.DecodeFrame2(frame, frame.limit(), pic);
@@ -86,12 +125,6 @@ public class OpenH264Decoder
          
          return yuvPicture;
       }
-//      else if(NALType.fromBitStream(frame) == NALType.CODED_SLICE_IDR_PICTURE)
-//      {
-//         isvcDecoder.DecodeFrame2(pic);
-//         System.out.println(pic.getInfo().getIBufferStatus());
-//         return null;
-//      }
       else
       {
          return null;
@@ -99,6 +132,10 @@ public class OpenH264Decoder
 
    }
    
+   
+   /**
+    * Free native memory
+    */
    public void delete()
    {
       isvcDecoder.Uninitialize();

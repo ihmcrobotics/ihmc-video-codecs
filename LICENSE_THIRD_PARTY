@@ -1,0 +1,9 @@
+This source tree contains third party source code which is governed by third
+party licenses. This file contains references to files which are under other
+licenses than the one provided in the LICENSE file in the root of the source 
+tree.
+
+Packages governed by third party licenses:
+src/org/jcodec: LICENSE_JCODEC
+swig/generated/org/openh264: LICENSE_OPENH264
+swig/generated/com/google/code/libyuv: LICENSE_LIBYUV
