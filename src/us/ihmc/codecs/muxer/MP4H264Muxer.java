@@ -18,10 +18,8 @@
 package us.ihmc.codecs.muxer;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 
 import org.jcodec.codecs.h264.mp4.AvcCBox;
@@ -34,6 +32,7 @@ import org.jcodec.containers.mp4.boxes.SampleEntry;
 import org.jcodec.containers.mp4.muxer.FramesMP4MuxerTrack;
 import org.jcodec.containers.mp4.muxer.MP4Muxer;
 
+import us.ihmc.codecs.builder.MP4H264MovieBuilder;
 import us.ihmc.codecs.h264.NALProcessor;
 import us.ihmc.codecs.h264.NALType;
 
@@ -62,8 +61,6 @@ public class MP4H264Muxer implements NALProcessor
    private long pts = 0;
    private long dts = 0;
    private long frameNo = 0;
-
-   private final FileChannel out = new FileOutputStream("test.h264").getChannel();
 
    /**
     * NALProcessor to mux a raw h264 stream into a mp4 file
@@ -143,7 +140,6 @@ public class MP4H264Muxer implements NALProcessor
          nal = nal.slice();
       }
 
-      out.write(nal);
       nal.clear();
 
       switch (type)
@@ -204,8 +200,5 @@ public class MP4H264Muxer implements NALProcessor
       muxer.writeHeader();
 
       channel.close();
-
-      out.close();
-
    }
 }
