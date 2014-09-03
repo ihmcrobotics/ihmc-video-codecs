@@ -1,3 +1,21 @@
+/*
+ *   Copyright 2014 Florida Institute for Human and Machine Cognition (IHMC)
+ *    
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *    
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *    
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ *    
+ *    Written by Jesper Smith with assistance from IHMC team members
+ */
+
 package us.ihmc.codecs.h264;
 
 import java.io.IOException;
@@ -17,7 +35,12 @@ import org.openh264.SSourcePicture;
 import us.ihmc.codecs.yuv.YUV420Picture;
 
 /**
- * Created by jesper on 8/19/14.
+ * Easy to use class for the OpenH264 encoder. 
+ * 
+ * Make sure to call delete() when done.
+ * 
+ * @author Jesper Smith
+ *
  */
 public class OpenH264Encoder implements H264Encoder
 {
@@ -29,6 +52,10 @@ public class OpenH264Encoder implements H264Encoder
    private final ISVCEncoder isvcEncoder;
    private SEncParamExt paramExt;
 
+   /**
+    * Create new Encoder
+    * @throws IOException
+    */
    public OpenH264Encoder() throws IOException
    {
       isvcEncoder = OpenH264.WelsCreateSVCEncoder();

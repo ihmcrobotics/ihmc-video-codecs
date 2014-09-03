@@ -6,10 +6,14 @@ import java.nio.ByteBuffer;
 import com.google.code.libyuv.FilterModeEnum;
 import com.google.code.libyuv.libyuv;
 
+/**
+ * Implementation of a YUV 4:4:4 format
+ * @author Jesper Smith
+ *
+ */
 public class YUV444Picture extends YUVPicture
 {
    private final ByteBuffer Y, U, V;
-
 
    public YUV444Picture(ByteBuffer Y, ByteBuffer U, ByteBuffer V, int yStride, int uStride, int vStride, int w, int h)
    {
@@ -18,7 +22,11 @@ public class YUV444Picture extends YUVPicture
       this.U = U;
       this.V = V;
    }
-   
+
+   /**
+    * Create YUV 4:4:4 picture from a BufferedImage
+    * @param orig BufferedImage of TYPE_3_BYTE_BGR
+    */
    public YUV444Picture(BufferedImage orig)
    {
       super(orig.getWidth(), orig.getHeight(), orig.getWidth(), orig.getWidth(), orig.getWidth());
@@ -33,7 +41,7 @@ public class YUV444Picture extends YUVPicture
       libyuv.ARGBToI444(src, srcStride, Y, yStride, U, uStride, V, vStride, w, h);
 
    }
-   
+
    @Override
    public YUV444Picture scale(int newWidth, int newHeight, FilterModeEnum filterMode)
    {
@@ -50,11 +58,10 @@ public class YUV444Picture extends YUVPicture
       ByteBuffer Udest = ByteBuffer.allocateDirect(uStrideDest * newHeight);
       ByteBuffer Vdest = ByteBuffer.allocateDirect(vStrideDest * newHeight);
 
-
       libyuv.ScalePlane(Y, yStride, w, h, Ydest, yStrideDest, newWidth, newHeight, filterMode);
       libyuv.ScalePlane(U, uStride, w, h, Udest, uStrideDest, newWidth, newHeight, filterMode);
       libyuv.ScalePlane(V, vStride, w, h, Vdest, vStrideDest, newWidth, newHeight, filterMode);
-      
+
       return new YUV444Picture(Ydest, Udest, Vdest, yStrideDest, uStrideDest, vStrideDest, newWidth, newHeight);
 
    }
