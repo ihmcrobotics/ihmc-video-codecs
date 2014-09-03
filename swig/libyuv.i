@@ -7,7 +7,6 @@
 
 %typemap(jni) enum RotationMode "RotationModeEnum";
 %typemap(jstype) enum RotationMode "RotationModeEnum";
-#%typemap(jtype) enum RotationMode "RotationModeEnum";
 
 %ignore libyuv::MJpegDecoder::DecodeToBuffers;
 %ignore libyuv::MJpegDecoder::DecodeToCallback;
@@ -15,6 +14,7 @@
 
 %javaconst(1);
 %{
+#define LIBYUV_DISABLE_NEON
 #include "libyuv.h"
 using namespace libyuv;
 %}
@@ -36,7 +36,6 @@ using namespace libyuv;
 %include "libyuv/scale_argb.h"
 %include "libyuv/scale_row.h"
 %include "libyuv/version.h"
-#%include "libyuv/video_common.h"
 
 %extend libyuv::MJpegDecoder{
 	int Decode(uint8* Y, uint8* U, uint8* V)
