@@ -19,8 +19,10 @@ Only video is supported.
 	- Mux: H264
 	- Demux: H264, MJPEG 
 
+## Usage
+See the examples directory
 
-## Compilation
+## Compile native code
 
 - Compile LibYUV following https://code.google.com/p/libyuv/wiki/GettingStarted
 	- When ninja complains about tools/sanitizer_options/sanitizer_options.cc get it from the chromium git: https://chromium.googlesource.com/chromium/src/base/+/f64188fb60c527d54bb54f1d107a5b5890a49c89/debug/sanitizer_options.cc
