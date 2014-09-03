@@ -30,11 +30,27 @@ import org.jcodec.containers.mp4.demuxer.MP4Demuxer;
 
 import us.ihmc.codecs.yuv.YUVPicture;
 
+/**
+ * Demuxer for MP4 files. Automatically detects the format and chooses the correct decoder.
+ * 
+ * Supported codecs:
+ *    - H264 (Baseline)
+ *    - MJPEG (YUV only)
+ * 
+ * @author Jesper Smith
+ *
+ */
 public class MP4VideoDemuxer
 {
    private final AbstractMP4DemuxerTrack videoTrack;
    private final DemuxerHelper demuxerHelper;
 
+   /**
+    * Create a new demuxer
+    * 
+    * @param file File to oper
+    * @throws IOException
+    */
    public MP4VideoDemuxer(File file) throws IOException
    {
 
@@ -54,7 +70,7 @@ public class MP4VideoDemuxer
       }
       else
       {
-         throw new RuntimeException("Cannot decode fourcc " + fourcc);
+         throw new IOException("Cannot decode fourcc " + fourcc);
       }
    }
 
