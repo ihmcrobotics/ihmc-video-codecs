@@ -14,3 +14,8 @@ Only video is supported.
 
 - Supports RGB <-> YUV conversion using libyuv (BSD license)
 - Bridge to OpenH264 (BSD License)
+
+
+## TODO
+
+- Replace JCodec ByteBuffers with DirectByteBuffers

@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 
 import com.google.code.libyuv.FilterModeEnum;
 
-import us.ihmc.codecs.YUVPicture;
+import us.ihmc.codecs.yuv.YUV420Picture;
 
 /* package-private */class MovieBuilderTools
 {
@@ -23,10 +23,10 @@ import us.ihmc.codecs.YUVPicture;
       return target;
    }
    
-   /* package-private */static YUVPicture toYUV(BufferedImage original, int width, int height)
+   /* package-private */static YUV420Picture toYUV(BufferedImage original, int width, int height)
    {
       BufferedImage bgr = to3ByteBGR(original);
-      YUVPicture picture = new YUVPicture(bgr);
+      YUV420Picture picture = new YUV420Picture(bgr);
       
       if(picture.getWidth() == width && picture.getHeight() == height)
       {

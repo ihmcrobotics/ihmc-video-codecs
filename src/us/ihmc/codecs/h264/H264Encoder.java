@@ -2,7 +2,7 @@ package us.ihmc.codecs.h264;
 
 import java.io.IOException;
 
-import us.ihmc.codecs.YUVPicture;
+import us.ihmc.codecs.yuv.YUV420Picture;
 
 /**
  * Common interface to a H264 encoder
@@ -19,7 +19,7 @@ public interface H264Encoder
     * @param nalProcessor
     * @throws IOException
     */
-   void encodeFrame(YUVPicture picture, NALProcessor nalProcessor) throws IOException;
+   void encodeFrame(YUV420Picture picture, NALProcessor nalProcessor) throws IOException;
 
    /**
     * Change the resolution of the frames after the encoder is initialized. Can be called during encoding.

@@ -1,20 +1,16 @@
 package us.ihmc.codecs.demuxer;
 
-import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
-
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 import org.jcodec.common.NIOUtils;
 import org.jcodec.common.SeekableByteChannel;
 import org.jcodec.common.model.Packet;
+import org.jcodec.containers.mp4.boxes.VideoSampleEntry;
 import org.jcodec.containers.mp4.demuxer.AbstractMP4DemuxerTrack;
 import org.jcodec.containers.mp4.demuxer.MP4Demuxer;
 
-import us.ihmc.codecs.YUVPicture;
+import us.ihmc.codecs.yuv.YUVPicture;
 
 public class MP4VideoDemuxer
 {
@@ -33,6 +29,10 @@ public class MP4VideoDemuxer
       if (fourcc.equals("avc1"))
       {
          demuxerHelper = new AVCDemuxerHelper(videoTrack.getSampleEntries());
+      }
+      else if (fourcc.equals("jpeg"))
+      {
+         demuxerHelper = new JPEGDemuxerHelper(videoTrack.getSampleEntries());
       }
       else
       {
@@ -66,7 +66,7 @@ public class MP4VideoDemuxer
     */
    public int getWidth()
    {
-      return videoTrack.getMeta().getDimensions().getWidth();
+      return ((VideoSampleEntry)videoTrack.getSampleEntries()[0]).getWidth();
    }
 
    /**
@@ -75,7 +75,7 @@ public class MP4VideoDemuxer
     */
    public int getHeight()
    {
-      return videoTrack.getMeta().getDimensions().getHeight();
+      return ((VideoSampleEntry)videoTrack.getSampleEntries()[0]).getHeight();
    }
 
    /**
@@ -94,6 +94,15 @@ public class MP4VideoDemuxer
    public double getDuration()
    {
       return videoTrack.getDuration().scalar();
+   }
+   
+   /**
+    * Delete native resources held by the demuxer
+    */
+   
+   public void delete()
+   {
+      demuxerHelper.delete();
    }
 
 }

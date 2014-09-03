@@ -9,6 +9,10 @@
 %typemap(jstype) enum RotationMode "RotationModeEnum";
 #%typemap(jtype) enum RotationMode "RotationModeEnum";
 
+%ignore libyuv::MJpegDecoder::DecodeToBuffers;
+%ignore libyuv::MJpegDecoder::DecodeToCallback;
+%ignore libyuv::MJpegDecoder::JpegSubsamplingTypeHelper;
+
 %javaconst(1);
 %{
 #include "libyuv.h"
@@ -23,7 +27,7 @@ using namespace libyuv;
 %include "libyuv/convert_from.h"
 %include "libyuv/convert_from_argb.h"
 %include "libyuv/format_conversion.h"
-#%include "libyuv/mjpeg_decoder.h"
+%include "libyuv/mjpeg_decoder.h"
 %include "libyuv/planar_functions.h"
 %include "libyuv/rotate.h"
 %include "libyuv/rotate_argb.h"
@@ -34,3 +38,10 @@ using namespace libyuv;
 %include "libyuv/version.h"
 #%include "libyuv/video_common.h"
 
+%extend libyuv::MJpegDecoder{
+	int Decode(uint8* Y, uint8* U, uint8* V)
+	{
+		uint8* planes[] = { Y, U, V };
+		$self->DecodeToBuffers(planes, $self->GetWidth(), $self->GetHeight());
+	}
+}

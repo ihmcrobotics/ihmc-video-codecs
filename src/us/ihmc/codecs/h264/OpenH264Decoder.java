@@ -12,7 +12,8 @@ import org.openh264.STargetPicture;
 import org.openh264.VIDEO_BITSTREAM_TYPE;
 import org.openh264.OpenH264;
 
-import us.ihmc.codecs.YUVPicture;
+import us.ihmc.codecs.yuv.YUV420Picture;
+import us.ihmc.codecs.yuv.YUVPicture;
 
 public class OpenH264Decoder
 {
@@ -81,7 +82,7 @@ public class OpenH264Decoder
          pic.getV(V);
 
          
-         YUVPicture yuvPicture = new YUVPicture(Y, U, V, stride[0], stride[1], stride[1], width, height);
+         YUVPicture yuvPicture = new YUV420Picture(Y, U, V, stride[0], stride[1], stride[1], width, height);
          
          return yuvPicture;
       }

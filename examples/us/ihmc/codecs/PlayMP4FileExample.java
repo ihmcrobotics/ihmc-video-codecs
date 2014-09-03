@@ -9,14 +9,18 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import us.ihmc.codecs.demuxer.MP4VideoDemuxer;
+import us.ihmc.codecs.yuv.YUV420Picture;
+import us.ihmc.codecs.yuv.YUVPicture;
 
 public class PlayMP4FileExample
 {
    public static void main(String[] args) throws IOException
    {
-      MP4VideoDemuxer demuxer = new MP4VideoDemuxer(new File("test.mp4"));
+      MP4VideoDemuxer demuxer = new MP4VideoDemuxer(new File("data/TripodVideo.mov"));
+//      MP4VideoDemuxer demuxer = new MP4VideoDemuxer(new File("test.mp4"));
 
       JFrame frame = new JFrame("Decoder");
+      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       JLabel label = new JLabel();
       label.setPreferredSize(new Dimension(demuxer.getWidth(), demuxer.getHeight()));
       frame.getContentPane().add(label);

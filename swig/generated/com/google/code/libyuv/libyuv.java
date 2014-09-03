@@ -989,6 +989,17 @@ public class libyuv implements libyuvConstants {
     }
   }
 
+  public static int ValidateJpeg(java.nio.ByteBuffer sample, long sample_size) {
+  assert sample.isDirect() : "Buffer must be allocated direct.";
+    {
+      return libyuvJNI.ValidateJpeg(sample, sample_size);
+    }
+  }
+
+  public static long getKUnknownDataSize() {
+    return libyuvJNI.kUnknownDataSize_get();
+  }
+
   public static void CopyPlane(java.nio.ByteBuffer src_y, int src_stride_y, java.nio.ByteBuffer dst_y, int dst_stride_y, int width, int height) {
   assert src_y.isDirect() : "Buffer must be allocated direct.";
   assert dst_y.isDirect() : "Buffer must be allocated direct.";
@@ -6514,19 +6525,19 @@ public class libyuv implements libyuvConstants {
     }
   }
 
-  public static void ScaleARGBRowDownEven_NEON(java.nio.ByteBuffer src_argb, int src_stride, int src_stepx, java.nio.ByteBuffer dst_argb, int dst_width) {
+  public static void ScaleARGBRowDownEven_NEON(java.nio.ByteBuffer src_argb, SWIGTYPE_p_ptrdiff_t src_stride, int src_stepx, java.nio.ByteBuffer dst_argb, int dst_width) {
   assert src_argb.isDirect() : "Buffer must be allocated direct.";
   assert dst_argb.isDirect() : "Buffer must be allocated direct.";
     {
-      libyuvJNI.ScaleARGBRowDownEven_NEON(src_argb, src_stride, src_stepx, dst_argb, dst_width);
+      libyuvJNI.ScaleARGBRowDownEven_NEON(src_argb, SWIGTYPE_p_ptrdiff_t.getCPtr(src_stride), src_stepx, dst_argb, dst_width);
     }
   }
 
-  public static void ScaleARGBRowDownEvenBox_NEON(java.nio.ByteBuffer src_argb, int src_stride, int src_stepx, java.nio.ByteBuffer dst_argb, int dst_width) {
+  public static void ScaleARGBRowDownEvenBox_NEON(java.nio.ByteBuffer src_argb, SWIGTYPE_p_ptrdiff_t src_stride, int src_stepx, java.nio.ByteBuffer dst_argb, int dst_width) {
   assert src_argb.isDirect() : "Buffer must be allocated direct.";
   assert dst_argb.isDirect() : "Buffer must be allocated direct.";
     {
-      libyuvJNI.ScaleARGBRowDownEvenBox_NEON(src_argb, src_stride, src_stepx, dst_argb, dst_width);
+      libyuvJNI.ScaleARGBRowDownEvenBox_NEON(src_argb, SWIGTYPE_p_ptrdiff_t.getCPtr(src_stride), src_stepx, dst_argb, dst_width);
     }
   }
 

@@ -7,9 +7,9 @@ import java.io.IOException;
 import org.openh264.RC_MODES;
 import org.openh264.SEncParamExt;
 
-import us.ihmc.codecs.YUVPicture;
 import us.ihmc.codecs.h264.OpenH264Encoder;
 import us.ihmc.codecs.muxer.MP4H264Muxer;
+import us.ihmc.codecs.yuv.YUV420Picture;
 
 public class MP4H264MovieBuilder implements MovieBuilder
 {
@@ -50,7 +50,7 @@ public class MP4H264MovieBuilder implements MovieBuilder
    @Override
    public void encodeFrame(BufferedImage frame) throws IOException
    {
-      YUVPicture picture = MovieBuilderTools.toYUV(frame, width, height);
+      YUV420Picture picture = MovieBuilderTools.toYUV(frame, width, height);
       encoder.encodeFrame(picture, muxer);
    }
 

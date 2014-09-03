@@ -14,5 +14,5 @@ public interface libyuvConstants {
   public final static int LIBYUV_TRUE = 1;
   public final static String LABELALIGN = ".p2align 2\n";
   public final static String BUNDLEALIGN = "\n";
-  public final static int LIBYUV_VERSION = 1065;
+  public final static int LIBYUV_VERSION = 1069;
 }

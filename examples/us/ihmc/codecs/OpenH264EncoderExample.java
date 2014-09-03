@@ -19,11 +19,12 @@ import javax.swing.SwingUtilities;
 
 import org.openh264.RC_MODES;
 
-import us.ihmc.codecs.YUVPicture;
 import us.ihmc.codecs.h264.NALProcessor;
 import us.ihmc.codecs.h264.NALType;
 import us.ihmc.codecs.h264.OpenH264Decoder;
 import us.ihmc.codecs.h264.OpenH264Encoder;
+import us.ihmc.codecs.yuv.YUV420Picture;
+import us.ihmc.codecs.yuv.YUVPicture;
 
 import com.google.code.libyuv.FilterModeEnum;
 
@@ -69,7 +70,7 @@ public class OpenH264EncoderExample
          checkResolution();
          checkBitrate();
 
-         YUVPicture pic = new YUVPicture(img);
+         YUV420Picture pic = new YUV420Picture(img);
          if (pic.getWidth() != width || pic.getHeight() != height)
          {
             pic = pic.scale(width, height, FilterModeEnum.kFilterBilinear);

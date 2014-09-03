@@ -3,7 +3,7 @@ package us.ihmc.codecs.h264;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
-import us.ihmc.codecs.YUVPicture;
+import us.ihmc.codecs.yuv.YUVPicture;
 
 public interface H264Decoder
 {

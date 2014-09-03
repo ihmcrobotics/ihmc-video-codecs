@@ -14,7 +14,7 @@ import org.openh264.SFrameBSInfo;
 import org.openh264.SLayerBSInfo;
 import org.openh264.SSourcePicture;
 
-import us.ihmc.codecs.YUVPicture;
+import us.ihmc.codecs.yuv.YUV420Picture;
 
 /**
  * Created by jesper on 8/19/14.
@@ -171,7 +171,7 @@ public class OpenH264Encoder implements H264Encoder
    }
 
    @Override
-   public synchronized void encodeFrame(YUVPicture frame, NALProcessor nalProcessor) throws IOException
+   public synchronized void encodeFrame(YUV420Picture frame, NALProcessor nalProcessor) throws IOException
    {
       checkInitalized();
       if (frame.getWidth() != paramExt.getIPicWidth() || frame.getHeight() != paramExt.getIPicHeight())

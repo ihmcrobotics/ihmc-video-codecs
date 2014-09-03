@@ -13,8 +13,8 @@ import org.jcodec.containers.mp4.boxes.LeafBox;
 import org.jcodec.containers.mp4.boxes.SampleEntry;
 import org.jcodec.containers.mp4.boxes.VideoSampleEntry;
 
-import us.ihmc.codecs.YUVPicture;
 import us.ihmc.codecs.h264.OpenH264Decoder;
+import us.ihmc.codecs.yuv.YUVPicture;
 
 public class AVCDemuxerHelper implements DemuxerHelper
 {
@@ -132,6 +132,16 @@ public class AVCDemuxerHelper implements DemuxerHelper
          return dup.getInt();
       default:
          throw new IllegalArgumentException("NAL Unit length size can not be " + nls);
+      }
+   }
+
+   @Override
+   public void delete()
+   {
+      if(decoder != null)
+      {
+         decoder.delete();
+         decoder = null;
       }
    }
 
