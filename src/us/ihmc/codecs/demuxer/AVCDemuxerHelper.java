@@ -119,19 +119,40 @@ public class AVCDemuxerHelper implements DemuxerHelper
       int nls = avcC.getNalLengthSize();
 
       ByteBuffer dup = buf.duplicate();
-      while (dup.remaining() >= nls)
+      if(buf.isDirect())
       {
-         int len = readLen(dup, nls);
-         if (len == 0)
-            break;
-         ByteBuffer direct = ByteBuffer.allocateDirect(len + 4);
-         direct.put(NAL_HEADER);
-         for (int i = 0; i < len; i++)
+         while(dup.remaining() >= nls)
          {
-            direct.put(dup.get());
+            ByteBuffer slice = buf.slice();
+            int len = readLen(dup, nls);
+            if(len == 0)
+            {
+               break;
+            }
+            slice.limit(len + 4);
+            slice.putInt(0, 1);
+            result.add(slice);
+            
+            dup.position(dup.position() + len);
          }
-         direct.flip();
-         result.add(direct);
+      }
+      else
+      {
+         System.out.println("NON_DIRECT_BUFFER");
+         while (dup.remaining() >= nls)
+         {
+            int len = readLen(dup, nls);
+            if (len == 0)
+               break;
+            ByteBuffer direct = ByteBuffer.allocateDirect(len + 4);
+            direct.put(NAL_HEADER);
+            for (int i = 0; i < len; i++)
+            {
+               direct.put(dup.get());
+            }
+            direct.flip();
+            result.add(direct);
+         }
       }
       return result;
    }
@@ -160,6 +181,18 @@ public class AVCDemuxerHelper implements DemuxerHelper
       {
          decoder.delete();
          decoder = null;
+      }
+   }
+
+   @Override
+   public void skipFrame(Packet frame) throws IOException
+   {
+      updateState(frame);
+
+      List<ByteBuffer> buffers = splitMOVPacket(frame.getData(), avcCBox);
+      for (int i = 0; i < buffers.size(); i++)
+      {
+         decoder.skipFrame(buffers.get(i));
       }
    }
 

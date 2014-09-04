@@ -32,6 +32,7 @@ import static org.jcodec.common.DemuxerTrackMeta.Type.*;
 public class FramesMP4DemuxerTrack extends AbstractMP4DemuxerTrack {
 
     private int[] sizes;
+    private int maxSize;
 
     private long offInChunk;
 
@@ -69,6 +70,12 @@ public class FramesMP4DemuxerTrack extends AbstractMP4DemuxerTrack {
         }
     
         sizes = stsz.getSizes();
+        maxSize = stsz.getMaxSize();
+    }
+    
+    public int getMaxSize()
+    {
+       return maxSize;
     }
 
     public synchronized MP4Packet nextFrame() throws IOException {
@@ -181,6 +188,11 @@ public class FramesMP4DemuxerTrack extends AbstractMP4DemuxerTrack {
 
     @Override
     public DemuxerTrackMeta getMeta() {
+       if(syncSamples == null)
+       {
+          return null;
+       }
+       
         int[] copyOf = Arrays.copyOf(syncSamples, syncSamples.length);
         for (int i = 0; i < copyOf.length; i++)
             copyOf[i]--;

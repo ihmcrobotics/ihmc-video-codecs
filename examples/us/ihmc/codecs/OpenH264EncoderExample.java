@@ -20,13 +20,11 @@ package us.ihmc.codecs;
 
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.ByteBuffer;
 
-import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -41,7 +39,7 @@ import us.ihmc.codecs.h264.NALProcessor;
 import us.ihmc.codecs.h264.NALType;
 import us.ihmc.codecs.h264.OpenH264Decoder;
 import us.ihmc.codecs.h264.OpenH264Encoder;
-import us.ihmc.codecs.yuv.YUV420Picture;
+import us.ihmc.codecs.yuv.JPEGDecoder;
 import us.ihmc.codecs.yuv.YUVPicture;
 
 import com.google.code.libyuv.FilterModeEnum;
@@ -67,6 +65,8 @@ public class OpenH264EncoderExample
 
    private int width = 1920, height = 1080;
    private int bitrate = 5000000;
+   
+   private final JPEGDecoder jpegDecoder = new JPEGDecoder();
 
    public OpenH264EncoderExample() throws IOException, InvocationTargetException, InterruptedException
    {
@@ -83,27 +83,22 @@ public class OpenH264EncoderExample
 
       for (int i = 1; i < 19036; i += 1)
       {
-         BufferedImage img = ImageIO.read(new File("data/image_" + i + ".jpg"));
+         YUVPicture pic = jpegDecoder.readJPEG(new File("data/image_" + i + ".jpg"));
 
          checkResolution();
          checkBitrate();
 
-         YUV420Picture pic = new YUV420Picture(img);
          if (pic.getWidth() != width || pic.getHeight() != height)
          {
             pic = pic.scale(width, height, FilterModeEnum.kFilterBilinear);
          }
 
-         encoder.encodeFrame(pic, new NALProcessor()
+         encoder.encodeFrame(pic.toYUV420(), new NALProcessor()
          {
 
             @Override
             public void processNal(NALType type, ByteBuffer nal)
             {
-               if(type == NALType.SPS || type == NALType.PPS)
-               {
-                  System.out.println(type);
-               }
                try
                {
                   final YUVPicture img = decoder.decodeFrame(nal);
@@ -128,6 +123,7 @@ public class OpenH264EncoderExample
          });
       }
 
+      jpegDecoder.delete();
       encoder.delete();
       decoder.delete();
    }

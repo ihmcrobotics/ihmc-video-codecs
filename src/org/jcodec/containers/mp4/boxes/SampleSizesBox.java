@@ -13,6 +13,7 @@ public class SampleSizesBox extends FullBox {
     private int defaultSize;
     private int count;
     private int[] sizes;
+    private int maxSize = 0;
     
     public static String fourcc() {
         return "stsz";
@@ -40,8 +41,13 @@ public class SampleSizesBox extends FullBox {
 
         if (defaultSize == 0) {
             sizes = new int[count];
+            maxSize = 0;
             for (int i = 0; i < count; i++) {
                 sizes[i] = input.getInt();
+                if(maxSize < sizes[i])
+                {
+                   maxSize = sizes[i];
+                }
             }
         }
     }
@@ -60,6 +66,11 @@ public class SampleSizesBox extends FullBox {
     
     public void setCount(int count) {
         this.count = count;
+    }
+    
+    public int getMaxSize()
+    {
+       return maxSize;
     }
 
     @Override

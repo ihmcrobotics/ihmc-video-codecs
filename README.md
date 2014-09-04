@@ -27,10 +27,8 @@ See the examples directory
 - Compile LibYUV following https://code.google.com/p/libyuv/wiki/GettingStarted
 	- When ninja complains about tools/sanitizer_options/sanitizer_options.cc get it from the chromium git: https://chromium.googlesource.com/chromium/src/base/+/f64188fb60c527d54bb54f1d107a5b5890a49c89/debug/sanitizer_options.cc
 - Download the openH264 sources (version 1.1) from https://github.com/cisco/openh264
+- Install 
 - Edit ./CMakeLists.txt and point to the libyuv and openh264 directories
 - mkdir build; cmake ..; make
 
-## TODO
-
-- Replace JCodec ByteBuffers with DirectByteBuffers
 

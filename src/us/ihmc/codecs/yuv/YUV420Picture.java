@@ -112,4 +112,10 @@ public class YUV420Picture extends YUVPicture
       return V;
    }
 
+   @Override
+   public YUV420Picture toYUV420()
+   {
+      return this;
+   }
+
 }

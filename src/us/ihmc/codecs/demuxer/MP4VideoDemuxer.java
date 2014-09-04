@@ -20,12 +20,15 @@ package us.ihmc.codecs.demuxer;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 
+import org.jcodec.common.DemuxerTrackMeta;
 import org.jcodec.common.NIOUtils;
 import org.jcodec.common.SeekableByteChannel;
 import org.jcodec.common.model.Packet;
 import org.jcodec.containers.mp4.boxes.VideoSampleEntry;
 import org.jcodec.containers.mp4.demuxer.AbstractMP4DemuxerTrack;
+import org.jcodec.containers.mp4.demuxer.FramesMP4DemuxerTrack;
 import org.jcodec.containers.mp4.demuxer.MP4Demuxer;
 
 import us.ihmc.codecs.yuv.YUVPicture;
@@ -44,6 +47,7 @@ public class MP4VideoDemuxer
 {
    private final AbstractMP4DemuxerTrack videoTrack;
    private final DemuxerHelper demuxerHelper;
+   private final ByteBuffer buffer;
 
    /**
     * Create a new demuxer
@@ -53,11 +57,18 @@ public class MP4VideoDemuxer
     */
    public MP4VideoDemuxer(File file) throws IOException
    {
-
       SeekableByteChannel input = NIOUtils.readableFileChannel(file);
       MP4Demuxer demuxer = new MP4Demuxer(input);
-
       videoTrack = demuxer.getVideoTrack();
+      if(videoTrack instanceof FramesMP4DemuxerTrack)
+      {
+         buffer = ByteBuffer.allocateDirect(((FramesMP4DemuxerTrack) videoTrack).getMaxSize());
+      }
+      else
+      {
+         throw new IOException("Incompatible video track");
+      }
+      
       String fourcc = videoTrack.getFourcc();
 
       if (fourcc.equals("avc1"))
@@ -83,7 +94,8 @@ public class MP4VideoDemuxer
     */
    public YUVPicture getNextFrame() throws IOException
    {
-      Packet nextFrame = videoTrack.nextFrame();
+      buffer.clear();
+      Packet nextFrame = videoTrack.nextFrame(buffer);
       if (nextFrame != null)
       {
          return demuxerHelper.getFrame(nextFrame);
@@ -100,7 +112,7 @@ public class MP4VideoDemuxer
     */
    public int getWidth()
    {
-      return ((VideoSampleEntry)videoTrack.getSampleEntries()[0]).getWidth();
+      return ((VideoSampleEntry) videoTrack.getSampleEntries()[0]).getWidth();
    }
 
    /**
@@ -109,7 +121,7 @@ public class MP4VideoDemuxer
     */
    public int getHeight()
    {
-      return ((VideoSampleEntry)videoTrack.getSampleEntries()[0]).getHeight();
+      return ((VideoSampleEntry) videoTrack.getSampleEntries()[0]).getHeight();
    }
 
    /**
@@ -129,11 +141,110 @@ public class MP4VideoDemuxer
    {
       return videoTrack.getDuration().scalar();
    }
+
+   private long getPreviousKeyFrame(long start)
+   {
+      DemuxerTrackMeta meta = videoTrack.getMeta();
+      if(meta == null)
+      {
+         // No information about keyframes available. Assume every frame is selfcontained.
+         return start;
+      }
+      int[] seekFrames = meta.getSeekFrames();
+      if (seekFrames == null)
+      {
+         return start;
+      }
+      int prev = seekFrames[0];
+      for (int i = 1; i < seekFrames.length; i++)
+      {
+         if (seekFrames[i] > start)
+         {
+            break;
+         }
+         prev = seekFrames[i];
+      }
+      return prev;
+   }
+
+   /**
+    * Seek to frame. Next call to nextFrame will return frameNo
+    * 
+    * @throws IOException Cannot decode intraframes
+    */
+   public void seekToFrame(long frameNo) throws IOException
+   {
+      if(!videoTrack.gotoFrame(frameNo))
+      {
+         throw new IOException("Invalid frame no: " + frameNo);
+      }
+      decodeLeadingFrames();
+   }
+
+   private void decodeLeadingFrames() throws IOException
+   {
+      long frameNo = videoTrack.getCurFrame();
+      long keyFrame = getPreviousKeyFrame(frameNo);
+      
+      if(keyFrame == frameNo)
+      {
+         return;
+      }
+
+      if(!videoTrack.gotoFrame(keyFrame))
+      {
+         throw new IOException("Invalid frame no: " + keyFrame);
+      }
+      
+      
+      Packet frame;
+      do
+      {
+         buffer.clear();
+         frame = videoTrack.nextFrame(buffer);
+         if(frame == null)
+         {
+            throw new IOException("Cannot decode frame");
+         }
+         demuxerHelper.skipFrame(frame); 
+      }
+      while(frame.getFrameNo() < (frameNo - 1));
+   }
+
+   /** 
+    * Seek to PTS. Next call to nextFrame will return frame at given PTS
+    * 
+    * @throws IOException Cannot decode intraframes
+    */
+   public void seekToPTS(long pts) throws IOException
+   {
+      videoTrack.seek(pts);
+      decodeLeadingFrames();
+   }
    
+   /**
+    * Seek to time(s). Next call to nextFrame will return frame at given time.
+    * 
+    * @throws IOException Cannot decode intraframes
+    */
+   public void seek(double seconds) throws IOException
+   {
+      videoTrack.seek(seconds);
+      decodeLeadingFrames();
+   }
+   
+   /**
+    * @return Current frame number the video is on
+    */
+   public long getCurrentFrame()
+   {
+      return videoTrack.getCurFrame();
+   }
+
    /**
     * Delete native resources held by the demuxer
     */
-   
+
    public void delete()
    {
       demuxerHelper.delete();

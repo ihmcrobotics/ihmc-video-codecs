@@ -132,6 +132,23 @@ public class OpenH264Decoder
 
    }
    
+   /**
+    * Feeds frame to the decoder but ignores the output
+    * 
+    * @param frame to skip
+    * @throws IOException
+    */
+   public void skipFrame(ByteBuffer frame) throws IOException
+   {
+      DECODING_STATE state = isvcDecoder.DecodeFrame2(frame, frame.limit(), pic);
+      
+      if (state != DECODING_STATE.dsErrorFree)
+      {
+         throw new IOException("Cannot decode frame: " + state);
+      }
+      
+   }
+   
    
    /**
     * Free native memory

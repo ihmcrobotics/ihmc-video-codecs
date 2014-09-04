@@ -157,18 +157,26 @@ public abstract class YUVPicture
 
    protected BufferedImage createBGRBufferedImageFromRGBA(ByteBuffer dstBuffer)
    {
-      BufferedImage img = new BufferedImage(w, h, BufferedImage.TYPE_3BYTE_BGR);
-      WritableRaster raster = img.getRaster();
-      DataBufferByte buffer = (DataBufferByte) raster.getDataBuffer();
-
-      for (int i = 0; dstBuffer.hasRemaining(); i += 3)
-      {
-         buffer.setElem(i, dstBuffer.get());
-         buffer.setElem(i + 1, dstBuffer.get());
-         buffer.setElem(i + 2, dstBuffer.get());
-         dstBuffer.get();
-      }
-      return img;
+      // The conversion in native code to BGR is much faster than doing byte-for-byte copies in Java
+      int srcStride = w * 4;
+      int rgbStride = w * 3;
+      // Reusing the ARGB buffer looks to work, if problematic make a new buffer
+//      ByteBuffer rgbBuffer = ByteBuffer.allocateDirect(rgbStride * h);
+      libyuv.ARGBToRGB24(dstBuffer, srcStride, dstBuffer, rgbStride, w, h);
+      return createBGRBufferedImageFromRGB24(dstBuffer);
+      
+//      BufferedImage img = new BufferedImage(w, h, BufferedImage.TYPE_3BYTE_BGR);
+//      WritableRaster raster = img.getRaster();
+//      DataBufferByte buffer = (DataBufferByte) raster.getDataBuffer();
+//
+//      for (int i = 0; dstBuffer.hasRemaining(); i += 3)
+//      {
+//         buffer.setElem(i, dstBuffer.get());
+//         buffer.setElem(i + 1, dstBuffer.get());
+//         buffer.setElem(i + 2, dstBuffer.get());
+//         dstBuffer.get();
+//      }
+//      return img;
 
    }
 
@@ -177,11 +185,9 @@ public abstract class YUVPicture
       BufferedImage img = new BufferedImage(w, h, BufferedImage.TYPE_3BYTE_BGR);
       WritableRaster raster = img.getRaster();
       DataBufferByte buffer = (DataBufferByte) raster.getDataBuffer();
+      dstBuffer.get(buffer.getData());
 
-      for (int i = 0; dstBuffer.hasRemaining(); i++)
-      {
-         buffer.setElem(i, dstBuffer.get());
-      }
+      
       return img;
    }
 
@@ -245,5 +251,11 @@ public abstract class YUVPicture
    {
       return vStride;
    }
+
+   /**
+    * 
+    * @return YUV420 version of this picture. Could be the same picture.
+    */
+   public abstract YUV420Picture toYUV420();
 
 }

@@ -18,14 +18,13 @@
 
 package us.ihmc.codecs;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
-
 import us.ihmc.codecs.builder.MP4H264MovieBuilder;
 import us.ihmc.codecs.builder.MovieBuilder;
+import us.ihmc.codecs.yuv.JPEGDecoder;
+import us.ihmc.codecs.yuv.YUVPicture;
 
 public class CreateMP4WithH264Example
 {
@@ -33,25 +32,28 @@ public class CreateMP4WithH264Example
    {
       int width = 1920;
       int height = 1080;
-      int framerate = 25;
+      int framerate = 30;
       int bitrate = 8000;
 
       MovieBuilder builder = new MP4H264MovieBuilder(new File("test.mp4"), width, height, framerate, bitrate);
       
+      JPEGDecoder decoder = new JPEGDecoder();
       System.out.println("Writing movie");
-      for (int i = 200; i < 400; i += 1)
+      for (int i = 1; i < 10000; i += 1)
       {
          System.out.print(".");
          System.out.flush();
-         if(i % 80 == 0)
+         if(i % 100 == 0)
          {
             System.out.println();
          }
-         BufferedImage img = ImageIO.read(new File("data/image_" + i + ".jpg"));
-         builder.encodeFrame(img);
+         
+         YUVPicture pic = decoder.readJPEG(new File("data/image_" + i + ".jpg"));
+         builder.encodeFrame(pic);
       }
       System.out.println();
       
+      decoder.delete();
       builder.close();
    }
 }

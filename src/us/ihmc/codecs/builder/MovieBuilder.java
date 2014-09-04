@@ -21,6 +21,8 @@ package us.ihmc.codecs.builder;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+import us.ihmc.codecs.yuv.YUVPicture;
+
 /**
  * Simple to use interface for creating movies
  * 
@@ -36,6 +38,14 @@ public interface MovieBuilder
     * @throws IOException 
     */
    public void encodeFrame(BufferedImage frame) throws IOException;
+
+   /**
+    * Encode a single image. Automatically gets resized to the movie width/height.
+    * 
+    * @param frame YUVPicture with frame data.
+    * @throws IOException 
+    */
+   public void encodeFrame(YUVPicture frame) throws IOException;
    
    /**
     * Close the stream and write headers

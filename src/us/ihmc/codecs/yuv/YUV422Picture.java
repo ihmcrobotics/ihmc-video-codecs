@@ -115,4 +115,21 @@ public class YUV422Picture extends YUVPicture
       return V;
    }
 
+   @Override
+   public YUV420Picture toYUV420()
+   {
+      
+      int yStrideDest = w;
+      int uStrideDest = yStrideDest >> 1;
+      int vStrideDest = yStrideDest >> 1;
+
+      ByteBuffer Ydest = ByteBuffer.allocateDirect(yStrideDest * h);
+      ByteBuffer Udest = ByteBuffer.allocateDirect(uStrideDest * (h >> 1));
+      ByteBuffer Vdest = ByteBuffer.allocateDirect(vStrideDest * (h >> 1));
+      
+      libyuv.I422ToI420(Y, yStride, U, uStride, V, vStride, Ydest, yStrideDest, Udest, uStrideDest, Vdest, vStrideDest, w, h);
+      
+      return new YUV420Picture(Ydest, Udest, Vdest, yStrideDest, uStrideDest, vStrideDest, w, h);
+   }
+
 }

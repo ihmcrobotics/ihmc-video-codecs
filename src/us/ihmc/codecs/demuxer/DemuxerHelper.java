@@ -26,6 +26,7 @@ import us.ihmc.codecs.yuv.YUVPicture;
 
 public interface DemuxerHelper
 {
-   /* package-private */ public YUVPicture getFrame(Packet frame) throws IOException;
-   /* package-private */ public void delete();
+   /* package-private */ YUVPicture getFrame(Packet frame) throws IOException;
+   /* package-private */ void skipFrame(Packet frame) throws IOException;
+   /* package-private */ void delete();
 }

@@ -28,6 +28,7 @@ import org.openh264.SEncParamExt;
 import us.ihmc.codecs.h264.OpenH264Encoder;
 import us.ihmc.codecs.muxer.MP4H264Muxer;
 import us.ihmc.codecs.yuv.YUV420Picture;
+import us.ihmc.codecs.yuv.YUVPicture;
 
 public class MP4H264MovieBuilder implements MovieBuilder
 {
@@ -70,6 +71,12 @@ public class MP4H264MovieBuilder implements MovieBuilder
    {
       YUV420Picture picture = MovieBuilderTools.toYUV(frame, width, height);
       encoder.encodeFrame(picture, muxer);
+   }
+   
+   @Override
+   public void encodeFrame(YUVPicture picture) throws IOException
+   {
+      encoder.encodeFrame(picture.toYUV420(), muxer);
    }
 
    @Override
