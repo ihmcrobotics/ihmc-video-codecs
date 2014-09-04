@@ -22,6 +22,8 @@ import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
 
 public class OpenH264Downloader
 {
+   private static final String libraryOnDiskName = "libopenh264.so";
+   
    private static final String repository = "http://ciscobinary.openh264.org/";
    private static final String ext = ".bz2";
 
@@ -79,9 +81,6 @@ public class OpenH264Downloader
 
    private static void downloadOpenH264(File target, String libraryName)
    {
-
-      acceptLicense();
-
       try
       {
          URL url = new URL(repository + libraryName + ext);
@@ -104,17 +103,26 @@ public class OpenH264Downloader
 
    public static void loadOpenH264()
    {
+      loadOpenH264(true);
+   }
+   
+   private static void loadOpenH264(boolean showLicenseDialog)
+   {
       String libraryName = getLibraryName();
-      File directory = new File(System.getProperty("user.home"), ".ihmc/lib");
+      File directory = new File(NativeLibraryLoader.LIBRARY_LOCATION);
       if (!directory.exists())
       {
          directory.mkdirs();
       }
-
-      File library = new File(directory, "libopenh264.so");
-
+      
+      File library = new File(directory, libraryOnDiskName);
+      
       if (!library.exists())
       {
+         if(showLicenseDialog)
+         {
+            acceptLicense();
+         }
          downloadOpenH264(library, libraryName);
       } 
       
@@ -150,7 +158,7 @@ public class OpenH264Downloader
       panel.add(scroll);
       panel.add(new JLabel("Do you accept the OpenH264 License?"));
 
-      if(JOptionPane.showOptionDialog(null, panel, "OpenH264 License", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null) != JOptionPane.YES_OPTION)
+      if(JOptionPane.showOptionDialog(null, panel, "OpenH264 Video Codec provided by Cisco Systems, Inc.", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null) != JOptionPane.YES_OPTION)
       {
          JOptionPane.showMessageDialog(null, "User did not accept OpenH264 license", "License not accepted", JOptionPane.ERROR_MESSAGE);
          System.exit(-1);
@@ -160,12 +168,13 @@ public class OpenH264Downloader
 
    private static void acceptLicenseConsole()
    {
+      System.out.println("OpenH264 Video Codec provided by Cisco Systems, Inc.");
       System.out.println(getLicenseText());
       System.out.println("Do you accept the OpenH264 License? [Y/N]");
 
       String in = System.console().readLine();
 
-      if (!in.toLowerCase().startsWith("y"))
+      if (!in.toLowerCase().equals("y"))
       {
          System.err.println("License not accepted");
          System.exit(-1);
@@ -198,9 +207,77 @@ public class OpenH264Downloader
       return builder.toString();
    }
    
+   /**
+    * Shows an about dialog for the license with disable button, as per license terms
+    */
+   public static void showAboutCiscoDialog()
+   {
+      JPanel panel = new JPanel();
+      panel.add(new JLabel("OpenH264 Video Codec provided by Cisco Systems, Inc."));
+      panel.add(new JLabel("License terms"));
+      
+      panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+      JTextArea license = new JTextArea(getLicenseText());
+      license.setEditable(false);
+      license.setLineWrap(true);
+      license.setWrapStyleWord(true);
+      JScrollPane scroll = new JScrollPane(license);
+      scroll.setPreferredSize(new Dimension(500, 500));
+      panel.add(scroll);
+      
+      String[] options = new String[2];
+      
+      boolean enabled = isEnabled();
+      if(enabled)
+      {
+         options[0] = "Disable Cisco OpenH264 plugin";
+      }
+      else
+      {
+         options[0] = "Enable Cisco OpenH264 plugin";
+      }
+      options[1] = "Close";
+      
+      int res = JOptionPane.showOptionDialog(null, panel, "OpenH264 Video Codec provided by Cisco Systems, Inc.", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, null);
+      
+      if(res == 0)
+      {
+         if(enabled)
+         {
+            deleteOpenH264Library();
+         }
+         else
+         {
+            loadOpenH264(false);
+         }
+      }
+   }
+   
+   /**
+    * Check if the OpenH264 plugin is enabled
+    * @return true if enabled
+    */
+   public static boolean isEnabled()
+   {
+      return new File(NativeLibraryLoader.LIBRARY_LOCATION,  libraryOnDiskName).exists();
+   }
+   
+   
+   /**
+    * Disables the OpenH264 library, disabling the library as per license terms
+    */
+   public static void deleteOpenH264Library()
+   {
+      File library = new File(NativeLibraryLoader.LIBRARY_LOCATION,  libraryOnDiskName);
+      if(library.exists())
+      {
+         library.delete();
+      }
+   }
+   
    public static void main(String[] args)
    {
-      loadOpenH264();
+      showAboutCiscoDialog();
    }
 
 }

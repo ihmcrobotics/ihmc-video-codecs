@@ -16,6 +16,8 @@ import us.ihmc.codecs.Version;
  */
 public class NativeLibraryLoader
 {
+   public final static String LIBRARY_LOCATION = new File(System.getProperty("user.home"), ".ihmc" + File.separator + "lib").getAbsolutePath();
+   
    private final static String LIBYUV_MAC_64 = "liblibyuv.jnilib";
    private final static String LIBYUV_LINUX_64 = "liblibyuv.so";
    private final static String LIBYUV_WINDOWS_64 = "libyuv.dll";
@@ -96,7 +98,7 @@ public class NativeLibraryLoader
       {
          return;
       }
-      File directory = new File(System.getProperty("user.home"), ".ihmc/lib");
+      File directory = new File(LIBRARY_LOCATION);
       if(!directory.exists())
       {
          directory.mkdirs();
