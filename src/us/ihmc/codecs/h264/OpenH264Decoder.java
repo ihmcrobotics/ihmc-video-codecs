@@ -25,11 +25,12 @@ import org.openh264.DECODING_STATE;
 import org.openh264.ERROR_CON_IDC;
 import org.openh264.EVideoFormatType;
 import org.openh264.ISVCDecoder;
+import org.openh264.OpenH264;
 import org.openh264.SDecodingParam;
 import org.openh264.STargetPicture;
 import org.openh264.VIDEO_BITSTREAM_TYPE;
-import org.openh264.OpenH264;
 
+import us.ihmc.codecs.loader.NativeLibraryLoader;
 import us.ihmc.codecs.yuv.YUV420Picture;
 import us.ihmc.codecs.yuv.YUVPicture;
 
@@ -46,7 +47,7 @@ public class OpenH264Decoder
 {
    static
    {
-      System.loadLibrary("openh264bridge");
+      NativeLibraryLoader.loadOpenH264Bridge();
    }
 
    private final ISVCDecoder isvcDecoder;

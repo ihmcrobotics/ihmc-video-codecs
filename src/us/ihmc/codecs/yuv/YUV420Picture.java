@@ -117,5 +117,4 @@ public class YUV420Picture extends YUVPicture
    {
       return this;
    }
-
 }

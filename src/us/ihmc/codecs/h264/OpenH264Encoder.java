@@ -32,6 +32,7 @@ import org.openh264.SFrameBSInfo;
 import org.openh264.SLayerBSInfo;
 import org.openh264.SSourcePicture;
 
+import us.ihmc.codecs.loader.NativeLibraryLoader;
 import us.ihmc.codecs.yuv.YUV420Picture;
 
 /**
@@ -46,7 +47,7 @@ public class OpenH264Encoder implements H264Encoder
 {
    static
    {
-      System.loadLibrary("openh264bridge");
+      NativeLibraryLoader.loadOpenH264Bridge();
    }
 
    private final ISVCEncoder isvcEncoder;

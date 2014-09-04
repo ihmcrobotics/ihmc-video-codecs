@@ -21,12 +21,17 @@ package us.ihmc.codecs.builder;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import com.google.code.libyuv.FilterModeEnum;
-
 import us.ihmc.codecs.yuv.YUV420Picture;
+
+import com.google.code.libyuv.FilterModeEnum;
 
 /* package-private */class MovieBuilderTools
 {
+   private MovieBuilderTools()
+   {
+      // Disallow construction
+   }
+   
    /* package-private */static BufferedImage to3ByteBGR(BufferedImage original)
    {
       if (original.getType() == BufferedImage.TYPE_3BYTE_BGR)

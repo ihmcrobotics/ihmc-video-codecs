@@ -34,8 +34,8 @@ public class PlayMP4FileExample
 {
    public static void main(String[] args) throws IOException
    {
-      MP4VideoDemuxer demuxer = new MP4VideoDemuxer(new File("data/TripodVideo.mov"));
-//      MP4VideoDemuxer demuxer = new MP4VideoDemuxer(new File("test.mp4"));
+//      MP4VideoDemuxer demuxer = new MP4VideoDemuxer(new File("data/TripodVideo.mov"));
+      MP4VideoDemuxer demuxer = new MP4VideoDemuxer(new File("test.mp4"));
       
 
       JFrame frame = new JFrame("Decoder");

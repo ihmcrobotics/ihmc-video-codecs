@@ -23,6 +23,8 @@ import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
 import java.nio.ByteBuffer;
 
+import us.ihmc.codecs.loader.NativeLibraryLoader;
+
 import com.google.code.libyuv.FilterModeEnum;
 import com.google.code.libyuv.libyuv;
 
@@ -30,7 +32,7 @@ public abstract class YUVPicture
 {
    static
    {
-      System.loadLibrary("libyuv");
+      NativeLibraryLoader.loadLibYUV();
    }
 
    public enum YUVSubsamplingType
