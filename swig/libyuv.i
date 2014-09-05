@@ -41,6 +41,6 @@ using namespace libyuv;
 	int Decode(uint8* Y, uint8* U, uint8* V)
 	{
 		uint8* planes[] = { Y, U, V };
-		$self->DecodeToBuffers(planes, $self->GetWidth(), $self->GetHeight());
+		return $self->DecodeToBuffers(planes, $self->GetWidth(), $self->GetHeight());
 	}
 }
