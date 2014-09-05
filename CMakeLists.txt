@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.812)
+cmake_minimum_required(VERSION 2.8.12)
 
 SET(OPENH264_HOME ~/workspace/openh264 CACHE FILEPATH "Path to openh264 sources")
 SET(LIBYUV_HOME ~/workspace/libyuv/trunk/ CACHE FILEPATH "Path to libyuv sources")
