@@ -15,8 +15,11 @@ include_directories(${JNI_INCLUDE_DIRS})
 if(APPLE)
 	# clang complains about missing lookups, which are a lot in libyuv
 	SET(CMAKE_MODULE_LINKER_FLAGS "-undefined dynamic_lookup")
-ELSE(UNIX)
+ELSEIF(WIN32)
+	SET(CMAKE_MODULE_LINKER_FLAGS "/FORCE:UNRESOLVED")
+ELSEIF(UNIX)
 	SET(CMAKE_INSTALL_RPATH "\$ORIGIN")
-endif(APPLE)
+ENDIF(APPLE)
 add_subdirectory (swig)
+
 

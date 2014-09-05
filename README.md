@@ -82,3 +82,28 @@ For your convenience compiled libraries are placed in the resources directory. I
 ### Windows
 
 May the force be with you.
+
+- Install Visual Studio Express 2013 for Windows Desktop
+	- Continue while this is downloading and get some coffee
+- Install the 64 bit JDK for Windows (>6)
+- Install CMake using the installer http://www.cmake.org/download/
+- Install swig 3.0.3
+	- No binaries have been released as of 05/09/2014 yet. Get the swigwin 3.0.2 binary and replace Lib/java/various.i with https://github.com/swig/swig/blob/master/Lib/java/various.i
+- Install Libyuv
+	- Non-cygwin
+	- Follow instructions on https://code.google.com/p/libyuv/wiki/GettingStarted
+		- Dowloading the windows sdk takes forever, just have patience
+- Install mingw 
+- Download the openh264 sources, tag v1.1
+	- Following the instructions in README.md
+	- Setup your path to point to msys and mingw
+	- Use make OS=msvc ENABLE64Bit=Yes
+- Start the cmake-gui
+	- Point source directory to your sources
+	- Point build directory to [sources]/build
+	- Configure
+		- Choose the Visual Studio 12 2014 Win64 generator
+		- Choose native toolchain
+		- Set all paths correctly
+		- Configure
+	- Generate

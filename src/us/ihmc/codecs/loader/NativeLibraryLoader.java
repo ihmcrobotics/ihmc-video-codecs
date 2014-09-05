@@ -24,7 +24,7 @@ public class NativeLibraryLoader
    
    private final static String OPENH264BRIDGE_MAC_64 = "libopenh264bridge.jnilib";
    private final static String OPENH264BRIDGE_LINUX_64 = "libopenh264bridge.so";
-   private final static String OPENH264BRIDGE_WINDOWS_64 = "libopenh264bridge.dll";
+   private final static String OPENH264BRIDGE_WINDOWS_64 = "openh264bridge.dll";
    
    
    
