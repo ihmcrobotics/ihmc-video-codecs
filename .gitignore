@@ -2,4 +2,9 @@
 .idea
 *.iml
 data/
-
+.classpath
+.settings
+.project
+bin
+hs_err_pid*.log
+test.mp4
