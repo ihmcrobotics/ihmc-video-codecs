@@ -27,3 +27,8 @@ ADD_DEPENDENCIES(libyuv version)
 SWIG_LINK_LIBRARIES(libyuv libyuv.a libjpeg_turbo.a)
 
 INSTALL(TARGETS libyuv openh264bridge RUNTIME DESTINATION resources LIBRARY DESTINATION resources)
+
+if(APPLE)
+	SET_TARGET_PROPERTIES(openh264bridge PROPERTIES INSTALL_RPATH "@loader_path/")
+	add_custom_command(TARGET openh264bridge POST_BUILD COMMAND ${CMAKE_INSTALL_NAME_TOOL} -change libopenh264.dylib @rpath/libopenh264.dylib $<TARGET_FILE:openh264bridge>)
+endif(APPLE)

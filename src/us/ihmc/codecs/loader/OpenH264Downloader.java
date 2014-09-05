@@ -22,8 +22,6 @@ import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
 
 public class OpenH264Downloader
 {
-   private static final String libraryOnDiskName = "libopenh264.so";
-   
    private static final String repository = "http://ciscobinary.openh264.org/";
    private static final String ext = ".bz2";
 
@@ -36,6 +34,10 @@ public class OpenH264Downloader
    public static final String osx64 = "libopenh264-1.1.0-osx64.dylib";
    public static final String win32 = "openh264-1.1.0-win32msvc.dll";
    public static final String win64 = "openh264-1.1.0-win64msvc.dll";
+
+   public static final String osxDisk = "libopenh264.dylib";
+   public static final String linuxDisk = "libopenh264.so";
+   public static final String winDisk = "openh264.dll";
 
    private static boolean openH264HasBeenLoaded;
    
@@ -76,10 +78,28 @@ public class OpenH264Downloader
          {
             return win32;
          }
-      }
-
+}
       throw new RuntimeException("Cannot load archive for " + System.getProperty("os.name") + "/" + System.getProperty("os.arch"));
    }
+
+
+    public static String getLibraryOnDiskName()
+    {
+         if (NativeLibraryLoader.isLinux())
+         {
+            return linuxDisk;
+         }
+         else if (NativeLibraryLoader.isMac())
+         {
+            return osxDisk;
+         }
+         else if (NativeLibraryLoader.isWindows())
+         {
+            return winDisk;
+         }
+
+	throw new RuntimeException("Cannot write archive for " + System.getProperty("os.name"));
+    }	
 
    private static void downloadOpenH264(File target, String libraryName)
    {
@@ -122,7 +142,7 @@ public class OpenH264Downloader
          directory.mkdirs();
       }
       
-      File library = new File(directory, libraryOnDiskName);
+      File library = new File(directory, getLibraryOnDiskName());
       
       if (!library.exists())
       {
@@ -268,7 +288,7 @@ public class OpenH264Downloader
     */
    public static boolean isEnabled()
    {
-      return new File(NativeLibraryLoader.LIBRARY_LOCATION,  libraryOnDiskName).exists();
+      return new File(NativeLibraryLoader.LIBRARY_LOCATION,  getLibraryOnDiskName()).exists();
    }
    
    
@@ -277,7 +297,7 @@ public class OpenH264Downloader
     */
    public static void deleteOpenH264Library()
    {
-      File library = new File(NativeLibraryLoader.LIBRARY_LOCATION,  libraryOnDiskName);
+      File library = new File(NativeLibraryLoader.LIBRARY_LOCATION,  getLibraryOnDiskName());
       if(library.exists())
       {
          library.delete();
