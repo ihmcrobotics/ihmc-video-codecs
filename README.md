@@ -24,11 +24,26 @@ See the examples directory
 
 ## Compile native code
 
+For your convenience compiled libraries are placed in the resources directory. It's only necessary to compile native code if you want to change things or port to different platforms.
+
+### Linux
 - Compile LibYUV following https://code.google.com/p/libyuv/wiki/GettingStarted
 	- When ninja complains about tools/sanitizer_options/sanitizer_options.cc get it from the chromium git: https://chromium.googlesource.com/chromium/src/base/+/f64188fb60c527d54bb54f1d107a5b5890a49c89/debug/sanitizer_options.cc
-- Download the openH264 sources (version 1.1) from https://github.com/cisco/openh264
-- Install 
-- Edit ./CMakeLists.txt and point to the libyuv and openh264 directories
-- mkdir build; cmake ..; make
+- Download and compile the openH264 sources (version 1.1) from https://github.com/cisco/openh264
+	- git clone https://github.com/cisco/openh264.git
+	- git checkout v1.1
+	- make
+- Install swig 3.0.3 (Development version as of 5/09/2014)
+- Go to IHMCVideoCodecs directory
+	- mkdir build
+	- ccmake ..
+		- Set LIBYUV_HOME to the libyuv trunk directory
+		- Set OPENH264_HOMe to the openh264 source directory
+	- make
+	- make install
 
+### Mac
+
+
+### Windows
 

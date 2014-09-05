@@ -43,12 +43,12 @@ public class SDecodingParam {
     return OpenH264JNI.SDecodingParam_pFileNameRestructed_get(swigCPtr, this);
   }
 
-  public void setEOutputColorFormat(EVideoFormatType value) {
-    OpenH264JNI.SDecodingParam_eOutputColorFormat_set(swigCPtr, this, value.swigValue());
+  public void setIOutputColorFormat(int value) {
+    OpenH264JNI.SDecodingParam_iOutputColorFormat_set(swigCPtr, this, value);
   }
 
-  public EVideoFormatType getEOutputColorFormat() {
-    return EVideoFormatType.swigToEnum(OpenH264JNI.SDecodingParam_eOutputColorFormat_get(swigCPtr, this));
+  public int getIOutputColorFormat() {
+    return OpenH264JNI.SDecodingParam_iOutputColorFormat_get(swigCPtr, this);
   }
 
   public void setUiCpuLoad(long value) {
@@ -67,12 +67,12 @@ public class SDecodingParam {
     return OpenH264JNI.SDecodingParam_uiTargetDqLayer_get(swigCPtr, this);
   }
 
-  public void setEEcActiveIdc(ERROR_CON_IDC value) {
-    OpenH264JNI.SDecodingParam_eEcActiveIdc_set(swigCPtr, this, value.swigValue());
+  public void setUiEcActiveFlag(short value) {
+    OpenH264JNI.SDecodingParam_uiEcActiveFlag_set(swigCPtr, this, value);
   }
 
-  public ERROR_CON_IDC getEEcActiveIdc() {
-    return ERROR_CON_IDC.swigToEnum(OpenH264JNI.SDecodingParam_eEcActiveIdc_get(swigCPtr, this));
+  public short getUiEcActiveFlag() {
+    return OpenH264JNI.SDecodingParam_uiEcActiveFlag_get(swigCPtr, this);
   }
 
   public void setSVideoProperty(SVideoProperty value) {

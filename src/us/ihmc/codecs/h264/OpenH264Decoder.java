@@ -66,9 +66,9 @@ public class OpenH264Decoder
          throw new IOException("Cannot create Wels decoder");
       }
       SDecodingParam pParam = new SDecodingParam();
-      pParam.setEOutputColorFormat(EVideoFormatType.videoFormatI420);
+      pParam.setIOutputColorFormat(EVideoFormatType.videoFormatI420.swigValue());
       pParam.setUiTargetDqLayer((short) 255);
-      pParam.setEEcActiveIdc(ERROR_CON_IDC.ERROR_CON_SLICE_COPY);
+      pParam.setUiEcActiveFlag((short) ERROR_CON_IDC.ERROR_CON_SLICE_COPY.swigValue());
       pParam.getSVideoProperty().setEVideoBsType(VIDEO_BITSTREAM_TYPE.VIDEO_BITSTREAM_DEFAULT);
       isvcDecoder.Initialize(pParam);
       pParam.delete();

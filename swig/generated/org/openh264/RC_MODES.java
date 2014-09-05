@@ -12,7 +12,6 @@ public enum RC_MODES {
   RC_QUALITY_MODE(0),
   RC_BITRATE_MODE(1),
   RC_LOW_BW_MODE(2),
-  RC_BUFFERBASED_MODE(3),
   RC_OFF_MODE(-1);
 
   public final int swigValue() {

@@ -43,6 +43,14 @@ public class SEncParamBase {
     return EUsageType.swigToEnum(OpenH264JNI.SEncParamBase_iUsageType_get(swigCPtr, this));
   }
 
+  public void setIInputCsp(int value) {
+    OpenH264JNI.SEncParamBase_iInputCsp_set(swigCPtr, this, value);
+  }
+
+  public int getIInputCsp() {
+    return OpenH264JNI.SEncParamBase_iInputCsp_get(swigCPtr, this);
+  }
+
   public void setIPicWidth(int value) {
     OpenH264JNI.SEncParamBase_iPicWidth_set(swigCPtr, this, value);
   }

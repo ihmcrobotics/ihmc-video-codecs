@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
+import us.ihmc.codecs.loader.NativeLibraryLoader;
 import us.ihmc.codecs.yuv.YUVPicture.YUVSubsamplingType;
 
 import com.google.code.libyuv.MJpegDecoder;
@@ -37,7 +38,7 @@ public class JPEGDecoder
 {
    static
    {
-      System.loadLibrary("libyuv");
+      NativeLibraryLoader.loadLibYUV();
    }
 
    private final MJpegDecoder decoder = new MJpegDecoder();

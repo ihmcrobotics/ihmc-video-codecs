@@ -43,6 +43,14 @@ public class SEncParamExt {
     return EUsageType.swigToEnum(OpenH264JNI.SEncParamExt_iUsageType_get(swigCPtr, this));
   }
 
+  public void setIInputCsp(int value) {
+    OpenH264JNI.SEncParamExt_iInputCsp_set(swigCPtr, this, value);
+  }
+
+  public int getIInputCsp() {
+    return OpenH264JNI.SEncParamExt_iInputCsp_get(swigCPtr, this);
+  }
+
   public void setIPicWidth(int value) {
     OpenH264JNI.SEncParamExt_iPicWidth_set(swigCPtr, this, value);
   }
@@ -99,14 +107,6 @@ public class SEncParamExt {
     return OpenH264JNI.SEncParamExt_iSpatialLayerNum_get(swigCPtr, this);
   }
 
-  public void setIComplexityMode(ECOMPLEXITY_MODE value) {
-    OpenH264JNI.SEncParamExt_iComplexityMode_set(swigCPtr, this, value.swigValue());
-  }
-
-  public ECOMPLEXITY_MODE getIComplexityMode() {
-    return ECOMPLEXITY_MODE.swigToEnum(OpenH264JNI.SEncParamExt_iComplexityMode_get(swigCPtr, this));
-  }
-
   public void setUiIntraPeriod(long value) {
     OpenH264JNI.SEncParamExt_uiIntraPeriod_set(swigCPtr, this, value);
   }
@@ -121,6 +121,14 @@ public class SEncParamExt {
 
   public int getINumRefFrame() {
     return OpenH264JNI.SEncParamExt_iNumRefFrame_get(swigCPtr, this);
+  }
+
+  public void setUiFrameToBeCoded(long value) {
+    OpenH264JNI.SEncParamExt_uiFrameToBeCoded_set(swigCPtr, this, value);
+  }
+
+  public long getUiFrameToBeCoded() {
+    return OpenH264JNI.SEncParamExt_uiFrameToBeCoded_get(swigCPtr, this);
   }
 
   public void setBEnableSpsPpsIdAddition(boolean value) {

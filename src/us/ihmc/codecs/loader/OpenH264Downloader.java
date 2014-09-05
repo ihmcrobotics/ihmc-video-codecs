@@ -37,6 +37,8 @@ public class OpenH264Downloader
    public static final String win32 = "openh264-1.1.0-win32msvc.dll";
    public static final String win64 = "openh264-1.1.0-win64msvc.dll";
 
+   private static boolean openH264HasBeenLoaded;
+   
    private OpenH264Downloader()
    {
       //Disallow construction
@@ -106,8 +108,13 @@ public class OpenH264Downloader
       loadOpenH264(true);
    }
    
-   private static void loadOpenH264(boolean showLicenseDialog)
+   private static synchronized void loadOpenH264(boolean showLicenseDialog)
    {
+      if(openH264HasBeenLoaded)
+      {
+         return;
+      }
+      
       String libraryName = getLibraryName();
       File directory = new File(NativeLibraryLoader.LIBRARY_LOCATION);
       if (!directory.exists())
@@ -130,6 +137,8 @@ public class OpenH264Downloader
       {
          System.load(library.getAbsolutePath());
       }
+      
+      openH264HasBeenLoaded = true;
    }
 
    private static void acceptLicense()

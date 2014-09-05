@@ -22,6 +22,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+import org.openh264.EUsageType;
 import org.openh264.RC_MODES;
 import org.openh264.SEncParamExt;
 
@@ -50,7 +51,7 @@ public class MP4H264MovieBuilder implements MovieBuilder
     * 
     * @throws IOException 
     */
-   public MP4H264MovieBuilder(File file, int width, int height, int framerate, int bitrate) throws IOException
+   public MP4H264MovieBuilder(File file, int width, int height, int framerate, int bitrate, EUsageType usageType) throws IOException
    {
       this.width = width;
       this.height = height;
@@ -59,6 +60,7 @@ public class MP4H264MovieBuilder implements MovieBuilder
       SEncParamExt params = encoder.createParamExt(width, height, bitrate * 1000, RC_MODES.RC_QUALITY_MODE);
       params.setUiIntraPeriod(100);
       params.setBEnableSpsPpsIdAddition(false);
+      params.setIUsageType(usageType);
       encoder.initialize(params);
       
       

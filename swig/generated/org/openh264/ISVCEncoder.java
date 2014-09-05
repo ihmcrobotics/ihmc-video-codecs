@@ -59,6 +59,10 @@ public class ISVCEncoder {
     return OpenH264JNI.ISVCEncoder_EncodeParameterSets(swigCPtr, this, SFrameBSInfo.getCPtr(pBsInfo), pBsInfo);
   }
 
+  public int PauseFrame(SSourcePicture kpSrcPic, SFrameBSInfo pBsInfo) {
+    return OpenH264JNI.ISVCEncoder_PauseFrame(swigCPtr, this, SSourcePicture.getCPtr(kpSrcPic), kpSrcPic, SFrameBSInfo.getCPtr(pBsInfo), pBsInfo);
+  }
+
   public int ForceIntraFrame(boolean bIDR) {
     return OpenH264JNI.ISVCEncoder_ForceIntraFrame(swigCPtr, this, bIDR);
   }
