@@ -107,3 +107,17 @@ May the force be with you.
 		- Set all paths correctly
 		- Configure
 	- Generate
+
+## Publishing
+
+To publish to Nexus, add the following lines to ~/.gradle/gradle.properties
+
+nexus_username=[username]
+nexus_password=[password]
+
+
+Replace [username] and [password] with your nexus credentials
+
+Then execute 
+
+gradle publish
