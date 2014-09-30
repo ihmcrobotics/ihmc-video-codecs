@@ -22,6 +22,9 @@ Only video is supported.
 ## Usage
 See the examples directory
 
+### Windows users
+	Install the Microsoft Visual Studio 2013 Runtime from http://www.microsoft.com/en-us/download/details.aspx?id=40784
+
 ## Compile native code
 
 For your convenience compiled libraries are placed in the resources directory. It's only necessary to compile native code if you want to change things or port to different platforms.

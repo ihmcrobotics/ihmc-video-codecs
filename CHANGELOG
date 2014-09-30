@@ -1,3 +1,6 @@
+Version 1.0.2
+	- Added notice for windows users to install the MSVC runtime
+
 Version 1.0.1
 	- Added sendIntraFrame() to encoder to force intra frame
 

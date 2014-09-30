@@ -117,8 +117,18 @@ public class NativeLibraryLoader
          {
          }
       }
-      
-      System.load(lib.getAbsolutePath());
+      try
+      {
+         System.load(lib.getAbsolutePath());         
+      }
+      catch(Exception e) 
+      {
+         if(isWindows())
+         {
+            System.err.println("Windows users, make sure to install the Microsoft Visual Studio 2013 runtime from http://www.microsoft.com/en-us/download/details.aspx?id=40784");
+         }
+         throw new RuntimeException(e);
+      }
       loadedLibraries.add(library);
    }
    
