@@ -58,7 +58,7 @@ public interface H264Encoder
     * Set target frame rate for bandwidth control
     * @param fps
     */
-   void setFrameRate(float fps);
+   public void setFrameRate(float fps);
 
    /**
     * Set the IDR Period. 0 means no intra period. Must be a multiple of 2^temporal_layer.
@@ -67,5 +67,12 @@ public interface H264Encoder
     * 
     * @param period
     */
-   void setIDRPeriod(int period);
+   public void setIDRPeriod(int period);
+   
+   /**
+    * Send IDR frame. Use on reconnect
+    * 
+    */
+   
+   void sendIntraFrame();
 }

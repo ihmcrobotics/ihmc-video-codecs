@@ -1,0 +1,5 @@
+Version 1.0.1
+	- Added sendIntraFrame() to encoder to force intra frame
+
+Version 1.0
+	- Initial release

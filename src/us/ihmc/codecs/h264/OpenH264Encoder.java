@@ -274,4 +274,10 @@ public class OpenH264Encoder implements H264Encoder
    {
       delete();
    }
+
+   @Override
+   public void sendIntraFrame()
+   {
+      isvcEncoder.ForceIntraFrame(true);
+   }
 }
