@@ -162,7 +162,11 @@ public class OpenH264Downloader
 
    private static void acceptLicense()
    {
-      if (GraphicsEnvironment.isHeadless())
+      if(System.getProperty("openh264.license", "reject").equals("accept"))
+      {
+	     return;
+      }
+      else if (GraphicsEnvironment.isHeadless())
       {
          acceptLicenseConsole();
       }

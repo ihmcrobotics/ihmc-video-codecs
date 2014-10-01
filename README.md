@@ -22,8 +22,8 @@ Only video is supported.
 ## Usage
 See the examples directory
 
-### Windows users
-	Install the Microsoft Visual Studio 2013 Runtime from http://www.microsoft.com/en-us/download/details.aspx?id=40784
+### Headless systems
+To accept the license on a system without console input, add "-Dopenh264.license=accept" to your Java command line arguments.
 
 ## Compile native code
 
@@ -98,11 +98,13 @@ May the force be with you.
 		- Dowloading the windows sdk takes forever, just have patience
 - Install mingw 
 - Download the openh264 sources, tag v1.1
-	- Following the instructions in README.md
+	- Following the instructions in openh264 README.md
 	- Setup your path to point to msys and mingw
+	- Start msys using C:\MinGW\msys\1.0\msys.bat
+	- cd to openh264 dir (C:\ is on /c/)
 	- Use make OS=msvc ENABLE64Bit=Yes
 - Start the cmake-gui
-	- Point source directory to your sources
+	- Point source directory to IHMCVideoCodecs sources
 	- Point build directory to [sources]/build
 	- Configure
 		- Choose the Visual Studio 12 2014 Win64 generator
@@ -110,6 +112,13 @@ May the force be with you.
 		- Set all paths correctly
 		- Configure
 	- Generate
+- Go to IHMCVideoCodecs/build
+	- Double click on ALL_BUILD.vcxproj
+	- Wait for VS2013 to start
+	- Select "Release" build type
+	- Right click ALL_BUILD and select build
+		- Ignore the LNK2019 errors
+	- Right click INSTALL and select build
 
 ## Publishing
 
