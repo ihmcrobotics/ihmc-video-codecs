@@ -50,8 +50,8 @@ public class OpenH264Decoder
       NativeLibraryLoader.loadOpenH264Bridge();
    }
 
-   private final ISVCDecoder isvcDecoder;
-   private final STargetPicture pic = new STargetPicture();
+   private ISVCDecoder isvcDecoder;
+   private STargetPicture pic = new STargetPicture();
 
    /**
     * Create a new decoder
@@ -154,11 +154,19 @@ public class OpenH264Decoder
    /**
     * Free native memory
     */
-   public void delete()
+   public synchronized void delete()
    {
-      isvcDecoder.Uninitialize();
-      OpenH264.WelsDestroyDecoder(isvcDecoder);
-      pic.delete();
+      if(isvcDecoder != null)
+      {
+         isvcDecoder.Uninitialize();
+         OpenH264.WelsDestroyDecoder(isvcDecoder);
+         isvcDecoder = null;
+      }
+      if(pic != null)
+      {
+         pic.delete();
+         pic = null;
+      }
    }
    
    @Override

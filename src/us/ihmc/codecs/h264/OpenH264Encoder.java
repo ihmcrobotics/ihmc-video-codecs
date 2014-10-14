@@ -50,7 +50,7 @@ public class OpenH264Encoder implements H264Encoder
       NativeLibraryLoader.loadOpenH264Bridge();
    }
 
-   private final ISVCEncoder isvcEncoder;
+   private ISVCEncoder isvcEncoder;
    private SEncParamExt paramExt;
 
    /**
@@ -258,14 +258,18 @@ public class OpenH264Encoder implements H264Encoder
    /** 
     * Reclaim native memory.
     */
-   public void delete()
+   public synchronized void delete()
    {
-      isvcEncoder.Uninitialize();
-      OpenH264.WelsDestroySVCEncoder(isvcEncoder);
-
+      if(isvcEncoder != null)
+      {
+         isvcEncoder.Uninitialize();
+         OpenH264.WelsDestroySVCEncoder(isvcEncoder);
+         isvcEncoder = null;
+      }
       if (paramExt != null)
       {
          paramExt.delete();
+         paramExt = null;
       }
    }
 

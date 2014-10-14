@@ -41,7 +41,7 @@ public class JPEGDecoder
       NativeLibraryLoader.loadLibYUV();
    }
 
-   private final MJpegDecoder decoder = new MJpegDecoder();
+   private MJpegDecoder decoder = new MJpegDecoder();
 
    public static final int kColorSpaceUnknown = MJpegDecoder.getKColorSpaceUnknown();
    public static final int kColorSpaceGrayscale = MJpegDecoder.getKColorSpaceGrayscale();
@@ -135,9 +135,13 @@ public class JPEGDecoder
    }
 
 
-   public void delete()
+   public synchronized void delete()
    {
-      decoder.delete();
+      if(decoder != null)
+      {
+         decoder.delete();
+         decoder = null;
+      }
    }
    
    @Override

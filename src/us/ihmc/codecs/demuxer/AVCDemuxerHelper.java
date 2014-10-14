@@ -175,7 +175,7 @@ public class AVCDemuxerHelper implements DemuxerHelper
    }
 
    @Override
-   public void delete()
+   public synchronized void delete()
    {
       if(decoder != null)
       {
