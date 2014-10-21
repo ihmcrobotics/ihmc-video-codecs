@@ -78,7 +78,12 @@ public class MP4H264MovieBuilder implements MovieBuilder
    @Override
    public void encodeFrame(YUVPicture picture) throws IOException
    {
-      encoder.encodeFrame(picture.toYUV420(), muxer);
+      YUV420Picture yuv420 = picture.toYUV420();
+      encoder.encodeFrame(yuv420, muxer);
+      if(yuv420 != picture)
+      {
+         yuv420.delete();
+      }
    }
 
    @Override

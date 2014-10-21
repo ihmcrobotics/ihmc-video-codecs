@@ -31,6 +31,7 @@ import org.jcodec.containers.mp4.demuxer.AbstractMP4DemuxerTrack;
 import org.jcodec.containers.mp4.demuxer.FramesMP4DemuxerTrack;
 import org.jcodec.containers.mp4.demuxer.MP4Demuxer;
 
+import us.ihmc.codecs.util.MemoryManagement;
 import us.ihmc.codecs.yuv.YUVPicture;
 
 /**
@@ -247,6 +248,7 @@ public class MP4VideoDemuxer
 
    public void delete()
    {
+      MemoryManagement.deallocateNativeByteBuffer(buffer);
       demuxerHelper.delete();
    }
 

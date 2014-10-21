@@ -192,7 +192,7 @@ public abstract class YUVPicture
       
       return img;
    }
-
+   
    /**
     * Resize this picture
     * 
@@ -259,5 +259,12 @@ public abstract class YUVPicture
     * @return YUV420 version of this picture. Could be the same picture.
     */
    public abstract YUV420Picture toYUV420();
+   
+   /**
+    * De-allocate native memory used by this picture. Call if your application does not GC frequently.
+    * 
+    * Can result in inconsistent state(!)
+    */
+   public abstract void delete();
 
 }

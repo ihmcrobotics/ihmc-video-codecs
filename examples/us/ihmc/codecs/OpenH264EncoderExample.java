@@ -40,6 +40,7 @@ import us.ihmc.codecs.h264.NALType;
 import us.ihmc.codecs.h264.OpenH264Decoder;
 import us.ihmc.codecs.h264.OpenH264Encoder;
 import us.ihmc.codecs.yuv.JPEGDecoder;
+import us.ihmc.codecs.yuv.YUV420Picture;
 import us.ihmc.codecs.yuv.YUVPicture;
 
 import com.google.code.libyuv.FilterModeEnum;
@@ -90,10 +91,13 @@ public class OpenH264EncoderExample
 
          if (pic.getWidth() != width || pic.getHeight() != height)
          {
-            pic = pic.scale(width, height, FilterModeEnum.kFilterBilinear);
+            YUVPicture scaled = pic.scale(width, height, FilterModeEnum.kFilterBilinear);
+            pic.delete();
+            pic = scaled;
          }
 
-         encoder.encodeFrame(pic.toYUV420(), new NALProcessor()
+         YUV420Picture yuv420 = pic.toYUV420();
+         encoder.encodeFrame(yuv420, new NALProcessor()
          {
 
             @Override
@@ -121,6 +125,11 @@ public class OpenH264EncoderExample
 
             }
          });
+         if(yuv420 != pic)
+         {
+            yuv420.delete();
+         }
+         pic.delete();
       }
 
       jpegDecoder.delete();

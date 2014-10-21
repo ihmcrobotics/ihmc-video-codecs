@@ -24,6 +24,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
 import us.ihmc.codecs.loader.NativeLibraryLoader;
+import us.ihmc.codecs.util.MemoryManagement;
 import us.ihmc.codecs.yuv.YUVPicture.YUVSubsamplingType;
 
 import com.google.code.libyuv.MJpegDecoder;
@@ -109,6 +110,11 @@ public class JPEGDecoder
 
       decoder.Decode(Y, U, V);
       decoder.UnloadFrame();
+      if(!buf.isDirect())
+      {
+         MemoryManagement.deallocateNativeByteBuffer(direct);
+      }
+      
       switch (samplingType)
       {
       case YUV420:
@@ -131,7 +137,9 @@ public class JPEGDecoder
       channel.read(buffer);
       buffer.flip();
       stream.close();
-      return decode(buffer);      
+      YUVPicture picture = decode(buffer);
+      MemoryManagement.deallocateNativeByteBuffer(buffer);
+      return picture;
    }
 
 

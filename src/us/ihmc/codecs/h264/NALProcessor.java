@@ -26,7 +26,7 @@ public interface NALProcessor
    /**
     * Process a single NAL from a H264 encoder.
     * @param type NAL type
-    * @param nal Raw NAL including header (0x00 0x00 0x00 0x01)
+    * @param nal Raw NAL including header (0x00 0x00 0x00 0x01). Will be re-used after evaluation. Copy if necessary.
     * @throws IOException
     */
    public void processNal(NALType type, ByteBuffer nal) throws IOException;

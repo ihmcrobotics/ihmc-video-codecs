@@ -21,6 +21,8 @@ package us.ihmc.codecs.yuv;
 import java.awt.image.BufferedImage;
 import java.nio.ByteBuffer;
 
+import us.ihmc.codecs.util.MemoryManagement;
+
 import com.google.code.libyuv.FilterModeEnum;
 import com.google.code.libyuv.libyuv;
 
@@ -31,7 +33,7 @@ import com.google.code.libyuv.libyuv;
  */
 public class YUV422Picture extends YUVPicture
 {
-   private final ByteBuffer Y, U, V;
+   private ByteBuffer Y, U, V;
 
    public YUV422Picture(ByteBuffer Y, ByteBuffer U, ByteBuffer V, int yStride, int uStride, int vStride, int w, int h)
    {
@@ -93,7 +95,7 @@ public class YUV422Picture extends YUVPicture
       libyuv.I422ToARGB(Y, yStride, U, uStride, V, vStride, dstBuffer, dstStride, w, h);
 
       BufferedImage img = createBGRBufferedImageFromRGBA(dstBuffer);
-
+      MemoryManagement.deallocateNativeByteBuffer(dstBuffer);
       return img;
    }
 
@@ -130,6 +132,17 @@ public class YUV422Picture extends YUVPicture
       libyuv.I422ToI420(Y, yStride, U, uStride, V, vStride, Ydest, yStrideDest, Udest, uStrideDest, Vdest, vStrideDest, w, h);
       
       return new YUV420Picture(Ydest, Udest, Vdest, yStrideDest, uStrideDest, vStrideDest, w, h);
+   }
+   
+   @Override
+   public void delete()
+   {
+      MemoryManagement.deallocateNativeByteBuffer(Y);
+      MemoryManagement.deallocateNativeByteBuffer(U);
+      MemoryManagement.deallocateNativeByteBuffer(V);
+      Y = null;
+      U = null;
+      V = null;
    }
 
 }

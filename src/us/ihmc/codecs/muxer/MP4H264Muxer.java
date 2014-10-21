@@ -131,14 +131,15 @@ public class MP4H264Muxer implements NALProcessor
    }
 
    @Override
-   public void processNal(NALType type, ByteBuffer nal) throws IOException
+   public void processNal(NALType type, ByteBuffer inputNAL) throws IOException
    {
       // Handle 0x00 0x00 0x00 0x00 0x01 start sequence if neccessary.
-      if (nal.get(3) == 0 && nal.get(4) == 1)
+      if (inputNAL.get(3) == 0 && inputNAL.get(4) == 1)
       {
-         nal.position(1);
-         nal = nal.slice();
+         inputNAL.position(1);
       }
+      ByteBuffer nal = ByteBuffer.allocate(inputNAL.remaining());
+      nal.put(inputNAL);
 
       nal.clear();
 

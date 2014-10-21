@@ -61,7 +61,7 @@ public class OpenH264Decoder
    public OpenH264Decoder() throws IOException
    {
       isvcDecoder = OpenH264.WelsCreateDecoder();
-      if(isvcDecoder == null)
+      if (isvcDecoder == null)
       {
          throw new IOException("Cannot create Wels decoder");
       }
@@ -77,42 +77,37 @@ public class OpenH264Decoder
    /**
     * Decode a frame.
     * 
-    * @param frame Single NAL packet including header ( 0x00 0x00 0x00 0x01 )
+    * @param frame Single NAL packet including header ( 0x00 0x00 0x00 0x01 ). Must be a direct bytebuffer. It's recommended that the buffer is re-used to avoid excessive native memory allocation.
     * @return YUVPicture if a frame was successfully decoded, null if no image was generated (does not mean an error)
     * @throws IOException An error occurred decoding the NAL
     */
    public YUVPicture decodeFrame(ByteBuffer frame) throws IOException
    {
       DECODING_STATE state = isvcDecoder.DecodeFrame2(frame, frame.limit(), pic);
-      
+
       if (state != DECODING_STATE.dsErrorFree)
       {
          throw new IOException("Cannot decode frame: " + state);
       }
-      
-      
+
       // Sometimes the encoder is not ready. Send an empty decode command will make it work.
-      if(pic.getInfo().getIBufferStatus() == 0)
+      if (pic.getInfo().getIBufferStatus() == 0)
       {
          NALType type = NALType.fromBitStream(frame);
-         if( 
-             type == NALType.CODED_SLICE_NON_IDR_PICTURE   ||
-             type == NALType.CODED_SLICE_DATA_PARTITION_A  ||
-             type == NALType.CODED_SLICE_DATA_PARTITION_B  ||
-             type == NALType.CODED_SLICE_DATA_PARTITION_C  ||
-             type == NALType.CODED_SLICE_IDR_PICTURE)
+         if (type == NALType.CODED_SLICE_NON_IDR_PICTURE || type == NALType.CODED_SLICE_DATA_PARTITION_A || type == NALType.CODED_SLICE_DATA_PARTITION_B
+               || type == NALType.CODED_SLICE_DATA_PARTITION_C || type == NALType.CODED_SLICE_IDR_PICTURE)
          {
-            isvcDecoder.DecodeFrame2(pic);            
+            isvcDecoder.DecodeFrame2(pic);
          }
 
       }
-      
+
       if (pic.getInfo().getIBufferStatus() == 1)
       {
          int width = pic.getInfo().getUsrData().getIWidth();
          int height = pic.getInfo().getUsrData().getIHeight();
          int[] stride = pic.getInfo().getUsrData().getIStride();
-         
+
          ByteBuffer Y = ByteBuffer.allocateDirect(stride[0] * height);
          ByteBuffer U = ByteBuffer.allocateDirect(stride[1] * (height >> 1));
          ByteBuffer V = ByteBuffer.allocateDirect(stride[1] * (height >> 1));
@@ -121,9 +116,8 @@ public class OpenH264Decoder
          pic.getU(U);
          pic.getV(V);
 
-         
          YUVPicture yuvPicture = new YUV420Picture(Y, U, V, stride[0], stride[1], stride[1], width, height);
-         
+
          return yuvPicture;
       }
       else
@@ -132,7 +126,7 @@ public class OpenH264Decoder
       }
 
    }
-   
+
    /**
     * Feeds frame to the decoder but ignores the output
     * 
@@ -142,33 +136,32 @@ public class OpenH264Decoder
    public void skipFrame(ByteBuffer frame) throws IOException
    {
       DECODING_STATE state = isvcDecoder.DecodeFrame2(frame, frame.limit(), pic);
-      
+
       if (state != DECODING_STATE.dsErrorFree)
       {
          throw new IOException("Cannot decode frame: " + state);
       }
-      
+
    }
-   
-   
+
    /**
     * Free native memory
     */
    public synchronized void delete()
    {
-      if(isvcDecoder != null)
+      if (isvcDecoder != null)
       {
          isvcDecoder.Uninitialize();
          OpenH264.WelsDestroyDecoder(isvcDecoder);
          isvcDecoder = null;
       }
-      if(pic != null)
+      if (pic != null)
       {
          pic.delete();
          pic = null;
       }
    }
-   
+
    @Override
    public void finalize()
    {

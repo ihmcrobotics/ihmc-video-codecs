@@ -21,6 +21,8 @@ package us.ihmc.codecs.yuv;
 import java.awt.image.BufferedImage;
 import java.nio.ByteBuffer;
 
+import us.ihmc.codecs.util.MemoryManagement;
+
 import com.google.code.libyuv.FilterModeEnum;
 import com.google.code.libyuv.libyuv;
 
@@ -32,7 +34,7 @@ import com.google.code.libyuv.libyuv;
 public class YUV420Picture extends YUVPicture
 {
 
-   private final ByteBuffer Y, U, V;
+   private ByteBuffer Y, U, V;
 
    /**
     * Create YUV 4:2:0 picture from a BufferedImage
@@ -90,7 +92,7 @@ public class YUV420Picture extends YUVPicture
       libyuv.I420ToRGB24(Y, yStride, U, uStride, V, vStride, dstBuffer, dstStride, w, h);
 
       BufferedImage img = createBGRBufferedImageFromRGB24(dstBuffer);
-
+      MemoryManagement.deallocateNativeByteBuffer(dstBuffer);
       return img;
    }
 
@@ -116,5 +118,16 @@ public class YUV420Picture extends YUVPicture
    public YUV420Picture toYUV420()
    {
       return this;
+   }
+
+   @Override
+   public void delete()
+   {
+      MemoryManagement.deallocateNativeByteBuffer(Y);
+      MemoryManagement.deallocateNativeByteBuffer(U);
+      MemoryManagement.deallocateNativeByteBuffer(V);
+      Y = null;
+      U = null;
+      V = null;
    }
 }

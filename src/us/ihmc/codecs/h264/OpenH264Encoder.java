@@ -50,6 +50,7 @@ public class OpenH264Encoder implements H264Encoder
       NativeLibraryLoader.loadOpenH264Bridge();
    }
 
+   private ByteBuffer nalBuffer = ByteBuffer.allocateDirect(1024*1024); //Decoder cannot handle frames > 1MB anyway
    private ISVCEncoder isvcEncoder;
    private SEncParamExt paramExt;
 
@@ -63,6 +64,28 @@ public class OpenH264Encoder implements H264Encoder
       if (isvcEncoder == null)
       {
          throw new IOException("Cannot create wels encoder");
+      }
+   }
+   
+   /**
+    * Helper function to reuse direct bytebuffers. Native memory does not get cleared till the GC runs. 
+    * This results in massive memory usage on 
+    * 
+    * @param size
+    * @return nalBuffer of capacity minimumCapacity
+    */
+   private ByteBuffer getNALBuffer(int size)
+   {
+      if(nalBuffer.capacity() > size)
+      {
+         nalBuffer.clear();
+         nalBuffer.limit(size);
+         return nalBuffer;
+      }
+      else
+      {
+         nalBuffer = ByteBuffer.allocateDirect(size);
+         return nalBuffer;
       }
    }
 
@@ -243,7 +266,7 @@ public class OpenH264Encoder implements H264Encoder
             SLayerBSInfo sLayerInfo = info.getSLayerInfo(i);
             for (int n = 0; n < sLayerInfo.getINalCount(); n++)
             {
-               ByteBuffer nalBuffer = ByteBuffer.allocateDirect(sLayerInfo.getNalLengthInByte(n));
+               ByteBuffer nalBuffer = getNALBuffer(sLayerInfo.getNalLengthInByte(n));
                sLayerInfo.getNal(n, nalBuffer);
                NALType type = NALType.fromBitStream(nalBuffer);
                nalProcessor.processNal(type, nalBuffer);
