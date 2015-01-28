@@ -21,7 +21,7 @@ import org.jcodec.containers.mp4.muxer.MP4Muxer;
 
 import us.ihmc.codecs.yuv.YUVPicture;
 
-public class JPEGMovieBuilder implements MovieBuilder
+public class MP4MJPEGMovieBuilder implements MovieBuilder
 {
    
    private FileChannelWrapper channel;
@@ -43,7 +43,7 @@ public class JPEGMovieBuilder implements MovieBuilder
    private final ByteBuffer buffer;
    private final ByteBufferImageOutputStream imageOutputStream;
    
-   public JPEGMovieBuilder(File file, int width, int height, int framerate, float quality) throws IOException
+   public MP4MJPEGMovieBuilder(File file, int width, int height, int framerate, float quality) throws IOException
    {
       channel = NIOUtils.writableFileChannel(file);
       muxer = new MP4Muxer(channel);
@@ -68,6 +68,11 @@ public class JPEGMovieBuilder implements MovieBuilder
       buffer.clear();
       writer.write(null, new IIOImage(frame, null, null), param);
       buffer.flip();
+      encodeFrame(buffer);
+   }
+
+   public void encodeFrame(ByteBuffer buffer) throws IOException
+   {
       MP4Packet packet = new MP4Packet(buffer, pts, timescale, 1, frameNo, true, null, dts, 0);
       track.addFrame(packet);
       pts++;

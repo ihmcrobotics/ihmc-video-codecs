@@ -21,7 +21,7 @@ package us.ihmc.codecs;
 import java.io.File;
 import java.io.IOException;
 
-import us.ihmc.codecs.builder.JPEGMovieBuilder;
+import us.ihmc.codecs.builder.MP4MJPEGMovieBuilder;
 import us.ihmc.codecs.builder.MovieBuilder;
 import us.ihmc.codecs.yuv.JPEGDecoder;
 import us.ihmc.codecs.yuv.YUVPicture;
@@ -34,7 +34,7 @@ public class CreateMP4WithJPEGExample
       int height = 720;
       int framerate = 10;
 
-      MovieBuilder builder = new JPEGMovieBuilder(new File("test.mp4"), width, height, framerate, 0.9f);
+      MovieBuilder builder = new MP4MJPEGMovieBuilder(new File("test.mp4"), width, height, framerate, 0.9f);
       
       JPEGDecoder decoder = new JPEGDecoder();
       System.out.println("Writing movie");
