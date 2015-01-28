@@ -26,6 +26,7 @@ public class NativeLibraryLoader
    private final static String OPENH264BRIDGE_LINUX_64 = "libopenh264bridge.so";
    private final static String OPENH264BRIDGE_WINDOWS_64 = "openh264bridge.dll";
    
+   private final static String SCREENSHOT_LINUX = "libscreenshot.so";
    
    
    private static final HashSet<String> loadedLibraries = new HashSet<String>();
@@ -33,6 +34,20 @@ public class NativeLibraryLoader
    private NativeLibraryLoader()
    {
       // Disallow construction
+   }
+   
+   private static String getScreenshotName()
+   {
+      if(isX86_64())
+      {
+         if(isLinux())
+         {
+            return SCREENSHOT_LINUX;
+         }
+      }
+      
+      throw new RuntimeException(System.getProperty("os.name") + "/" + System.getProperty("os.arch")
+            + " unsupported. Only 64bit Linux/Mac/Windows supported for now.");
    }
    
    private static String getOpenH264BridgeName()
@@ -90,6 +105,11 @@ public class NativeLibraryLoader
       OpenH264Downloader.loadOpenH264();
       String libopenH264bridge = getOpenH264BridgeName();
       loadLibraryFromClassPath(libopenH264bridge, Version.VERSION);
+   }
+   
+   public static void loadScreenShot()
+   {
+      loadLibraryFromClassPath(getScreenshotName(), Version.VERSION);
    }
 
    private synchronized static void loadLibraryFromClassPath(String library, String version)

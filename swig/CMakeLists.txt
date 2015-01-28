@@ -42,3 +42,17 @@ if(APPLE)
 	SET_TARGET_PROPERTIES(openh264bridge PROPERTIES INSTALL_RPATH "@loader_path/")
 	add_custom_command(TARGET openh264bridge POST_BUILD COMMAND ${CMAKE_INSTALL_NAME_TOOL} -change libopenh264.dylib @rpath/libopenh264.dylib $<TARGET_FILE:openh264bridge>)
 endif(APPLE)
+
+FIND_PACKAGE(X11)
+
+IF(X11_FOUND)
+SET(CMAKE_SWIG_OUTDIR "${CMAKE_CURRENT_SOURCE_DIR}/generated/us/ihmc/codecs/screenCapture")
+
+SET_SOURCE_FILES_PROPERTIES(ScreenShot.i PROPERTIES CPLUSPLUS ON)
+SET_PROPERTY(SOURCE ScreenShot.i PROPERTY SWIG_FLAGS "-package" "us.ihmc.codecs.screenCapture")
+INCLUDE_DIRECTORIES(X11_INCLUDE_DIR)
+SWIG_ADD_MODULE(screenshot java ScreenShot.i)
+ADD_DEPENDENCIES(screenshot version)
+SWIG_LINK_LIBRARIES(screenshot ${X11_LIBRARIES})
+INSTALL(TARGETS screenshot RUNTIME DESTINATION resources LIBRARY DESTINATION resources)
+ENDIF(X11_FOUND)
