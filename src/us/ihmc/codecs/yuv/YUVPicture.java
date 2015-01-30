@@ -61,19 +61,37 @@ public abstract class YUVPicture
             {
                return YUV444;
             }
-            else if (planeWidths[0] / 2 == planeWidths[1] && planeWidths[0] / 2 == planeWidths[2] && planeHeights[0] == planeHeights[1]
+            else if (isHalf(planeWidths[0], planeWidths[1]) && isHalf(planeWidths[0], planeWidths[2]) && planeHeights[0] == planeHeights[1]
                   && planeHeights[0] == planeHeights[2])
             {
                return YUV422;
             }
-            else if (planeWidths[0] / 2 == planeWidths[1] && planeWidths[0] / 2 == planeWidths[2] && planeHeights[0] / 2 == planeHeights[1]
-                  && planeHeights[0] / 2 == planeHeights[2])
+            else if (isHalf(planeWidths[0], planeWidths[1]) && isHalf(planeWidths[0], planeWidths[2]) &&
+                     isHalf(planeHeights[0], planeHeights[1]) && isHalf(planeHeights[0], planeHeights[2]))
             {
                return YUV420;
             }
 
          }
          return UNSUPPORTED;
+      }
+      
+      private static boolean isHalf(int orig, int toTest)
+      {
+         if(orig / 2 == toTest)
+         {
+            return true;
+         }
+         else if(orig / 2 == toTest + 1)
+         {
+            return true;
+         }
+         else if (orig / 2 == toTest - 1)
+         {
+            return true;
+         }
+         
+         return false;
       }
    }
 
