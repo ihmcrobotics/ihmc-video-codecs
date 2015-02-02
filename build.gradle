@@ -22,7 +22,7 @@ publishing {
 
 			groupId 'us.ihmc'
 			artifactId 'IHMCVideoCodecs'
-			version '1.0.9'
+			version '1.0.12'
 			from components.java
 			
 			artifact sourceJar {

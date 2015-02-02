@@ -41,7 +41,22 @@ public class LinuxNativeScreenCapture implements ScreenCapture
          screenBuffer.clear();
       }
       int bitsperpixel = ScreenShot.getPixels(screenBuffer, bounds.x, bounds.y, bounds.width, bounds.height);
-      if(bitsperpixel != 32)
+      if (bitsperpixel < 0)
+      {
+         switch (bitsperpixel)
+         {
+         case -1:
+            System.err.println("Cannot open display.");
+            return null;
+         case -2:
+            System.err.println("Cannot capture image.");
+            return null;
+
+         default:
+            return null;
+         }
+      }
+      else if (bitsperpixel != 32)
       {
          throw new RuntimeException("ScreenCapture expects 32 bits per pixel");
       }
@@ -56,7 +71,7 @@ public class LinuxNativeScreenCapture implements ScreenCapture
          byte b = screenBuffer.get();
          byte g = screenBuffer.get();
          byte r = screenBuffer.get();
-         /* byte a = */ screenBuffer.get();
+         /* byte a = */screenBuffer.get();
 
          imageArray[i] = b;
          imageArray[i + 1] = g;
