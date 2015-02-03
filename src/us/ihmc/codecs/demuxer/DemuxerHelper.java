@@ -22,7 +22,7 @@ import java.io.IOException;
 
 import org.jcodec.common.model.Packet;
 
-import us.ihmc.codecs.yuv.YUVPicture;
+import us.ihmc.codecs.generated.YUVPicture;
 
 public interface DemuxerHelper
 {

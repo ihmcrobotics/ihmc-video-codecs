@@ -33,6 +33,8 @@ ELSEIF(WIN32)
 ELSEIF(UNIX)
 	SET(CMAKE_INSTALL_RPATH "\$ORIGIN")
 ENDIF(APPLE)
+
+add_subdirectory(csrc)
 add_subdirectory (swig)
 
 

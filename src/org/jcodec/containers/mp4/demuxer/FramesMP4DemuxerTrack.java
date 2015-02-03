@@ -1,5 +1,8 @@
 package org.jcodec.containers.mp4.demuxer;
 
+import static org.jcodec.common.DemuxerTrackMeta.Type.AUDIO;
+import static org.jcodec.common.DemuxerTrackMeta.Type.OTHER;
+import static org.jcodec.common.DemuxerTrackMeta.Type.VIDEO;
 import static org.jcodec.containers.mp4.QTTimeUtil.mediaToEdited;
 import static org.jcodec.containers.mp4.boxes.Box.findFirst;
 
@@ -18,7 +21,6 @@ import org.jcodec.containers.mp4.boxes.MovieBox;
 import org.jcodec.containers.mp4.boxes.SampleSizesBox;
 import org.jcodec.containers.mp4.boxes.SyncSamplesBox;
 import org.jcodec.containers.mp4.boxes.TrakBox;
-import static org.jcodec.common.DemuxerTrackMeta.Type.*;
 
 /**
  * This class is part of JCodec ( www.jcodec.org ) This software is distributed

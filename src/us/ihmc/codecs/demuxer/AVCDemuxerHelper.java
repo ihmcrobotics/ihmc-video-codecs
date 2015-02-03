@@ -31,8 +31,8 @@ import org.jcodec.containers.mp4.boxes.LeafBox;
 import org.jcodec.containers.mp4.boxes.SampleEntry;
 import org.jcodec.containers.mp4.boxes.VideoSampleEntry;
 
+import us.ihmc.codecs.generated.YUVPicture;
 import us.ihmc.codecs.h264.OpenH264Decoder;
-import us.ihmc.codecs.yuv.YUVPicture;
 
 public class AVCDemuxerHelper implements DemuxerHelper
 {

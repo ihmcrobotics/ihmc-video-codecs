@@ -19,7 +19,8 @@ import org.jcodec.containers.mp4.boxes.SampleEntry;
 import org.jcodec.containers.mp4.muxer.FramesMP4MuxerTrack;
 import org.jcodec.containers.mp4.muxer.MP4Muxer;
 
-import us.ihmc.codecs.yuv.YUVPicture;
+import us.ihmc.codecs.generated.YUVPicture;
+import us.ihmc.codecs.yuv.YUVPictureConverter;
 
 public class MP4MJPEGMovieBuilder implements MovieBuilder
 {
@@ -42,6 +43,8 @@ public class MP4MJPEGMovieBuilder implements MovieBuilder
    
    private final ByteBuffer buffer;
    private final ByteBufferImageOutputStream imageOutputStream;
+   
+   private YUVPictureConverter converter;
    
    public MP4MJPEGMovieBuilder(File file, int width, int height, int framerate, float quality) throws IOException
    {
@@ -83,7 +86,11 @@ public class MP4MJPEGMovieBuilder implements MovieBuilder
    @Override
    public void encodeFrame(YUVPicture frame) throws IOException
    {
-      encodeFrame(frame.getImage());
+      if(converter == null)
+      {
+         converter = new YUVPictureConverter();
+      }
+      encodeFrame(converter.toBufferedImage(frame));
    }
 
    @Override

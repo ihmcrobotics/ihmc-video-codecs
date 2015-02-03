@@ -16,15 +16,11 @@ import us.ihmc.codecs.Version;
  */
 public class NativeLibraryLoader
 {
-   public final static String LIBRARY_LOCATION = new File(System.getProperty("user.home"), ".ihmc" + File.separator + "lib").getAbsolutePath();
+   public final static String LIBRARY_LOCATION = new File(System.getProperty("user.home"), ".ihmc" + File.separator + "lib" + File.separator + OpenH264Downloader.openH264Version).getAbsolutePath();
    
-   private final static String LIBYUV_MAC_64 = "liblibyuv.jnilib";
-   private final static String LIBYUV_LINUX_64 = "liblibyuv.so";
-   private final static String LIBYUV_WINDOWS_64 = "libyuv.dll";
-   
-   private final static String OPENH264BRIDGE_MAC_64 = "libopenh264bridge.jnilib";
-   private final static String OPENH264BRIDGE_LINUX_64 = "libopenh264bridge.so";
-   private final static String OPENH264BRIDGE_WINDOWS_64 = "openh264bridge.dll";
+   private final static String LIBYUV_MAC_64 = "libihmcVideoCodecs.jnilib";
+   private final static String LIBYUV_LINUX_64 = "libihmcVideoCodecs.so";
+   private final static String LIBYUV_WINDOWS_64 = "ihmcVideoCodecs.dll";
    
    private final static String SCREENSHOT_LINUX = "libscreenshot.so";
    
@@ -50,29 +46,8 @@ public class NativeLibraryLoader
             + " unsupported. Only 64bit Linux/Mac/Windows supported for now.");
    }
    
-   private static String getOpenH264BridgeName()
-   {
-      if(isX86_64())
-      {
-         if(isLinux())
-         {
-            return OPENH264BRIDGE_LINUX_64;
-         }
-         else if (isMac())
-         {
-            return OPENH264BRIDGE_MAC_64;
-         }
-         else if (isWindows())
-         {
-            return OPENH264BRIDGE_WINDOWS_64;
-         }
-      }
-      
-      throw new RuntimeException(System.getProperty("os.name") + "/" + System.getProperty("os.arch")
-            + " unsupported. Only 64bit Linux/Mac/Windows supported for now.");
-   }
 
-   private static String getYUVLibraryName()
+   private static String getIHMCVideoCodecsLibraryName()
    {
       if(isX86_64())
       {
@@ -94,19 +69,13 @@ public class NativeLibraryLoader
       
    }
    
-   public static void loadLibYUV()
-   {
-      String libyuv = getYUVLibraryName();
-      loadLibraryFromClassPath(libyuv, Version.VERSION);  
-   }
-   
-   public static void loadOpenH264Bridge()
+   public static void loadIHMCVideoCodecsLibrary()
    {
       OpenH264Downloader.loadOpenH264();
-      String libopenH264bridge = getOpenH264BridgeName();
-      loadLibraryFromClassPath(libopenH264bridge, Version.VERSION);
+      String libyuv = getIHMCVideoCodecsLibraryName();
+      loadLibraryFromClassPath(libyuv, Version.VERSION);  
    }
-   
+      
    public static void loadScreenShot()
    {
       loadLibraryFromClassPath(getScreenshotName(), Version.VERSION);

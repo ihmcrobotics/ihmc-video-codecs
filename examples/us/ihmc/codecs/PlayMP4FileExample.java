@@ -28,7 +28,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
 import us.ihmc.codecs.demuxer.MP4VideoDemuxer;
-import us.ihmc.codecs.yuv.YUVPicture;
+import us.ihmc.codecs.generated.YUVPicture;
 
 public class PlayMP4FileExample
 {

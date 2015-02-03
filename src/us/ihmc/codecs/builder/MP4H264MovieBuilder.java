@@ -22,14 +22,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import org.openh264.EUsageType;
-import org.openh264.RC_MODES;
-import org.openh264.SEncParamExt;
-
+import us.ihmc.codecs.generated.YUVPicture;
 import us.ihmc.codecs.h264.OpenH264Encoder;
 import us.ihmc.codecs.muxer.MP4H264Muxer;
-import us.ihmc.codecs.yuv.YUV420Picture;
-import us.ihmc.codecs.yuv.YUVPicture;
 
 public class MP4H264MovieBuilder implements MovieBuilder
 {

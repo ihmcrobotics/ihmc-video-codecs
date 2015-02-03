@@ -21,12 +21,10 @@ package us.ihmc.codecs;
 import java.io.File;
 import java.io.IOException;
 
-import org.openh264.EUsageType;
-
 import us.ihmc.codecs.builder.MP4H264MovieBuilder;
 import us.ihmc.codecs.builder.MovieBuilder;
+import us.ihmc.codecs.generated.YUVPicture;
 import us.ihmc.codecs.yuv.JPEGDecoder;
-import us.ihmc.codecs.yuv.YUVPicture;
 
 public class CreateMP4WithH264Example
 {

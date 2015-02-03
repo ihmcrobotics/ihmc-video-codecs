@@ -23,8 +23,8 @@ import java.io.IOException;
 
 import us.ihmc.codecs.builder.MP4MJPEGMovieBuilder;
 import us.ihmc.codecs.builder.MovieBuilder;
+import us.ihmc.codecs.generated.YUVPicture;
 import us.ihmc.codecs.yuv.JPEGDecoder;
-import us.ihmc.codecs.yuv.YUVPicture;
 
 public class CreateMP4WithJPEGExample
 {
@@ -35,7 +35,7 @@ public class CreateMP4WithJPEGExample
       int framerate = 10;
 
       MovieBuilder builder = new MP4MJPEGMovieBuilder(new File("test.mp4"), width, height, framerate, 0.9f);
-      
+            
       JPEGDecoder decoder = new JPEGDecoder();
       System.out.println("Writing movie");
       for (int i = 1; i < 100; i += 1)
@@ -48,6 +48,7 @@ public class CreateMP4WithJPEGExample
          }
          
          YUVPicture pic = decoder.readJPEG(new File("data/image_" + i + ".jpg"));
+
          builder.encodeFrame(pic);
       }
       System.out.println();

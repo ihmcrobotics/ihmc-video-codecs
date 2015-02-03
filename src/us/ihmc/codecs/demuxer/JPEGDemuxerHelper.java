@@ -24,8 +24,8 @@ import java.nio.ByteBuffer;
 import org.jcodec.common.model.Packet;
 import org.jcodec.containers.mp4.boxes.SampleEntry;
 
+import us.ihmc.codecs.generated.YUVPicture;
 import us.ihmc.codecs.yuv.JPEGDecoder;
-import us.ihmc.codecs.yuv.YUVPicture;
 
 public class JPEGDemuxerHelper implements DemuxerHelper
 {

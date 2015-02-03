@@ -33,17 +33,13 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.SwingUtilities;
 
-import org.openh264.RC_MODES;
-
+import us.ihmc.codecs.generated.FilterModeEnum;
+import us.ihmc.codecs.generated.YUVPicture;
 import us.ihmc.codecs.h264.NALProcessor;
 import us.ihmc.codecs.h264.NALType;
 import us.ihmc.codecs.h264.OpenH264Decoder;
 import us.ihmc.codecs.h264.OpenH264Encoder;
 import us.ihmc.codecs.yuv.JPEGDecoder;
-import us.ihmc.codecs.yuv.YUV420Picture;
-import us.ihmc.codecs.yuv.YUVPicture;
-
-import com.google.code.libyuv.FilterModeEnum;
 
 /**
  *

@@ -21,7 +21,7 @@ package us.ihmc.codecs.builder;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import us.ihmc.codecs.yuv.YUVPicture;
+import us.ihmc.codecs.generated.YUVPicture;
 
 /**
  * Simple to use interface for creating movies

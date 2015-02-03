@@ -21,19 +21,7 @@ package us.ihmc.codecs.h264;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
-import org.openh264.CM_RETURN;
-import org.openh264.ENCODER_OPTION;
-import org.openh264.EVideoFormatType;
-import org.openh264.ISVCEncoder;
-import org.openh264.OpenH264;
-import org.openh264.RC_MODES;
-import org.openh264.SEncParamExt;
-import org.openh264.SFrameBSInfo;
-import org.openh264.SLayerBSInfo;
-import org.openh264.SSourcePicture;
-
 import us.ihmc.codecs.loader.NativeLibraryLoader;
-import us.ihmc.codecs.yuv.YUV420Picture;
 
 /**
  * Easy to use class for the OpenH264 encoder. 
