@@ -29,6 +29,7 @@ import javax.swing.SwingUtilities;
 
 import us.ihmc.codecs.demuxer.MP4VideoDemuxer;
 import us.ihmc.codecs.generated.YUVPicture;
+import us.ihmc.codecs.yuv.YUVPictureConverter;
 
 public class PlayMP4FileExample
 {
@@ -48,11 +49,12 @@ public class PlayMP4FileExample
 
       demuxer.seek(300);
       
+      YUVPictureConverter converter = new YUVPictureConverter();
       
       YUVPicture picture;
       while ((picture = demuxer.getNextFrame()) != null)
       {
-         final BufferedImage img = picture.getImage(); 
+         final BufferedImage img = converter.toBufferedImage(picture); 
          SwingUtilities.invokeLater(new Runnable()
          {
             @Override
@@ -62,6 +64,7 @@ public class PlayMP4FileExample
                label.setIcon(icon);
             }
          });
+         picture.delete();
       }
 
       frame.dispose();

@@ -13,6 +13,11 @@ bool YUVPicture::isHalf(int orig, int toTest) {
 
 	return false;
 }
+
+int YUVPicture::divideByTwoRoundUp(int orig)
+{
+	return orig % 2 == 0 ? orig >> 1 : (orig >> 1) + 1;
+}
 YUVPicture::YUVSubsamplingType YUVPicture::getSubsamplingType(int yWidth, int yHeight, int uWidth, int uHeight, int vWidth, int vHeight) {
 	if (yWidth == uWidth && yWidth == vWidth && yHeight == uHeight && yHeight == vHeight) {
 		return YUVPicture::YUV444;
@@ -32,18 +37,18 @@ YUVPicture::YUVPicture(YUVSubsamplingType type, int width, int height) :
 	switch (type) {
 	case YUV420: {
 		yStride = width;
-		uStride = width >> 1;
-		vStride = width >> 1;
+		uStride = YUVPicture::divideByTwoRoundUp(width);
+		vStride = YUVPicture::divideByTwoRoundUp(width);
 
 		Y = (uint8*) malloc(yStride * height);
-		U = (uint8*) malloc(uStride * (height >> 1));
-		V = (uint8*) malloc(vStride * (height >> 1));
+		U = (uint8*) malloc(uStride * YUVPicture::divideByTwoRoundUp(height));
+		V = (uint8*) malloc(vStride * YUVPicture::divideByTwoRoundUp(height));
 		break;
 	}
 	case YUV422: {
 		yStride = width;
-		uStride = width >> 1;
-		vStride = width >> 1;
+		uStride = YUVPicture::divideByTwoRoundUp(width);
+		vStride = YUVPicture::divideByTwoRoundUp(width);
 
 		Y = (uint8*) malloc(yStride * height);
 		U = (uint8*) malloc(uStride * height);

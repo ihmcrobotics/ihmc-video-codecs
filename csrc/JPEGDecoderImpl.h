@@ -22,9 +22,10 @@
 #include <libyuv.h>
 #include <YUVPicture.h>
 
-	class JPEGDecoderImpl : private libyuv::MJpegDecoder
-	{
-	public:
-		YUVPicture* decode(uint8* src, int srcLength);
-	};
+class JPEGDecoderImpl {
+private:
+	libyuv::MJpegDecoder decoder;
+public:
+	YUVPicture* decode(uint8* src, int srcLength);
+};
 #endif

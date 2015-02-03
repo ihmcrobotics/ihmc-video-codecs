@@ -31,6 +31,7 @@ public:
 	static YUVSubsamplingType getSubsamplingType(int yWidth, int yHeight, int uWidth, int uHeight, int vWidth, int vHeight);
 private:
 	static bool isHalf(int orig, int toTest);
+	static int divideByTwoRoundUp(int orig);
 private:
 	YUVSubsamplingType type;
 	int width, height;
@@ -44,6 +45,7 @@ private:
 public:
 	YUVPicture(YUVSubsamplingType type, int width, int height, int yStride, int uStride, int vStride, uint8 *Y, uint8 *U, uint8 *V);
 	YUVPicture(YUVSubsamplingType type, int width, int height);
+
 	void scale(int newWidth, int newHeight, libyuv::FilterModeEnum filterMode);
 	RGBPicture* toRGB();
 	YUVSubsamplingType getType();
