@@ -18,7 +18,6 @@
 
 package us.ihmc.codecs.h264;
 
-import java.io.IOException;
 import java.nio.ByteBuffer;
 
 import us.ihmc.codecs.generated.OpenH264DecoderImpl;
@@ -43,11 +42,11 @@ public class OpenH264Decoder extends OpenH264DecoderImpl
    
    public YUVPicture decodeFrame(ByteBuffer buffer)
    {
-      return decodeFrame(buffer, buffer.remaining());
+      return decodeFrame(buffer, buffer.limit());
    }
    
    public void skipFrame(ByteBuffer buffer)
    {
-      skipFrame(buffer, buffer.remaining());
+      skipFrame(buffer, buffer.limit());
    }
 }

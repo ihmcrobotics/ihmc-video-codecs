@@ -39,15 +39,15 @@ public class YUVPicture {
     return YUVPicture.YUVSubsamplingType.swigToEnum(ihmcVideoCodecsJNI.YUVPicture_getSubsamplingType(yWidth, yHeight, uWidth, uHeight, vWidth, vHeight));
   }
 
-  static private long SwigConstructYUVPicture(YUVPicture.YUVSubsamplingType type, int width, int height, int yStride, int uStride, int vStride, java.nio.ByteBuffer Y, java.nio.ByteBuffer U, java.nio.ByteBuffer V) {
-  assert Y.isDirect() : "Buffer must be allocated direct.";
-  assert U.isDirect() : "Buffer must be allocated direct.";
-  assert V.isDirect() : "Buffer must be allocated direct.";
-    return ihmcVideoCodecsJNI.new_YUVPicture__SWIG_0(type.swigValue(), width, height, yStride, uStride, vStride, Y, U, V);
+  static private long SwigConstructYUVPicture(YUVPicture.YUVSubsamplingType type, int width, int height, int yStride, int uStride, int vStride, java.nio.ByteBuffer Yin, java.nio.ByteBuffer Uin, java.nio.ByteBuffer Vin) {
+  assert Yin.isDirect() : "Buffer must be allocated direct.";
+  assert Uin.isDirect() : "Buffer must be allocated direct.";
+  assert Vin.isDirect() : "Buffer must be allocated direct.";
+    return ihmcVideoCodecsJNI.new_YUVPicture__SWIG_0(type.swigValue(), width, height, yStride, uStride, vStride, Yin, Uin, Vin);
   }
 
-  public YUVPicture(YUVPicture.YUVSubsamplingType type, int width, int height, int yStride, int uStride, int vStride, java.nio.ByteBuffer Y, java.nio.ByteBuffer U, java.nio.ByteBuffer V) {
-    this(YUVPicture.SwigConstructYUVPicture(type, width, height, yStride, uStride, vStride, Y, U, V), true);
+  public YUVPicture(YUVPicture.YUVSubsamplingType type, int width, int height, int yStride, int uStride, int vStride, java.nio.ByteBuffer Yin, java.nio.ByteBuffer Uin, java.nio.ByteBuffer Vin) {
+    this(YUVPicture.SwigConstructYUVPicture(type, width, height, yStride, uStride, vStride, Yin, Uin, Vin), true);
   }
 
   public YUVPicture(YUVPicture.YUVSubsamplingType type, int width, int height) {

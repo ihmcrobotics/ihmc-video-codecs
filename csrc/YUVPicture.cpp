@@ -1,6 +1,7 @@
 #include <YUVPicture.h>
 #include <stdlib.h>
 #include <RGBPicture.h>
+#include <string.h>
 
 bool YUVPicture::isHalf(int orig, int toTest) {
 	if (orig / 2 == toTest) {
@@ -28,9 +29,21 @@ YUVPicture::YUVSubsamplingType YUVPicture::getSubsamplingType(int yWidth, int yH
 	} else
 		return YUVPicture::UNSUPPORTED;
 }
-YUVPicture::YUVPicture(YUVSubsamplingType type, int width, int height, int yStride, int uStride, int vStride, uint8 *Y, uint8 *U, uint8 *V) :
-		type(type), width(width), height(height), yStride(yStride), uStride(uStride), vStride(vStride), Y(Y), U(U), V(V)
+YUVPicture::YUVPicture(YUVSubsamplingType type, int width, int height, int yStride, int uStride, int vStride, uint8 *Yin, uint8 *Uin, uint8 *Vin) :
+		type(type), width(width), height(height), yStride(yStride), uStride(uStride), vStride(vStride)
 {
+	int ySize = yStride * height;
+	int uSize = uStride * YUVPicture::divideByTwoRoundUp(height);
+	int vSize = vStride * YUVPicture::divideByTwoRoundUp(height);
+
+	Y = (uint8*) malloc(ySize);
+	U = (uint8*) malloc(uSize);
+	V = (uint8*) malloc(vSize);
+
+	memcpy(Y, Yin, ySize);
+	memcpy(U, Uin, uSize);
+	memcpy(V, Vin, vSize);
+
 }
 YUVPicture::YUVPicture(YUVSubsamplingType type, int width, int height) :
 		type(type), width(width), height(height) {

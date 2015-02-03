@@ -43,7 +43,7 @@ private:
 	uint8* V;
 
 public:
-	YUVPicture(YUVSubsamplingType type, int width, int height, int yStride, int uStride, int vStride, uint8 *Y, uint8 *U, uint8 *V);
+	YUVPicture(YUVSubsamplingType type, int width, int height, int yStride, int uStride, int vStride, uint8 *Yin, uint8 *Uin, uint8 *Vin);
 	YUVPicture(YUVSubsamplingType type, int width, int height);
 
 	void scale(int newWidth, int newHeight, libyuv::FilterModeEnum filterMode);
