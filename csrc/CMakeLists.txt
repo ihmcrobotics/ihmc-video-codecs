@@ -17,6 +17,6 @@ set_property(TARGET yuvPicture PROPERTY POSITION_INDEPENDENT_CODE TRUE)
 INCLUDE_DIRECTORIES("${OPENH264_HOME}/codec/api/svc")
 LINK_DIRECTORIES("${OPENH264_HOME}")
 
-add_library(openH264WrapperImpl OBJECT OpenH264DecoderImpl.cpp)
+add_library(openH264WrapperImpl OBJECT OpenH264DecoderImpl.cpp OpenH264EncoderImpl.cpp)
 set_property(TARGET openH264WrapperImpl PROPERTY POSITION_INDEPENDENT_CODE TRUE)
 

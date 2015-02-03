@@ -23,6 +23,7 @@ import java.io.IOException;
 
 import us.ihmc.codecs.builder.MP4H264MovieBuilder;
 import us.ihmc.codecs.builder.MovieBuilder;
+import us.ihmc.codecs.generated.EUsageType;
 import us.ihmc.codecs.generated.YUVPicture;
 import us.ihmc.codecs.yuv.JPEGDecoder;
 
@@ -39,19 +40,24 @@ public class CreateMP4WithH264Example
       
       JPEGDecoder decoder = new JPEGDecoder();
       System.out.println("Writing movie");
-      for (int i = 1; i < 1000; i += 1)
+      while(framerate > 0)
       {
-         System.out.print(".");
-         System.out.flush();
-         if(i % 100 == 0)
+         for (int i = 1; i < 1000; i += 1)
          {
-            System.out.println();
+            System.out.print(".");
+            System.out.flush();
+            if(i % 100 == 0)
+            {
+               System.out.println();
+            }
+            
+            YUVPicture pic = decoder.readJPEG(new File("data/image_" + i + ".jpg"));
+            builder.encodeFrame(pic);
+            pic.delete();
          }
+         System.out.println();
          
-         YUVPicture pic = decoder.readJPEG(new File("data/image_" + i + ".jpg"));
-         builder.encodeFrame(pic);
       }
-      System.out.println();
       
       decoder.delete();
       builder.close();

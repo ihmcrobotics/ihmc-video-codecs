@@ -21,6 +21,10 @@ package us.ihmc.codecs.h264;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
+import us.ihmc.codecs.generated.EUsageType;
+import us.ihmc.codecs.generated.OpenH264EncoderImpl;
+import us.ihmc.codecs.generated.RC_MODES;
+import us.ihmc.codecs.generated.YUVPicture;
 import us.ihmc.codecs.loader.NativeLibraryLoader;
 
 /**
@@ -31,268 +35,71 @@ import us.ihmc.codecs.loader.NativeLibraryLoader;
  * @author Jesper Smith
  *
  */
-public class OpenH264Encoder implements H264Encoder
+public class OpenH264Encoder extends OpenH264EncoderImpl implements H264Encoder
 {
    static
    {
-      NativeLibraryLoader.loadOpenH264Bridge();
-   }
-
-   private ByteBuffer nalBuffer = ByteBuffer.allocateDirect(1024*1024); //Decoder cannot handle frames > 1MB anyway
-   private ISVCEncoder isvcEncoder;
-   private SEncParamExt paramExt;
-
-   /**
-    * Create new Encoder
-    * @throws IOException
-    */
-   public OpenH264Encoder() throws IOException
-   {
-      isvcEncoder = OpenH264.WelsCreateSVCEncoder();
-      if (isvcEncoder == null)
-      {
-         throw new IOException("Cannot create wels encoder");
-      }
+      NativeLibraryLoader.loadIHMCVideoCodecsLibrary();
    }
    
-   /**
-    * Helper function to reuse direct bytebuffers. Native memory does not get cleared till the GC runs. 
-    * This results in massive memory usage on 
-    * 
-    * @param size
-    * @return nalBuffer of capacity minimumCapacity
-    */
-   private ByteBuffer getNALBuffer(int size)
+   private ByteBuffer directBuffer;
+   private ByteBuffer getOrCreateBuffer(int size)
    {
-      if(nalBuffer.capacity() > size)
+      if(directBuffer == null)
       {
-         nalBuffer.clear();
-         nalBuffer.limit(size);
-         return nalBuffer;
+         directBuffer = ByteBuffer.allocateDirect(size);
+      }
+      else if(directBuffer.capacity() < size)
+      {
+         directBuffer = ByteBuffer.allocateDirect(size);
+      }
+      
+      directBuffer.clear();
+      directBuffer.limit(size);
+      return directBuffer;
+   }
+
+   /**
+    * Convenience initialization function, calls setSize, setMaxFrameRate, setBitRate, setRCMode before initialize()
+    * 
+    * @param width
+    * @param height
+    * @param framerate
+    * @param bitrate
+    * @param usageType
+    */
+   public void initialize(int width, int height, double framerate, int bitrate, EUsageType usageType)
+   {
+      setSize(width, height);
+      setMaxFrameRate((float)framerate);
+      setBitRate(bitrate);
+      setRCMode(RC_MODES.RC_QUALITY_MODE);
+      initialize();
+   }
+   
+   @Override
+   public ByteBuffer getNAL() throws IOException
+   {
+      int nalSize = getNALSize();
+      if(nalSize > 0)
+      {
+         ByteBuffer buffer = getOrCreateBuffer(nalSize);
+         getNAL(directBuffer, buffer.capacity());
+         return buffer;
       }
       else
       {
-         nalBuffer = ByteBuffer.allocateDirect(size);
-         return nalBuffer;
-      }
-   }
-
-   /**
-    * Create a new SEncParamExt to initialize the encoder. Use this to set advanced settings of the encoder
-    * 
-    * @param width Width of frames to encode
-    * @param height Height of frames to encode
-    * @param targetBitRate Target bitrate of the resulting stream
-    * @param rateControlMode Desired rate control mode
-    * 
-    * @return new SEncParamExt object. 
-    */
-   public SEncParamExt createParamExt(int width, int height, int targetBitRate, RC_MODES rateControlMode)
-   {
-      if ((width >> 1) << 1 != width || (height >> 1) << 1 != height)
-      {
-         throw new RuntimeException("Resolution not divisible by 2");
-      }
-
-      SEncParamExt paramExt = new SEncParamExt();
-      isvcEncoder.GetDefaultParams(paramExt);
-
-      setDimensionParams(paramExt, width, height);
-      setBitRateParams(paramExt, targetBitRate);
-      paramExt.setIRCMode(rateControlMode);
-
-      return paramExt;
-   }
-
-   /**
-    * Simple initialization of encoder
-    * 
-    * @param width Desired frame width
-    * @param height Desired frame height
-    * @param targetBitRate target bit rate for stream
-    * @param rateControlMode rate control mode
-    */
-   public void initialize(int width, int height, int targetBitRate, RC_MODES rateControlMode)
-   {
-      SEncParamExt paramExt = createParamExt(width, height, targetBitRate, rateControlMode);
-      initialize(paramExt);
-   }
-
-   /**
-    * Initialize based on current SEncParamExt. 
-    * @param paramExt Structure of type SEncParamExt. Create with OpenH264Encoder.createParamExt()
-    * 
-    * @see createParamExt()
-    */
-   public void initialize(SEncParamExt paramExt)
-   {
-      this.paramExt = paramExt;
-      CM_RETURN res = CM_RETURN.swigToEnum(isvcEncoder.InitializeExt(paramExt));
-      if(res != CM_RETURN.cmResultSuccess)
-      {
-         throw new RuntimeException("Cannot intialize encoder: " + res);
-      }
-      
-   }
-
-   private void setDimensionParams(SEncParamExt paramExt, int width, int height)
-   {
-      paramExt.setIPicWidth(width);
-      paramExt.setIPicHeight(height);
-      paramExt.getSpatialLayer(0).setIVideoHeight(height);
-      paramExt.getSpatialLayer(0).setIVideoWidth(width);
-   }
-
-   private void setBitRateParams(SEncParamExt paramExt, int bitrate)
-   {
-      paramExt.getSpatialLayer(0).setISpatialBitrate(bitrate);
-      paramExt.setITargetBitrate(bitrate);
-   }
-
-   private void checkInitalized()
-   {
-      if (paramExt == null)
-      {
-         throw new RuntimeException("Initialize the encoder before use.");
-      }
-   }
-
-   private void setOptionParamExt()
-   {
-      CM_RETURN ret = CM_RETURN.swigToEnum(isvcEncoder.SetOption(ENCODER_OPTION.ENCODER_OPTION_SVC_ENCODE_PARAM_EXT, paramExt));
-      if(ret != CM_RETURN.cmResultSuccess)
-      {
-         throw new RuntimeException("Cannot set option: " + ret);
-      }
-      
-   }
-   
-   @Override
-   public synchronized void setTargetBitRate(int bitrate)
-   {
-      checkInitalized();
-      setBitRateParams(paramExt, bitrate); // Set bitrate params, or resolution change overwrites bitrate settings
-      setOptionParamExt();
-      
-//      SBitrateInfo sBitrateInfo = new SBitrateInfo();
-//      sBitrateInfo.setIBitrate(bitrate);
-//      sBitrateInfo.setILayer(LAYER_NUM.SPATIAL_LAYER_ALL);
-//      isvcEncoder.SetOption(ENCODER_OPTION.ENCODER_OPTION_BITRATE, sBitrateInfo);
-   }
-
-   @Override
-   public synchronized void setFrameRate(float fps)
-   {
-      checkInitalized();
-      paramExt.getSpatialLayer(0).setFFrameRate(fps);
-      setOptionParamExt();
-   }
-   
-   @Override
-   public synchronized void setIDRPeriod(int period)
-   {
-      checkInitalized();
-      paramExt.setUiIntraPeriod(period);
-      setOptionParamExt();
-   }
-
-   @Override
-   public synchronized void setResolution(int width, int height)
-   {
-      checkInitalized();
-      if ((width >> 1) << 1 != width || (height >> 1) << 1 != height)
-      {
-         throw new RuntimeException("Resolution not divisible by 2");
-      }
-
-      setDimensionParams(paramExt, width, height);
-      setOptionParamExt();
-   }
-
-   @Override
-   public synchronized void encodeFrame(YUV420Picture frame, NALProcessor nalProcessor) throws IOException
-   {
-      checkInitalized();
-      if (frame.getWidth() != paramExt.getIPicWidth() || frame.getHeight() != paramExt.getIPicHeight())
-      {
-         throw new RuntimeException("Resolution of frame does not correspond to encoder resolution");
-      }
-
-      SSourcePicture picture = new SSourcePicture();
-
-      picture.setIPicWidth(frame.getWidth());
-      picture.setIPicHeight(frame.getHeight());
-      picture.setIColorFormat(EVideoFormatType.videoFormatI420.swigValue());
-
-      int[] stride = { frame.getYStride(), frame.getUStride(), frame.getVStride(), 0 };
-      picture.setIStride(stride);
-      picture.setPData(0, frame.getY());
-      picture.setPData(1, frame.getU());
-      picture.setPData(2, frame.getV());
-
-      SFrameBSInfo info = new SFrameBSInfo();
-      int e = isvcEncoder.EncodeFrame(picture, info);
-
-      if (e != 0)
-      {
-         throw new IOException("Cannot encode frame: " + e);
-      }
-
-      switch (info.getEFrameType())
-      {
-      case videoFrameTypeInvalid:
-         throw new IOException("Encoder not ready or parameters are invalidate");
-      case videoFrameTypeSkip:
-         break;
-      case videoFrameTypeI:
-      case videoFrameTypeIDR:
-      case videoFrameTypeP:
-      case videoFrameTypeIPMixed:
-         
-         for (int i = 0; i < info.getILayerNum(); i++)
-         {
-            SLayerBSInfo sLayerInfo = info.getSLayerInfo(i);
-            for (int n = 0; n < sLayerInfo.getINalCount(); n++)
-            {
-               ByteBuffer nalBuffer = getNALBuffer(sLayerInfo.getNalLengthInByte(n));
-               sLayerInfo.getNal(n, nalBuffer);
-               NALType type = NALType.fromBitStream(nalBuffer);
-               nalProcessor.processNal(type, nalBuffer);
-            }
-         }
-      }
-
-      picture.delete();
-      info.delete();
-   }
-
-   /** 
-    * Reclaim native memory.
-    */
-   public synchronized void delete()
-   {
-      if(isvcEncoder != null)
-      {
-         isvcEncoder.Uninitialize();
-         OpenH264.WelsDestroySVCEncoder(isvcEncoder);
-         isvcEncoder = null;
-      }
-      if (paramExt != null)
-      {
-         paramExt.delete();
-         paramExt = null;
+         throw new IOException("Cannot read NAL");
       }
    }
 
    @Override
-   public void finalize()
+   public void encodeFrame(YUVPicture picture) throws IOException
    {
-      delete();
+      if(!encodeFrameImpl(picture))
+      {
+         throw new IOException("Cannot encode frame");
+      }
    }
 
-   @Override
-   public void sendIntraFrame()
-   {
-      isvcEncoder.ForceIntraFrame(true);
-   }
 }

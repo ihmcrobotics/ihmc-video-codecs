@@ -33,13 +33,13 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.SwingUtilities;
 
+import us.ihmc.codecs.generated.EUsageType;
 import us.ihmc.codecs.generated.FilterModeEnum;
 import us.ihmc.codecs.generated.YUVPicture;
-import us.ihmc.codecs.h264.NALProcessor;
-import us.ihmc.codecs.h264.NALType;
 import us.ihmc.codecs.h264.OpenH264Decoder;
 import us.ihmc.codecs.h264.OpenH264Encoder;
 import us.ihmc.codecs.yuv.JPEGDecoder;
+import us.ihmc.codecs.yuv.YUVPictureConverter;
 
 /**
  *
@@ -64,11 +64,12 @@ public class OpenH264EncoderExample
    private int bitrate = 5000000;
    
    private final JPEGDecoder jpegDecoder = new JPEGDecoder();
+   private final YUVPictureConverter converter = new YUVPictureConverter();
 
    public OpenH264EncoderExample() throws IOException, InvocationTargetException, InterruptedException
    {
       
-      encoder.initialize(width, height, bitrate, RC_MODES.RC_LOW_BW_MODE);
+      encoder.initialize(width, height, 10.0, bitrate, EUsageType.CAMERA_VIDEO_REAL_TIME);
       SwingUtilities.invokeAndWait(new Runnable()
       {
          @Override
@@ -78,7 +79,7 @@ public class OpenH264EncoderExample
          }
       });
 
-      for (int i = 1; i < 19036; i += 1)
+      for (int i = 1; i < 1930; i += 1)
       {
          YUVPicture pic = jpegDecoder.readJPEG(new File("data/image_" + i + ".jpg"));
 
@@ -87,43 +88,26 @@ public class OpenH264EncoderExample
 
          if (pic.getWidth() != width || pic.getHeight() != height)
          {
-            YUVPicture scaled = pic.scale(width, height, FilterModeEnum.kFilterBilinear);
-            pic.delete();
-            pic = scaled;
+            pic.scale(width, height, FilterModeEnum.kFilterBilinear);
          }
 
-         YUV420Picture yuv420 = pic.toYUV420();
-         encoder.encodeFrame(yuv420, new NALProcessor()
+         encoder.encodeFrame(pic);
+         
+         while(encoder.nextNAL())
          {
-
-            @Override
-            public void processNal(NALType type, ByteBuffer nal)
+            ByteBuffer nal = encoder.getNAL();
+            final YUVPicture img = decoder.decodeFrame(nal);
+            if (img != null)
             {
-               try
+               SwingUtilities.invokeLater(new Runnable()
                {
-                  final YUVPicture img = decoder.decodeFrame(nal);
-                  if (img != null)
+                  @Override
+                  public void run()
                   {
-                     SwingUtilities.invokeLater(new Runnable()
-                     {
-                        @Override
-                        public void run()
-                        {
-                           image.setIcon(new ImageIcon(img.getImage()));
-                        }
-                     });
+                     image.setIcon(new ImageIcon(converter.toBufferedImage(img)));
                   }
-               }
-               catch (IOException e)
-               {
-                  throw new RuntimeException(e);
-               }
-
+               });
             }
-         });
-         if(yuv420 != pic)
-         {
-            yuv420.delete();
          }
          pic.delete();
       }
@@ -141,7 +125,7 @@ public class OpenH264EncoderExample
          width = newResolution;
          height = (((newResolution * 9) / 16) >> 1) << 1;
 
-         encoder.setResolution(width, height);
+         encoder.setSize(width, height);
          image.setPreferredSize(new Dimension(width, height));
 
       }
@@ -152,7 +136,7 @@ public class OpenH264EncoderExample
       int newBitrate = bitrateSlider.getValue();
       if (newBitrate != bitrate)
       {
-         encoder.setTargetBitRate(newBitrate);
+         encoder.setBitRate(newBitrate);
          this.bitrate = newBitrate;
       }
    }

@@ -19,6 +19,7 @@
 package us.ihmc.codecs.h264;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 
 import us.ihmc.codecs.generated.YUVPicture;
 
@@ -35,30 +36,43 @@ public interface H264Encoder
     * 
     * @param picture 
     * @param nalProcessor
-    * @throws IOException
+    * @throws IOException if frame could not be encoded
     */
-   void encodeFrame(YUVPicture picture, NALProcessor nalProcessor) throws IOException;
+   public void encodeFrame(YUVPicture picture) throws IOException;
 
+   /**
+    * Load the next NAL
+    * @return false if there are no more NALs avaible
+    */
+   public boolean nextNAL();
+   
+   /**
+    * Get the NAL data
+    * 
+    * @return Reference to the Direct ByteBuffer with the NAL information. This buffer can be re-used on subsequent calls
+    */
+   public ByteBuffer getNAL() throws IOException;
+   
    /**
     * Change the resolution of the frames after the encoder is initialized. Can be called during encoding.
     * 
     * @param width Width of incoming frames
     * @param height Height of incoming frames
     */
-   public void setResolution(int width, int height);
-   
+   public void setSize(int width, int height);
+
    /**
     * Set target bitrate after the encoder is initialized. Can be called during encoding
     * 
     * @param bitrate new desired bitrate
     */
-   public void setTargetBitRate(int bitrate);
+   public void setBitRate(int bitrate);
 
    /**
     * Set target frame rate for bandwidth control
     * @param fps
     */
-   public void setFrameRate(float fps);
+   public void setMaxFrameRate(float fps);
 
    /**
     * Set the IDR Period. 0 means no intra period. Must be a multiple of 2^temporal_layer.
@@ -67,12 +81,12 @@ public interface H264Encoder
     * 
     * @param period
     */
-   public void setIDRPeriod(int period);
-   
+   public void setIntraPeriod(int period);
+
    /**
     * Send IDR frame. Use on reconnect
     * 
     */
-   
+
    void sendIntraFrame();
 }

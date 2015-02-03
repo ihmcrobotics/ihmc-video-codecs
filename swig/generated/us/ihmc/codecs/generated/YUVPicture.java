@@ -87,6 +87,10 @@ public class YUVPicture {
     return ihmcVideoCodecsJNI.YUVPicture_getVStride(swigCPtr, this);
   }
 
+  public void toYUV420() {
+    ihmcVideoCodecsJNI.YUVPicture_toYUV420(swigCPtr, this);
+  }
+
   public enum YUVSubsamplingType {
     YUV444,
     YUV422,

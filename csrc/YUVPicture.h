@@ -60,6 +60,8 @@ public:
 	int getUStride();
 	int getVStride();
 
+	void toYUV420();
+
 	~YUVPicture();
 };
 

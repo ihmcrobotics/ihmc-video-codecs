@@ -15,9 +15,8 @@ bool YUVPicture::isHalf(int orig, int toTest) {
 	return false;
 }
 
-int YUVPicture::divideByTwoRoundUp(int orig)
-{
-	return orig % 2 == 0 ? orig >> 1 : (orig >> 1) + 1;
+inline int YUVPicture::divideByTwoRoundUp(int orig) {
+	return (orig + 1) >> 1;
 }
 YUVPicture::YUVSubsamplingType YUVPicture::getSubsamplingType(int yWidth, int yHeight, int uWidth, int uHeight, int vWidth, int vHeight) {
 	if (yWidth == uWidth && yWidth == vWidth && yHeight == uHeight && yHeight == vHeight) {
@@ -30,8 +29,7 @@ YUVPicture::YUVSubsamplingType YUVPicture::getSubsamplingType(int yWidth, int yH
 		return YUVPicture::UNSUPPORTED;
 }
 YUVPicture::YUVPicture(YUVSubsamplingType type, int width, int height, int yStride, int uStride, int vStride, uint8 *Yin, uint8 *Uin, uint8 *Vin) :
-		type(type), width(width), height(height), yStride(yStride), uStride(uStride), vStride(vStride)
-{
+		type(type), width(width), height(height), yStride(yStride), uStride(uStride), vStride(vStride) {
 	int ySize = yStride * height;
 	int uSize = uStride * YUVPicture::divideByTwoRoundUp(height);
 	int vSize = vStride * YUVPicture::divideByTwoRoundUp(height);
@@ -88,8 +86,8 @@ void YUVPicture::scale(int newWidth, int newHeight, libyuv::FilterModeEnum filte
 	switch (type) {
 	case YUV420: {
 		yStrideDest = newWidth;
-		uStrideDest = yStrideDest >> 1;
-		vStrideDest = yStrideDest >> 1;
+		uStrideDest = divideByTwoRoundUp(yStrideDest);
+		vStrideDest = divideByTwoRoundUp(yStrideDest);
 
 		Ydest = (uint8*) malloc(yStrideDest * newHeight);
 		Udest = (uint8*) malloc(uStrideDest * (newHeight >> 1));
@@ -99,8 +97,8 @@ void YUVPicture::scale(int newWidth, int newHeight, libyuv::FilterModeEnum filte
 	}
 	case YUV422: {
 		yStrideDest = newWidth;
-		uStrideDest = yStrideDest >> 1;
-		vStrideDest = yStrideDest >> 1;
+		uStrideDest = divideByTwoRoundUp(yStrideDest);
+		vStrideDest = divideByTwoRoundUp(yStrideDest);
 
 		Ydest = (uint8*) malloc(yStrideDest * newHeight);
 		Udest = (uint8*) malloc(uStrideDest * newHeight);
@@ -173,6 +171,50 @@ RGBPicture* YUVPicture::toRGB() {
 	}
 
 	return rgb;
+}
+
+void YUVPicture::toYUV420() {
+	if (type == YUV420) {
+		return;
+	}
+	int yStrideDest, uStrideDest, vStrideDest;
+	uint8 *Ydest, *Udest, *Vdest;
+
+	if (type == YUV422) {
+
+		yStrideDest = width;
+		uStrideDest = divideByTwoRoundUp(yStrideDest);
+		vStrideDest = divideByTwoRoundUp(yStrideDest);
+
+		Ydest = (uint8*) malloc(yStrideDest * height);
+		Udest = (uint8*) malloc(uStrideDest * height);
+		Vdest = (uint8*) malloc(vStrideDest * height);
+
+		libyuv::I422ToI420(Y, yStride, U, uStride, V, vStride, Ydest, yStrideDest, Udest, uStrideDest, Vdest, vStrideDest, width, height);
+
+	} else if (type == YUV444) {
+		yStrideDest = width;
+		uStrideDest = yStrideDest;
+		vStrideDest = yStrideDest;
+
+		Ydest = (uint8*) malloc(yStrideDest * height);
+		Udest = (uint8*) malloc(uStrideDest * height);
+		Vdest = (uint8*) malloc(vStrideDest * height);
+
+		libyuv::I444ToI420(Y, yStride, U, uStride, V, vStride, Ydest, yStrideDest, Udest, uStrideDest, Vdest, vStrideDest, width, height);
+	}
+
+	yStride = yStrideDest;
+	uStride = uStrideDest;
+	vStride = vStrideDest;
+
+	free(Y);
+	free(U);
+	free(V);
+
+	Y = Ydest;
+	U = Udest;
+	V = Vdest;
 }
 
 YUVPicture::YUVSubsamplingType YUVPicture::getType() {

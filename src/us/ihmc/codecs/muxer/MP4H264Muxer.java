@@ -33,7 +33,6 @@ import org.jcodec.containers.mp4.muxer.FramesMP4MuxerTrack;
 import org.jcodec.containers.mp4.muxer.MP4Muxer;
 
 import us.ihmc.codecs.builder.MP4H264MovieBuilder;
-import us.ihmc.codecs.h264.NALProcessor;
 import us.ihmc.codecs.h264.NALType;
 
 /**
@@ -45,7 +44,7 @@ import us.ihmc.codecs.h264.NALType;
  * @author Jesper Smith
  *
  */
-public class MP4H264Muxer implements NALProcessor
+public class MP4H264Muxer
 {
    private final MP4Muxer muxer;
    private final FramesMP4MuxerTrack track;
@@ -130,9 +129,9 @@ public class MP4H264Muxer implements NALProcessor
       ppsList.add(nalIn);
    }
 
-   @Override
-   public void processNal(NALType type, ByteBuffer inputNAL) throws IOException
+   public void processNal(ByteBuffer inputNAL) throws IOException
    {
+      NALType type = NALType.fromBitStream(inputNAL);
       // Handle 0x00 0x00 0x00 0x00 0x01 start sequence if neccessary.
       if (inputNAL.get(3) == 0 && inputNAL.get(4) == 1)
       {

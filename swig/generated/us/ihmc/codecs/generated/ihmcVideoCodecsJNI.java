@@ -20,6 +20,7 @@ public class ihmcVideoCodecsJNI {
   public final static native int YUVPicture_getYStride(long jarg1, YUVPicture jarg1_);
   public final static native int YUVPicture_getUStride(long jarg1, YUVPicture jarg1_);
   public final static native int YUVPicture_getVStride(long jarg1, YUVPicture jarg1_);
+  public final static native void YUVPicture_toYUV420(long jarg1, YUVPicture jarg1_);
   public final static native void delete_YUVPicture(long jarg1);
   public final static native long new_RGBPicture(int jarg1, int jarg2);
   public final static native void RGBPicture_put(long jarg1, RGBPicture jarg1_, java.nio.ByteBuffer jarg2);
@@ -35,4 +36,25 @@ public class ihmcVideoCodecsJNI {
   public final static native long OpenH264DecoderImpl_decodeFrame(long jarg1, OpenH264DecoderImpl jarg1_, java.nio.ByteBuffer jarg2, int jarg3);
   public final static native void OpenH264DecoderImpl_skipFrame(long jarg1, OpenH264DecoderImpl jarg1_, java.nio.ByteBuffer jarg2, int jarg3);
   public final static native void delete_OpenH264DecoderImpl(long jarg1);
+  public final static native long new_OpenH264EncoderImpl();
+  public final static native void OpenH264EncoderImpl_setUsageType(long jarg1, OpenH264EncoderImpl jarg1_, int jarg2);
+  public final static native void OpenH264EncoderImpl_setSize(long jarg1, OpenH264EncoderImpl jarg1_, int jarg2, int jarg3);
+  public final static native void OpenH264EncoderImpl_setBitRate(long jarg1, OpenH264EncoderImpl jarg1_, int jarg2);
+  public final static native void OpenH264EncoderImpl_setRCMode(long jarg1, OpenH264EncoderImpl jarg1_, int jarg2);
+  public final static native void OpenH264EncoderImpl_setMaxFrameRate(long jarg1, OpenH264EncoderImpl jarg1_, float jarg2);
+  public final static native void OpenH264EncoderImpl_setComplexityMode(long jarg1, OpenH264EncoderImpl jarg1_, int jarg2);
+  public final static native void OpenH264EncoderImpl_setIntraPeriod(long jarg1, OpenH264EncoderImpl jarg1_, int jarg2);
+  public final static native void OpenH264EncoderImpl_setEnableSpsPpsIdAddition(long jarg1, OpenH264EncoderImpl jarg1_, boolean jarg2);
+  public final static native void OpenH264EncoderImpl_setEnableFrameSkip(long jarg1, OpenH264EncoderImpl jarg1_, boolean jarg2);
+  public final static native void OpenH264EncoderImpl_setMaxBitrate(long jarg1, OpenH264EncoderImpl jarg1_, int jarg2);
+  public final static native void OpenH264EncoderImpl_setMaxQp(long jarg1, OpenH264EncoderImpl jarg1_, int jarg2);
+  public final static native void OpenH264EncoderImpl_setMinQp(long jarg1, OpenH264EncoderImpl jarg1_, int jarg2);
+  public final static native void OpenH264EncoderImpl_setEnableDenoise(long jarg1, OpenH264EncoderImpl jarg1_, boolean jarg2);
+  public final static native boolean OpenH264EncoderImpl_initialize(long jarg1, OpenH264EncoderImpl jarg1_);
+  public final static native boolean OpenH264EncoderImpl_encodeFrameImpl(long jarg1, OpenH264EncoderImpl jarg1_, long jarg2, YUVPicture jarg2_);
+  public final static native boolean OpenH264EncoderImpl_nextNAL(long jarg1, OpenH264EncoderImpl jarg1_);
+  public final static native int OpenH264EncoderImpl_getNALSize(long jarg1, OpenH264EncoderImpl jarg1_);
+  public final static native void OpenH264EncoderImpl_getNAL(long jarg1, OpenH264EncoderImpl jarg1_, java.nio.ByteBuffer jarg2, int jarg3);
+  public final static native void OpenH264EncoderImpl_sendIntraFrame(long jarg1, OpenH264EncoderImpl jarg1_);
+  public final static native void delete_OpenH264EncoderImpl(long jarg1);
 }
