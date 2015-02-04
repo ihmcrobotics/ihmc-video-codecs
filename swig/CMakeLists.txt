@@ -18,6 +18,8 @@ ELSE()
 	LINK_DIRECTORIES("${LIBYUV_HOME}/out/Release")
 	LINK_DIRECTORIES("${LIBYUV_HOME}/out/Release/obj/third_party/libjpeg_turbo")
 ENDIF(WIN32)
+
+INCLUDE_DIRECTORIES("${LIBYUV_HOME}/third_party/libjpeg_turbo")
 INCLUDE_DIRECTORIES("${LIBYUV_HOME}/include")
 SET_SOURCE_FILES_PROPERTIES(ihmcVideoCodecs.i PROPERTIES CPLUSPLUS ON)
 SET_PROPERTY(SOURCE ihmcVideoCodecs.i PROPERTY SWIG_FLAGS "-package" "us.ihmc.codecs.generated")

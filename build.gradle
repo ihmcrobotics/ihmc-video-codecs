@@ -31,14 +31,14 @@ publishing {
 		}
 
 	}
-
+/*s
 	repositories {
 		maven {
 			credentials {	
-				username "${nexus_username}"
-				password "${nexus_password}"
+				username "$ {nexus_username}"
+				password "$ {nexus_password}"
 			}
 			url "https://bengal.ihmc.us/nexus/content/repositories/releases"
 		}
-	}
+	}*/
 }

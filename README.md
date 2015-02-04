@@ -97,20 +97,20 @@ May the force be with you.
 	- Non-cygwin
 	- Follow instructions on https://code.google.com/p/libyuv/wiki/GettingStarted
 		- Dowloading the windows sdk takes forever, just have patience
-- Install mingw 
+- Install MinGW (you only need to select msys-base)
+	- Setup %PATH to point to MinGW and MSYS
 - Download the openh264 sources, tag v1.3
 	- Following the instructions in openh264 README.md
-	- Setup your path to point to msys and mingw
-	- Start msys using C:\MinGW\msys\1.0\msys.bat
-	- cd to openh264 dir (C:\ is on /c/)
-	- Use make OS=msvc ENABLE64Bit=Yes
+	- Start the VS2013 x64 Cross Tools Command Prompt (Start -> Visual Studio 2013 -> Visual Studio Tools)
+	- cd to openh264 dir 
+	- Use make OS=msvc ENABLE64BIT=Yes
 - Start the cmake-gui
 	- Point source directory to IHMCVideoCodecs sources
 	- Point build directory to [sources]/build
 	- Configure
-		- Choose the Visual Studio 12 2014 Win64 generator
+		- Choose the Visual Studio 12 2013 Win64 generator
 		- Choose native toolchain
-		- Set all paths correctly
+		- Set all paths (LIBYUV_HOME, OPENH264_HOME) correctly
 		- Configure
 	- Generate
 - Go to IHMCVideoCodecs/build
