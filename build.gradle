@@ -4,7 +4,7 @@ apply from: 'gradleScripts/util.gradle'
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
-version = '1.0'
+version = '2.0'
 
 setupDefaultDirectoryStructure()
 
@@ -22,7 +22,7 @@ publishing {
 
 			groupId 'us.ihmc'
 			artifactId 'IHMCVideoCodecs'
-			version '1.0.12'
+			version '2.0.0'
 			from components.java
 			
 			artifact sourceJar {
