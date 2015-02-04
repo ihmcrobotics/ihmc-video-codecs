@@ -1,11 +1,9 @@
 package us.ihmc.codecs.screenCapture;
 
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
-import java.awt.image.WritableRaster;
 import java.nio.ByteBuffer;
 
+import us.ihmc.codecs.generated.RGBPicture;
 import us.ihmc.codecs.loader.NativeLibraryLoader;
 
 public class LinuxNativeScreenCapture implements ScreenCapture
@@ -17,6 +15,7 @@ public class LinuxNativeScreenCapture implements ScreenCapture
       if (!loaded)
       {
          NativeLibraryLoader.loadScreenShot();
+         NativeLibraryLoader.loadIHMCVideoCodecsLibrary();
          loaded = true;
       }
    }
@@ -29,7 +28,7 @@ public class LinuxNativeScreenCapture implements ScreenCapture
    }
 
    @Override
-   public BufferedImage createScreenCapture(Rectangle bounds)
+   public RGBPicture createScreenCapture(Rectangle bounds)
    {
       int imageSize = bounds.height * bounds.width * 4;
       if (screenBuffer == null || screenBuffer.capacity() < imageSize)
@@ -60,25 +59,11 @@ public class LinuxNativeScreenCapture implements ScreenCapture
       {
          throw new RuntimeException("ScreenCapture expects 32 bits per pixel");
       }
-      BufferedImage bufferedImage = new BufferedImage(bounds.width, bounds.height, BufferedImage.TYPE_3BYTE_BGR);
 
-      WritableRaster wr = bufferedImage.getRaster();
-      DataBufferByte db = (DataBufferByte) wr.getDataBuffer();
+      RGBPicture picture = new RGBPicture(bounds.width, bounds.height);
+      picture.putRGBA(screenBuffer);
 
-      byte[] imageArray = db.getData();
-      for (int i = 0; i < imageArray.length; i += 3)
-      {
-         byte b = screenBuffer.get();
-         byte g = screenBuffer.get();
-         byte r = screenBuffer.get();
-         /* byte a = */screenBuffer.get();
-
-         imageArray[i] = b;
-         imageArray[i + 1] = g;
-         imageArray[i + 2] = r;
-      }
-
-      return bufferedImage;
+      return picture;
    }
 
 }

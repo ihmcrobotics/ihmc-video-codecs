@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <RGBPicture.h>
 #include <string.h>
-
+#include <iostream>
 bool YUVPicture::isHalf(int orig, int toTest) {
 	if (orig / 2 == toTest) {
 		return true;
@@ -82,7 +82,6 @@ YUVPicture::YUVPicture(YUVSubsamplingType type, int width, int height) :
 void YUVPicture::scale(int newWidth, int newHeight, libyuv::FilterModeEnum filterMode) {
 	uint8 *Ydest, *Udest, *Vdest;
 	int yStrideDest, uStrideDest, vStrideDest;
-
 	switch (type) {
 	case YUV420: {
 		yStrideDest = newWidth;
@@ -90,8 +89,8 @@ void YUVPicture::scale(int newWidth, int newHeight, libyuv::FilterModeEnum filte
 		vStrideDest = divideByTwoRoundUp(yStrideDest);
 
 		Ydest = (uint8*) malloc(yStrideDest * newHeight);
-		Udest = (uint8*) malloc(uStrideDest * (newHeight >> 1));
-		Vdest = (uint8*) malloc(vStrideDest * (newHeight >> 1));
+		Udest = (uint8*) malloc(uStrideDest * divideByTwoRoundUp(newHeight));
+		Vdest = (uint8*) malloc(vStrideDest * divideByTwoRoundUp(newHeight));
 		libyuv::I420Scale(Y, yStride, U, uStride, V, vStride, width, height, Ydest, yStrideDest, Udest, uStrideDest, Vdest, vStrideDest, newWidth, newHeight, filterMode);
 		break;
 	}

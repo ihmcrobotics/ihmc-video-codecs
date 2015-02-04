@@ -19,15 +19,16 @@ package us.ihmc.codecs;
 
 import java.awt.Dimension;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import us.ihmc.codecs.generated.RGBPicture;
 import us.ihmc.codecs.screenCapture.ScreenCapture;
 import us.ihmc.codecs.screenCapture.ScreenCaptureFactory;
+import us.ihmc.codecs.yuv.RGBPictureConverter;
 
 public class CreateScreenShotExample
 {
@@ -46,14 +47,15 @@ public class CreateScreenShotExample
 
       ScreenCapture capture = ScreenCaptureFactory.getScreenCapture();
       Rectangle bounds = new Rectangle(0, 0, width, height);
-      
+      RGBPictureConverter converter = new RGBPictureConverter();
       while(true)
       {
          long start = System.nanoTime();
-         BufferedImage img = capture.createScreenCapture(bounds);
+         RGBPicture img = capture.createScreenCapture(bounds);
          System.out.println((System.nanoTime() - start) / 1e9);
-         ImageIcon icon = new ImageIcon(img);
+         ImageIcon icon = new ImageIcon(converter.toBufferedImage(img));
          label.setIcon(icon);
+         img.delete();
          try
          {
             Thread.sleep(100);

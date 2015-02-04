@@ -34,11 +34,11 @@ public class CreateMP4WithJPEGExample
       int height = 720;
       int framerate = 10;
 
-      MovieBuilder builder = new MP4MJPEGMovieBuilder(new File("test.mp4"), width, height, framerate, 0.9f);
+      MovieBuilder builder = new MP4MJPEGMovieBuilder(new File("testMJPEG.mp4"), width, height, framerate, 95);
             
       JPEGDecoder decoder = new JPEGDecoder();
       System.out.println("Writing movie");
-      for (int i = 1; i < 100; i += 1)
+      for (int i = 1; i < 1000; i += 1)
       {
          System.out.print(".");
          System.out.flush();
@@ -48,8 +48,8 @@ public class CreateMP4WithJPEGExample
          }
          
          YUVPicture pic = decoder.readJPEG(new File("data/image_" + i + ".jpg"));
-
          builder.encodeFrame(pic);
+         pic.delete();
       }
       System.out.println();
       

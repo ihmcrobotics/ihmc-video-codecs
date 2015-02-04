@@ -46,6 +46,13 @@ public class RGBPicture {
     }
   }
 
+  public void putRGBA(java.nio.ByteBuffer src) {
+  assert src.isDirect() : "Buffer must be allocated direct.";
+    {
+      ihmcVideoCodecsJNI.RGBPicture_putRGBA(swigCPtr, this, src);
+    }
+  }
+
   public void get(java.nio.ByteBuffer target) {
   assert target.isDirect() : "Buffer must be allocated direct.";
     {

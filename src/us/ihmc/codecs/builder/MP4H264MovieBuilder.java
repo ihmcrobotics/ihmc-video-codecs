@@ -74,6 +74,7 @@ public class MP4H264MovieBuilder implements MovieBuilder
    {
       YUVPicture picture = converter.fromBufferedImage(frame, YUVSubsamplingType.YUV420);
       encoder.encodeFrame(picture);
+      picture.delete();
    }
 
    @Override

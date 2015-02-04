@@ -31,34 +31,31 @@ public class CreateMP4WithH264Example
 {
    public static void main(String[] args) throws IOException
    {
-      int width = 1920;
-      int height = 1080;
+      int width = 1280;
+      int height = 720;
       int framerate = 30;
       int bitrate = 8000;
 
-      MovieBuilder builder = new MP4H264MovieBuilder(new File("test.mp4"), width, height, framerate, bitrate, EUsageType.CAMERA_VIDEO_REAL_TIME);
-      
+      MovieBuilder builder = new MP4H264MovieBuilder(new File("testH264.mp4"), width, height, framerate, bitrate, EUsageType.CAMERA_VIDEO_REAL_TIME);
+
       JPEGDecoder decoder = new JPEGDecoder();
       System.out.println("Writing movie");
-      while(framerate > 0)
+
+      for (int i = 1; i < 1000; i += 1)
       {
-         for (int i = 1; i < 1000; i += 1)
+         System.out.print(".");
+         System.out.flush();
+         if (i % 100 == 0)
          {
-            System.out.print(".");
-            System.out.flush();
-            if(i % 100 == 0)
-            {
-               System.out.println();
-            }
-            
-            YUVPicture pic = decoder.readJPEG(new File("data/image_" + i + ".jpg"));
-            builder.encodeFrame(pic);
-            pic.delete();
+            System.out.println();
          }
-         System.out.println();
-         
+
+         YUVPicture pic = decoder.readJPEG(new File("data/image_" + i + ".jpg"));
+         builder.encodeFrame(pic);
+         pic.delete();
       }
-      
+      System.out.println();
+
       decoder.delete();
       builder.close();
    }

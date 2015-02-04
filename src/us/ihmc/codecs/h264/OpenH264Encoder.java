@@ -26,6 +26,7 @@ import us.ihmc.codecs.generated.OpenH264EncoderImpl;
 import us.ihmc.codecs.generated.RC_MODES;
 import us.ihmc.codecs.generated.YUVPicture;
 import us.ihmc.codecs.loader.NativeLibraryLoader;
+import us.ihmc.codecs.util.ByteBufferProvider;
 
 /**
  * Easy to use class for the OpenH264 encoder. 
@@ -42,22 +43,7 @@ public class OpenH264Encoder extends OpenH264EncoderImpl implements H264Encoder
       NativeLibraryLoader.loadIHMCVideoCodecsLibrary();
    }
    
-   private ByteBuffer directBuffer;
-   private ByteBuffer getOrCreateBuffer(int size)
-   {
-      if(directBuffer == null)
-      {
-         directBuffer = ByteBuffer.allocateDirect(size);
-      }
-      else if(directBuffer.capacity() < size)
-      {
-         directBuffer = ByteBuffer.allocateDirect(size);
-      }
-      
-      directBuffer.clear();
-      directBuffer.limit(size);
-      return directBuffer;
-   }
+   private ByteBufferProvider byteBufferProvider = new ByteBufferProvider();
 
    /**
     * Convenience initialization function, calls setSize, setMaxFrameRate, setBitRate, setRCMode before initialize()
@@ -83,8 +69,9 @@ public class OpenH264Encoder extends OpenH264EncoderImpl implements H264Encoder
       int nalSize = getNALSize();
       if(nalSize > 0)
       {
-         ByteBuffer buffer = getOrCreateBuffer(nalSize);
-         getNAL(directBuffer, buffer.capacity());
+         ByteBuffer buffer = byteBufferProvider.getOrCreateBuffer(nalSize);
+         getNAL(buffer, buffer.capacity());
+         buffer.limit(nalSize);
          return buffer;
       }
       else

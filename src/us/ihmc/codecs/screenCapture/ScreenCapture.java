@@ -1,9 +1,10 @@
 package us.ihmc.codecs.screenCapture;
 
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
+
+import us.ihmc.codecs.generated.RGBPicture;
 
 public interface ScreenCapture
 {
-   public BufferedImage createScreenCapture(Rectangle bounds);
+   public RGBPicture createScreenCapture(Rectangle bounds);
 }

@@ -32,7 +32,6 @@ import org.jcodec.containers.mp4.demuxer.FramesMP4DemuxerTrack;
 import org.jcodec.containers.mp4.demuxer.MP4Demuxer;
 
 import us.ihmc.codecs.generated.YUVPicture;
-import us.ihmc.codecs.util.MemoryManagement;
 
 /**
  * Demuxer for MP4 files. Automatically detects the format and chooses the correct decoder.
@@ -248,7 +247,6 @@ public class MP4VideoDemuxer
 
    public void delete()
    {
-      MemoryManagement.deallocateNativeByteBuffer(buffer);
       demuxerHelper.delete();
    }
 

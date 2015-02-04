@@ -9,6 +9,8 @@
 #include "YUVPicture.h"
 #include "RGBPicture.h"
 #include "JPEGDecoderImpl.h"
+#include "JPEGEncoderImpl.h"
+
 %}
 
 namespace libyuv
@@ -28,3 +30,4 @@ namespace libyuv
 %include "YUVPicture.h"
 %include "RGBPicture.h"
 %include "JPEGDecoderImpl.h"
+%include "JPEGEncoderImpl.h"

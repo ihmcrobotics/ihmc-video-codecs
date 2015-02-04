@@ -20,13 +20,17 @@ package us.ihmc.codecs.yuv;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.nio.ByteBuffer;
+import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
+import java.nio.channels.ReadableByteChannel;
 
 import us.ihmc.codecs.generated.JPEGDecoderImpl;
 import us.ihmc.codecs.generated.YUVPicture;
 import us.ihmc.codecs.loader.NativeLibraryLoader;
-import us.ihmc.codecs.util.MemoryManagement;
+import us.ihmc.codecs.util.ByteBufferProvider;
 
 /** 
  * JPEG decoder using libyuv
@@ -41,21 +45,42 @@ public class JPEGDecoder extends JPEGDecoderImpl
       NativeLibraryLoader.loadIHMCVideoCodecsLibrary();
    }
 
+   private final ByteBufferProvider byteBufferProvider = new ByteBufferProvider();
+
    public YUVPicture decode(ByteBuffer buffer)
    {
       return decode(buffer, buffer.remaining());
+   }
+
+   public YUVPicture readJPEG(URL jpeg) throws IOException
+   {
+      InputStream stream = jpeg.openStream();
+      ReadableByteChannel channel = Channels.newChannel(stream);
+      ByteBuffer buffer = byteBufferProvider.getOrCreateBuffer(stream.available());
+
+      while (channel.read(buffer) >= 0)
+      {
+         if (buffer.remaining() == 0)
+         {
+            buffer = byteBufferProvider.growByteBuffer();
+         }
+      }
+
+      buffer.flip();
+      stream.close();
+      YUVPicture picture = decode(buffer, buffer.remaining());
+      return picture;
    }
 
    public YUVPicture readJPEG(File file) throws IOException
    {
       FileInputStream stream = new FileInputStream(file);
       FileChannel channel = stream.getChannel();
-      ByteBuffer buffer = ByteBuffer.allocateDirect((int) channel.size());
+      ByteBuffer buffer = byteBufferProvider.getOrCreateBuffer((int) channel.size());
       channel.read(buffer);
       buffer.flip();
       stream.close();
       YUVPicture picture = decode(buffer, buffer.remaining());
-      MemoryManagement.deallocateNativeByteBuffer(buffer);
       return picture;
    }
 

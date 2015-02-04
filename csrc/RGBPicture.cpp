@@ -10,6 +10,10 @@ void RGBPicture::put(uint8* src) {
 	memcpy(buffer, src, width * height * 3);
 }
 
+void RGBPicture::putRGBA(uint8* src) {
+	libyuv::ARGBToRGB24(src, width * 4, buffer, width * 3, width, height);
+}
+
 void RGBPicture::get(uint8* target) {
 	memcpy(target, buffer, width * height * 3);
 }

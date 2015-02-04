@@ -15,33 +15,28 @@
  *
  *    Written by Jesper Smith with assistance from IHMC team members
  */
-#ifndef RGBPICTURE_H
-#define RGBPICTURE_H
+#ifndef JPEGENCODERIMPL_H
+#define JPEGENCODERIMPL_H
 
-#define LIBYUV_DISABLE_NEON
-#include <libyuv/basic_types.h>
-#include <YUVPicture.h>
-
-class RGBPicture {
+#include "YUVPicture.h"
+extern "C" {
+	#include <jpeglib.h>
+}
+class JPEGEncoderImpl
+{
 private:
-	int width;
-	int height;
-	uint8* buffer;
+	struct jpeg_compress_struct cinfo;
+	struct jpeg_error_mgr jerr;
+	struct jpeg_destination_mgr dest;
+
 
 public:
-	RGBPicture(int width, int height);
-
-	uint8* getBuffer();
-
-	void put(uint8* src);
-	void putRGBA(uint8* src);
-	void get(uint8* target);
-
-	int getWidth();
-	int getHeight();
-
-	YUVPicture* toYUV(YUVPicture::YUVSubsamplingType samplingType);
-
-	~RGBPicture();
+	JPEGEncoderImpl();
+	long long maxSize(YUVPicture* pic);
+	int encode(YUVPicture* pic, uint8* target, int targetLength, int quality);
+	~JPEGEncoderImpl();
 };
+
+
+
 #endif

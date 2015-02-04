@@ -6,28 +6,29 @@ import java.awt.image.WritableRaster;
 import java.nio.ByteBuffer;
 
 import us.ihmc.codecs.generated.RGBPicture;
+import us.ihmc.codecs.util.ByteBufferProvider;
 
 public class RGBPictureConverter
 {
-   private ByteBuffer directBuffer = null;
+   private ByteBufferProvider byteBufferProvider = new ByteBufferProvider();
 
-   private ByteBuffer getOrAllocateBuffer(int w, int h)
-   {
-      int size = w * h * 3;
-      if (directBuffer == null)
-      {
-         directBuffer = ByteBuffer.allocateDirect(size);
-         return directBuffer;
-      }
-
-      directBuffer.clear();
-      if (directBuffer.capacity() < size)
-      {
-         directBuffer = ByteBuffer.allocateDirect(size);
-      }
-
-      return directBuffer;
-   }
+//   private ByteBuffer getOrAllocateBuffer(int w, int h)
+//   {
+//      int size = w * h * 3;
+//      if (directBuffer == null)
+//      {
+//         directBuffer = ByteBuffer.allocateDirect(size);
+//         return directBuffer;
+//      }
+//
+//      directBuffer.clear();
+//      if (directBuffer.capacity() < size)
+//      {
+//         directBuffer = ByteBuffer.allocateDirect(size);
+//      }
+//
+//      return directBuffer;
+//   }
    
    /**
     * Convert RGBPicture to BufferedImage, minimizing object allocation
@@ -59,7 +60,7 @@ public class RGBPictureConverter
       }
       
       
-      ByteBuffer dstBuffer = getOrAllocateBuffer(w, h);
+      ByteBuffer dstBuffer = byteBufferProvider.getOrCreateBuffer(w * h * 3);
       dstBuffer.put(10, (byte)31);
       picture.get(dstBuffer);
       WritableRaster raster = target.getRaster();
@@ -101,7 +102,7 @@ public class RGBPictureConverter
       WritableRaster raster = source.getRaster();
       byte[] imageBuffer = ((DataBufferByte) raster.getDataBuffer()).getData();
 
-      ByteBuffer bgr = getOrAllocateBuffer(source.getWidth(), source.getHeight());
+      ByteBuffer bgr = byteBufferProvider.getOrCreateBuffer(source.getWidth() * source.getHeight() * 3);
       bgr.put(imageBuffer);
       target.put(bgr);
 

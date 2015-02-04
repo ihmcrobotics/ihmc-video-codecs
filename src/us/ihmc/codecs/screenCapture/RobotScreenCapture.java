@@ -3,12 +3,15 @@ package us.ihmc.codecs.screenCapture;
 import java.awt.AWTException;
 import java.awt.Rectangle;
 import java.awt.Robot;
-import java.awt.image.BufferedImage;
+
+import us.ihmc.codecs.generated.RGBPicture;
+import us.ihmc.codecs.yuv.RGBPictureConverter;
 
 public class RobotScreenCapture implements ScreenCapture
 {
    private final Robot robot;
-
+   private final RGBPictureConverter converter = new RGBPictureConverter();
+   
    public RobotScreenCapture()
    {
       try
@@ -22,9 +25,9 @@ public class RobotScreenCapture implements ScreenCapture
    }
 
    @Override
-   public BufferedImage createScreenCapture(Rectangle bounds)
+   public RGBPicture createScreenCapture(Rectangle bounds)
    {
-      return robot.createScreenCapture(bounds);
+      return converter.fromBufferedImage(robot.createScreenCapture(bounds));
    }
 
 }

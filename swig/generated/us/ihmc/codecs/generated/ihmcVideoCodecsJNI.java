@@ -24,6 +24,7 @@ public class ihmcVideoCodecsJNI {
   public final static native void delete_YUVPicture(long jarg1);
   public final static native long new_RGBPicture(int jarg1, int jarg2);
   public final static native void RGBPicture_put(long jarg1, RGBPicture jarg1_, java.nio.ByteBuffer jarg2);
+  public final static native void RGBPicture_putRGBA(long jarg1, RGBPicture jarg1_, java.nio.ByteBuffer jarg2);
   public final static native void RGBPicture_get(long jarg1, RGBPicture jarg1_, java.nio.ByteBuffer jarg2);
   public final static native int RGBPicture_getWidth(long jarg1, RGBPicture jarg1_);
   public final static native int RGBPicture_getHeight(long jarg1, RGBPicture jarg1_);
@@ -32,6 +33,10 @@ public class ihmcVideoCodecsJNI {
   public final static native long JPEGDecoderImpl_decode(long jarg1, JPEGDecoderImpl jarg1_, java.nio.ByteBuffer jarg2, int jarg3);
   public final static native long new_JPEGDecoderImpl();
   public final static native void delete_JPEGDecoderImpl(long jarg1);
+  public final static native long new_JPEGEncoderImpl();
+  public final static native long JPEGEncoderImpl_maxSize(long jarg1, JPEGEncoderImpl jarg1_, long jarg2, YUVPicture jarg2_);
+  public final static native int JPEGEncoderImpl_encode(long jarg1, JPEGEncoderImpl jarg1_, long jarg2, YUVPicture jarg2_, java.nio.ByteBuffer jarg3, int jarg4, int jarg5);
+  public final static native void delete_JPEGEncoderImpl(long jarg1);
   public final static native long new_OpenH264DecoderImpl();
   public final static native long OpenH264DecoderImpl_decodeFrame(long jarg1, OpenH264DecoderImpl jarg1_, java.nio.ByteBuffer jarg2, int jarg3);
   public final static native void OpenH264DecoderImpl_skipFrame(long jarg1, OpenH264DecoderImpl jarg1_, java.nio.ByteBuffer jarg2, int jarg3);

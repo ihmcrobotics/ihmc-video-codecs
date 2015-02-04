@@ -5,11 +5,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
-import javax.imageio.IIOImage;
-import javax.imageio.ImageIO;
-import javax.imageio.ImageWriteParam;
-import javax.imageio.ImageWriter;
-
 import org.jcodec.common.FileChannelWrapper;
 import org.jcodec.common.NIOUtils;
 import org.jcodec.common.model.Size;
@@ -20,6 +15,8 @@ import org.jcodec.containers.mp4.muxer.FramesMP4MuxerTrack;
 import org.jcodec.containers.mp4.muxer.MP4Muxer;
 
 import us.ihmc.codecs.generated.YUVPicture;
+import us.ihmc.codecs.generated.YUVPicture.YUVSubsamplingType;
+import us.ihmc.codecs.yuv.JPEGEncoder;
 import us.ihmc.codecs.yuv.YUVPictureConverter;
 
 public class MP4MJPEGMovieBuilder implements MovieBuilder
@@ -36,17 +33,22 @@ public class MP4MJPEGMovieBuilder implements MovieBuilder
 
    private final int width;
    private final int height;
-
-   private final ImageWriter writer = ImageIO.getImageWritersByFormatName("jpeg").next();
-   private final ImageWriteParam param = writer.getDefaultWriteParam();
-   
-   
-   private final ByteBuffer buffer;
-   private final ByteBufferImageOutputStream imageOutputStream;
+   private final int quality; 
    
    private YUVPictureConverter converter;
+   private final JPEGEncoder encoder = new JPEGEncoder();
    
-   public MP4MJPEGMovieBuilder(File file, int width, int height, int framerate, float quality) throws IOException
+   /**
+    * Create an MP4 file with MJPEG
+    * 
+    * @param file Output file
+    * @param width Frame width
+    * @param height Frame height
+    * @param framerate
+    * @param quality JPEG quality 0 - 100
+    * @throws IOException
+    */
+   public MP4MJPEGMovieBuilder(File file, int width, int height, int framerate, int quality) throws IOException
    {
       channel = NIOUtils.writableFileChannel(file);
       muxer = new MP4Muxer(channel);
@@ -56,22 +58,19 @@ public class MP4MJPEGMovieBuilder implements MovieBuilder
 
       this.width = width;
       this.height = height;
-      
-      param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT); 
-      param.setCompressionQuality(quality); 
-      
-      buffer = ByteBuffer.allocate(width * height * 4 * 4);
-      imageOutputStream = new ByteBufferImageOutputStream(buffer);
-      writer.setOutput(imageOutputStream);
+      this.quality = quality;
    }
 
    @Override
    public void encodeFrame(BufferedImage frame) throws IOException
    {
-      buffer.clear();
-      writer.write(null, new IIOImage(frame, null, null), param);
-      buffer.flip();
-      encodeFrame(buffer);
+      if(converter == null)
+      {
+         converter = new YUVPictureConverter();
+      }
+      YUVPicture pic = converter.fromBufferedImage(frame, YUVSubsamplingType.YUV420);
+      encodeFrame(pic);
+      pic.delete();
    }
 
    public void encodeFrame(ByteBuffer buffer) throws IOException
@@ -86,11 +85,11 @@ public class MP4MJPEGMovieBuilder implements MovieBuilder
    @Override
    public void encodeFrame(YUVPicture frame) throws IOException
    {
-      if(converter == null)
-      {
-         converter = new YUVPictureConverter();
-      }
-      encodeFrame(converter.toBufferedImage(frame));
+      ByteBuffer buffer = encoder.encode(frame, quality);
+      ByteBuffer heapBuffer = ByteBuffer.allocate(buffer.remaining());
+      heapBuffer.put(buffer);
+      heapBuffer.flip();
+      encodeFrame(heapBuffer);
    }
 
    @Override
@@ -101,6 +100,7 @@ public class MP4MJPEGMovieBuilder implements MovieBuilder
       track.addSampleEntry(sampleEntry);
       muxer.writeHeader();
       channel.close();
+      encoder.delete();
    }
 
    @Override
