@@ -14,9 +14,10 @@ Only video is supported.
 
 - Video tracks only
 - Supports RGB <-> YUV conversion using libyuv (BSD license)
+- Supports JPEG encoding/decoding using libjpeg-turbo (BSD/IJG license)
 - Bridge to OpenH264 (BSD License)
 - MP4 support
-	- Mux: H264
+	- Mux: H264, MJPEG
 	- Demux: H264, MJPEG 
 
 ## Usage
@@ -33,12 +34,12 @@ For your convenience compiled libraries are placed in the resources directory. I
 - Install OpenJDK (>6)
 - Compile LibYUV following https://code.google.com/p/libyuv/wiki/GettingStarted
 	- When ninja complains about tools/sanitizer_options/sanitizer_options.cc get it from the chromium git: https://chromium.googlesource.com/chromium/src/base/+/f64188fb60c527d54bb54f1d107a5b5890a49c89/debug/sanitizer_options.cc
-- Download and compile the openH264 sources (version 1.1) from https://github.com/cisco/openh264
+- Download and compile the openH264 sources (version 1.3) from https://github.com/cisco/openh264
 	- git clone https://github.com/cisco/openh264.git
 	- cd openh264
-	- git checkout v1.1
+	- git checkout v1.3
 	- make
-- Install swig 3.0.3 (Development version as of 5/09/2014)
+- Install swig 3.0.3 or higher (Development version as of 5/09/2014)
 - Go to IHMCVideoCodecs directory
 	- mkdir build
 	- cd build
@@ -97,7 +98,7 @@ May the force be with you.
 	- Follow instructions on https://code.google.com/p/libyuv/wiki/GettingStarted
 		- Dowloading the windows sdk takes forever, just have patience
 - Install mingw 
-- Download the openh264 sources, tag v1.1
+- Download the openh264 sources, tag v1.3
 	- Following the instructions in openh264 README.md
 	- Setup your path to point to msys and mingw
 	- Start msys using C:\MinGW\msys\1.0\msys.bat
