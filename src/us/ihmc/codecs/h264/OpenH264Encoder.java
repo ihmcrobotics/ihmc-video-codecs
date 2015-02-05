@@ -59,7 +59,6 @@ public class OpenH264Encoder extends OpenH264EncoderImpl implements H264Encoder
       setSize(width, height);
       setMaxFrameRate((float)framerate);
       setBitRate(bitrate);
-      setRCMode(RC_MODES.RC_QUALITY_MODE);
       initialize();
    }
    
