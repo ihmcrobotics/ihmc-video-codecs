@@ -35,7 +35,7 @@ public class OpenH264Downloader
    public static final String win32 = "openh264-" + openH264Version + "-win32msvc.dll";
    public static final String win64 = "openh264-" + openH264Version + "-win64msvc.dll";
 
-   public static final String osxDisk = "libopenh264.dylib";
+   public static final String osxDisk = "libopenh264.0.dylib";
    public static final String linuxDisk = "libopenh264.so.0";
    public static final String winDisk = "openh264.dll";
 

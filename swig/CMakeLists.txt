@@ -35,7 +35,7 @@ INSTALL(TARGETS ihmcVideoCodecs RUNTIME DESTINATION resources LIBRARY DESTINATIO
 
 if(APPLE)
 	SET_TARGET_PROPERTIES(ihmcVideoCodecs PROPERTIES INSTALL_RPATH "@loader_path/")
-	add_custom_command(TARGET ihmcVideoCodecs POST_BUILD COMMAND ${CMAKE_INSTALL_NAME_TOOL} -change libopenh264.dylib @rpath/libopenh264.dylib $<TARGET_FILE:ihmcVideoCodecs>)
+	add_custom_command(TARGET ihmcVideoCodecs POST_BUILD COMMAND ${CMAKE_INSTALL_NAME_TOOL} -change "/usr/local/lib/libopenh264.0.dylib" @rpath/libopenh264.0.dylib $<TARGET_FILE:ihmcVideoCodecs>)
 endif(APPLE)
 
 FIND_PACKAGE(X11)
