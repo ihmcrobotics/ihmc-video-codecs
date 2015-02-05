@@ -21,6 +21,7 @@ ENDIF(WIN32)
 
 INCLUDE_DIRECTORIES("${LIBYUV_HOME}/third_party/libjpeg_turbo")
 INCLUDE_DIRECTORIES("${LIBYUV_HOME}/include")
+INCLUDE_DIRECTORIES("${LIBYUV_HOME}/chromium/src/third_party/libjpeg_turbo/")
 SET_SOURCE_FILES_PROPERTIES(ihmcVideoCodecs.i PROPERTIES CPLUSPLUS ON)
 SET_PROPERTY(SOURCE ihmcVideoCodecs.i PROPERTY SWIG_FLAGS "-package" "us.ihmc.codecs.generated")
 SWIG_ADD_MODULE(ihmcVideoCodecs java ihmcVideoCodecs.i $<TARGET_OBJECTS:yuvPicture> $<TARGET_OBJECTS:openH264WrapperImpl>)
@@ -39,7 +40,7 @@ endif(APPLE)
 
 FIND_PACKAGE(X11)
 
-IF(X11_FOUND)
+IF(X11_FOUND AND NOT APPLE)
 SET(CMAKE_SWIG_OUTDIR "${CMAKE_CURRENT_SOURCE_DIR}/generated/us/ihmc/codecs/screenCapture")
 
 SET_SOURCE_FILES_PROPERTIES(ScreenShot.i PROPERTIES CPLUSPLUS ON)
@@ -49,4 +50,4 @@ SWIG_ADD_MODULE(screenshot java ScreenShot.i)
 ADD_DEPENDENCIES(screenshot version)
 SWIG_LINK_LIBRARIES(screenshot ${X11_LIBRARIES})
 INSTALL(TARGETS screenshot RUNTIME DESTINATION resources LIBRARY DESTINATION resources)
-ENDIF(X11_FOUND)
+ENDIF(X11_FOUND AND NOT APPLE)
