@@ -6,7 +6,7 @@ This library enables the use of common video encoding formats used at IHMC in Ja
 
 All code is released under a permissive Apache 2.0 license. This library tries to avoid problems with licensing patents, for example trough the use of the OpenH264 module.
 
-SWIG is used to bridge Java to native code. Where SWIG has trouble translating functions in a usable Java format, helper functions are written in C/C++ instead of using advanced SWIG functionality. This should help maintainability.
+Simple, well defined classes to support the functionality needed are written in C++. SWIG is used to bridge our C++ classes to Java.
 
 Only video is supported.
 
@@ -19,6 +19,9 @@ Only video is supported.
 - MP4 support
 	- Mux: H264, MJPEG
 	- Demux: H264, MJPEG 
+- Fast screenshot support using native code
+	- Linux only
+	- Fallback using AWT Robot for Mac/Windows
 
 ## Usage
 See the examples directory
@@ -91,26 +94,30 @@ May the force be with you.
 	- Continue while this is downloading and get some coffee
 - Install the 64 bit JDK for Windows (>6)
 - Install CMake using the installer http://www.cmake.org/download/
-- Install swig 3.0.3
-	- No binaries have been released as of 05/09/2014 yet. Get the swigwin 3.0.2 binary and replace Lib/java/various.i with https://github.com/swig/swig/blob/master/Lib/java/various.i
+- Download and unpack swigwin 3.0.3
+	- http://sourceforge.net/projects/swig/files/swigwin/swigwin-3.0.3/
 - Install Libyuv
-	- Non-cygwin
 	- Follow instructions on https://code.google.com/p/libyuv/wiki/GettingStarted
+		- Do not use cygwin
 		- Dowloading the windows sdk takes forever, just have patience
 - Install MinGW (you only need to select msys-base)
+	- Use mingw-get-setup.exe from http://sourceforge.net/projects/mingw/files/Installer/
 	- Setup %PATH to point to MinGW and MSYS
 - Download the openh264 sources, tag v1.3
-	- Following the instructions in openh264 README.md
+	- Use git
+		- git clone https://github.com/cisco/openh264.git
+		- git checkout openh264v1.3
+	- Read the instructions in the openh264 README.md
 	- Start the VS2013 x64 Cross Tools Command Prompt (Start -> Visual Studio 2013 -> Visual Studio Tools)
-	- cd to openh264 dir 
-	- Use make OS=msvc ENABLE64BIT=Yes
+	- cd to the openh264 dir 
+	- make OS=msvc ENABLE64BIT=Yes
 - Start the cmake-gui
 	- Point source directory to IHMCVideoCodecs sources
 	- Point build directory to [sources]/build
 	- Configure
 		- Choose the Visual Studio 12 2013 Win64 generator
 		- Choose native toolchain
-		- Set all paths (LIBYUV_HOME, OPENH264_HOME) correctly
+		- Set all paths (LIBYUV_HOME, OPENH264_HOME, SWIG_EXECUTABLE) correctly
 		- Configure
 	- Generate
 - Go to IHMCVideoCodecs/build
@@ -118,7 +125,6 @@ May the force be with you.
 	- Wait for VS2013 to start
 	- Select "Release" build type
 	- Right click ALL_BUILD and select build
-		- Ignore the LNK2019 errors
 	- Right click INSTALL and select build
 
 ## Publishing
