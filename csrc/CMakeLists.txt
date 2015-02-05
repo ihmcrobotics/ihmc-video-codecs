@@ -11,6 +11,7 @@ ENDIF(WIN32)
 SET(CMAKE_INCLUDE_CURRENT_DIR ON)
 INCLUDE_DIRECTORIES("${LIBYUV_HOME}/include")
 INCLUDE_DIRECTORIES("${LIBYUV_HOME}/third_party/libjpeg_turbo/")
+INCLUDE_DIRECTORIES("${LIBYUV_HOME}/chromium/src/third_party/libjpeg_turbo/")
 
 add_library(yuvPicture OBJECT RGBPicture.cpp YUVPicture.cpp JPEGDecoderImpl.cpp JPEGEncoderImpl.cpp)
 set_property(TARGET yuvPicture PROPERTY POSITION_INDEPENDENT_CODE TRUE)
