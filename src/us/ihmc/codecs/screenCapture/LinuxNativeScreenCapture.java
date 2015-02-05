@@ -8,16 +8,10 @@ import us.ihmc.codecs.loader.NativeLibraryLoader;
 
 public class LinuxNativeScreenCapture implements ScreenCapture
 {
-   private static boolean loaded = false;
-
    private static synchronized void loadLibrary()
    {
-      if (!loaded)
-      {
-         NativeLibraryLoader.loadScreenShot();
-         NativeLibraryLoader.loadIHMCVideoCodecsLibrary();
-         loaded = true;
-      }
+      NativeLibraryLoader.loadScreenShot();
+      NativeLibraryLoader.loadIHMCVideoCodecsLibrary();
    }
 
    private ByteBuffer screenBuffer;
