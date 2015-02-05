@@ -13,10 +13,10 @@ LINK_DIRECTORIES("${OPENH264_HOME}")
 
 IF(WIN32)
 	LINK_DIRECTORIES("${LIBYUV_HOME}/out/Release_x64")
-	LINK_DIRECTORIES("${LIBYUV_HOME}/out/Release_x64/obj/third_party/libjpeg_turbo")
+	LINK_DIRECTORIES("${LIBYUV_HOME}/out/Release_x64/obj/chromium/src/third_party/libjpeg_turbo")
 ELSE()
 	LINK_DIRECTORIES("${LIBYUV_HOME}/out/Release")
-	LINK_DIRECTORIES("${LIBYUV_HOME}/out/Release/obj/third_party/libjpeg_turbo")
+	LINK_DIRECTORIES("${LIBYUV_HOME}/out/Release/obj/chromium/src/third_party/libjpeg_turbo")
 ENDIF(WIN32)
 
 INCLUDE_DIRECTORIES("${LIBYUV_HOME}/third_party/libjpeg_turbo")
