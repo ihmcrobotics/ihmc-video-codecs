@@ -73,7 +73,7 @@ public class MP4H264MovieBuilder implements MovieBuilder
    public void encodeFrame(BufferedImage frame) throws IOException
    {
       YUVPicture picture = converter.fromBufferedImage(frame, YUVSubsamplingType.YUV420);
-      encoder.encodeFrame(picture);
+      encodeFrame(picture);
       picture.delete();
    }
 

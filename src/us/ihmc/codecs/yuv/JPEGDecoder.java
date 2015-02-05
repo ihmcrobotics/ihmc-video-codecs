@@ -49,11 +49,24 @@ public class JPEGDecoder extends JPEGDecoderImpl
 
    public YUVPicture decode(ByteBuffer buffer)
    {
-      if (!buffer.isDirect())
+      ByteBuffer direct;
+      if(!buffer.isDirect())
       {
-         throw new RuntimeException("Buffer must be allocated direct.");
+         direct = byteBufferProvider.getOrCreateBuffer(buffer.remaining());
+         buffer.mark();
+         direct.put(buffer);
+         buffer.reset();
+         direct.clear();
       }
-      return decode(buffer, buffer.remaining());
+      else if(buffer.position() == 0)
+      {
+         direct = buffer;
+      }
+      else
+      {
+         direct = buffer.slice();
+      }
+      return decode(direct, direct.remaining());
    }
 
    public YUVPicture readJPEG(URL jpeg) throws IOException
