@@ -6,7 +6,7 @@ This library enables the use of common video encoding formats used at IHMC in Ja
 
 All code is released under a permissive Apache 2.0 license. This library tries to avoid problems with licensing patents, for example trough the use of the OpenH264 module.
 
-Simple, well defined classes to support the functionality needed are written in C++. SWIG is used to bridge our C++ classes to Java.
+Simple, well defined classes to support the functionality needed are written in C++. SWIG is used to bridge our C++ classes to Java. Only basic features are supported, keeping the API simple and maintainable.
 
 Only video is supported.
 
@@ -16,22 +16,27 @@ Only video is supported.
 - Supports RGB <-> YUV conversion using libyuv (BSD license)
 - Supports JPEG encoding/decoding using libjpeg-turbo (BSD/IJG license)
 - Bridge to OpenH264 (BSD License)
-- MP4 support
+	- Automatic downloading of Cisco licensed binary
+- MP4 support based on JCodec (BSD License)
 	- Mux: H264, MJPEG
 	- Demux: H264, MJPEG 
 - Fast screenshot support using native code
 	- Linux only
 	- Fallback using AWT Robot for Mac/Windows
 
+
 ## Usage
 See the examples directory
 
-### Headless systems
+## Headless systems
 To accept the license on a system without console input, add "-Dopenh264.license=accept" to your Java command line arguments.
+
+## Contributions
+Contributions are welcome. We are a robot lab, supporting video codecs is not our main focus. Please provide pull requests. If you or your organization is interested in taking over maintainance, please contact us. 
 
 ## Compile native code
 
-For your convenience compiled libraries are placed in the resources directory. It's only necessary to compile native code if you want to change things or port to different platforms.
+For your convenience compiled libraries are placed in the resources directory. It's only necessary to compile native code if you want to change native code or port to different platforms.
 
 ### Linux
 - Install OpenJDK (>6)
@@ -40,15 +45,15 @@ For your convenience compiled libraries are placed in the resources directory. I
 - Download and compile the openH264 sources (version 1.3) from https://github.com/cisco/openh264
 	- git clone https://github.com/cisco/openh264.git
 	- cd openh264
-	- git checkout v1.3
+	- git checkout openh264v1.3
 	- make
-- Install swig 3.0.3 or higher (Development version as of 5/09/2014)
+- Install swig 3.0.3 or higher 
 - Go to IHMCVideoCodecs directory
 	- mkdir build
 	- cd build
 	- ccmake ..
 		- Set LIBYUV_HOME to the libyuv trunk directory
-		- Set OPENH264_HOMe to the openh264 source directory
+		- Set OPENH264_HOME to the openh264 source directory
 	- make
 	- make install
 
@@ -57,15 +62,10 @@ For your convenience compiled libraries are placed in the resources directory. I
 - Install homebrew
 	- brew install nasm automake pcre cmake
 - Add /usr/local/bin to the start of your path (for nasm)
-- Install swig 3.0.3 from GIT
-	- ./autogen.sh
-	- ./configure --with-javaincl=/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/include/ (change your jdk version to match)
-	- make
-	- touch CCache/ccache-swig.1
-	- make install
-- Download and compile the openH264 sources (version 1.1) from https://github.com/cisco/openh264
+- Install swig 3.0.3 from homebrew
+- Download and compile the openH264 sources (version 1.3) from https://github.com/cisco/openh264
 	- git clone https://github.com/cisco/openh264.git
-	- git checkout v1.1
+	- git checkout openh264v1.3
 	- cd openh264
 	- make
 - Compile LibYUV following https://code.google.com/p/libyuv/wiki/GettingStarted
