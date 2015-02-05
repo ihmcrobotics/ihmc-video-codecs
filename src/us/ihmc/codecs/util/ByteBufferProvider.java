@@ -1,6 +1,7 @@
 package us.ihmc.codecs.util;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 public class ByteBufferProvider
 {
@@ -18,6 +19,7 @@ public class ByteBufferProvider
       }
 
       directBuffer.clear();
+      directBuffer.order(ByteOrder.nativeOrder());
       return directBuffer;
    }
    
