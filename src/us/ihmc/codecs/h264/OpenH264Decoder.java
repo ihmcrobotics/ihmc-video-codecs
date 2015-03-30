@@ -42,11 +42,19 @@ public class OpenH264Decoder extends OpenH264DecoderImpl
    
    public YUVPicture decodeFrame(ByteBuffer buffer)
    {
+      if (!buffer.isDirect())
+      {
+         throw new RuntimeException("Buffer must be allocated direct.");
+      }
       return decodeFrame(buffer, buffer.limit());
    }
    
    public void skipFrame(ByteBuffer buffer)
    {
+      if (!buffer.isDirect())
+      {
+         throw new RuntimeException("Buffer must be allocated direct.");
+      }
       skipFrame(buffer, buffer.limit());
    }
 }

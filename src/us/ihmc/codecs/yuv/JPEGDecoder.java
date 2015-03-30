@@ -49,7 +49,24 @@ public class JPEGDecoder extends JPEGDecoderImpl
 
    public YUVPicture decode(ByteBuffer buffer)
    {
-      return decode(buffer, buffer.remaining());
+      ByteBuffer direct;
+      if(!buffer.isDirect())
+      {
+         direct = byteBufferProvider.getOrCreateBuffer(buffer.remaining());
+         buffer.mark();
+         direct.put(buffer);
+         buffer.reset();
+         direct.clear();
+      }
+      else if(buffer.position() == 0)
+      {
+         direct = buffer;
+      }
+      else
+      {
+         direct = buffer.slice();
+      }
+      return decode(direct, direct.remaining());
    }
 
    public YUVPicture readJPEG(URL jpeg) throws IOException

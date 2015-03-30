@@ -54,6 +54,10 @@ public class JPEGEncoder extends JPEGEncoderImpl
    public void encode(ByteBuffer target, YUVPicture picture, int quality) throws IOException
    {
       int maxSize = (int) maxSize(picture);
+      if (!target.isDirect())
+      {
+         throw new RuntimeException("Buffer must be allocated direct.");
+      }
       if (target.capacity() < maxSize)
       {
          throw new IOException("Buffer is not large enough. Maximum compressed data size is " + maxSize + "bits");

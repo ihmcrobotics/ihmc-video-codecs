@@ -2,7 +2,10 @@
 #include <iostream>
 
 YUVPicture* JPEGDecoderImpl::decode(uint8* src, int srcLength) {
-	decoder.LoadFrame(src, srcLength);
+	if(!decoder.LoadFrame(src, srcLength))
+	{
+		return NULL;
+	}
 	int width = decoder.GetWidth();
 	int height = decoder.GetHeight();
 	int colorSpace = decoder.GetColorSpace();
