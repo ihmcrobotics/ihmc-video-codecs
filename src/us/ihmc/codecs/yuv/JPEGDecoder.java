@@ -49,6 +49,10 @@ public class JPEGDecoder extends JPEGDecoderImpl
 
    public YUVPicture decode(ByteBuffer buffer)
    {
+      if(buffer.remaining() < 1)
+      {
+         return null;
+      }
       ByteBuffer direct;
       if(!buffer.isDirect())
       {

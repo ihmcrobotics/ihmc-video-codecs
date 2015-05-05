@@ -22,12 +22,21 @@
 extern "C" {
 	#include <jpeglib.h>
 }
+
+typedef struct {
+		struct jpeg_destination_mgr destinationManager;
+
+		unsigned char * outputBuffer;
+		size_t bufferSize;
+		size_t compressedSize;
+} mem_destination_mgr;
+
 class JPEGEncoderImpl
 {
 private:
 	struct jpeg_compress_struct cinfo;
 	struct jpeg_error_mgr jerr;
-	struct jpeg_destination_mgr dest;
+	mem_destination_mgr dest;
 
 
 public:

@@ -53,13 +53,15 @@
 
 #define PAD(v, p) ((v+(p)-1)&(~((p)-1)))
 
+
+
 // Destination manager as old-school C code
-uint8* memoryTarget;
-int memoryTargetLength;
-int compressedSize;
 void memory_init_destination(j_compress_ptr cinfo) {
-	cinfo->dest->next_output_byte = memoryTarget;
-	cinfo->dest->free_in_buffer = memoryTargetLength;
+
+	mem_destination_mgr* dest = (mem_destination_mgr*) cinfo->dest;
+
+	dest->destinationManager.next_output_byte = dest->outputBuffer;
+	dest->destinationManager.free_in_buffer = dest->bufferSize;
 }
 
 boolean memory_empty_output_buffer(j_compress_ptr cinfo) {
@@ -67,16 +69,20 @@ boolean memory_empty_output_buffer(j_compress_ptr cinfo) {
 }
 
 void memory_term_destination(j_compress_ptr cinfo) {
-	compressedSize = memoryTargetLength - cinfo->dest->free_in_buffer;
+	mem_destination_mgr* dest = (mem_destination_mgr*) cinfo->dest;
+
+	dest->compressedSize = dest->bufferSize - dest->destinationManager.free_in_buffer;
 }
 
 JPEGEncoderImpl::JPEGEncoderImpl() {
 	cinfo.err = jpeg_std_error(&jerr);
 	jpeg_create_compress(&cinfo);
-	dest.init_destination = &memory_init_destination;
-	dest.empty_output_buffer = &memory_empty_output_buffer;
-	dest.term_destination = &memory_term_destination;
-	cinfo.dest = &dest;
+
+	dest.destinationManager.init_destination = &memory_init_destination;
+	dest.destinationManager.empty_output_buffer = &memory_empty_output_buffer;
+	dest.destinationManager.term_destination = &memory_term_destination;
+
+	cinfo.dest = (struct jpeg_destination_mgr *) &dest;
 }
 
 // Based on turbojpeg.c:tjBufSize()
@@ -103,10 +109,18 @@ long long JPEGEncoderImpl::maxSize(YUVPicture* pic) {
 	return PAD(pic->getWidth(), mcuw) * PAD(pic->getHeight(), mcuh) * (2 + chromasf) + 2048;
 }
 
-int JPEGEncoderImpl::encode(YUVPicture* pic, uint8* target, int targetLength, int quality) {
-	compressedSize = 0;
-	memoryTarget = target;
-	memoryTargetLength = targetLength;
+int JPEGEncoderImpl::encode(YUVPicture* pic, unsigned char* target, int targetLength, int quality) {
+
+	/*
+	 * Setup destination manager.
+	 */
+	dest.compressedSize = -1; // Default to error value
+	dest.outputBuffer = target;
+	dest.bufferSize = targetLength;
+
+	/*
+	 * Setup cinfo
+	 */
 	cinfo.image_width = pic->getWidth();
 	cinfo.image_height = pic->getHeight();
 	cinfo.input_components = 3;
@@ -141,6 +155,10 @@ int JPEGEncoderImpl::encode(YUVPicture* pic, uint8* target, int targetLength, in
 		cinfo.comp_info[2].v_samp_factor = 1;
 		break;
 	}
+
+	/*
+	 * Start compression
+	 */
 	jpeg_start_compress(&cinfo, TRUE);
 	// The following routine is based on turbojpeg.c:tjCompressFromYUVPlanes()
 	uint8 *srcPlanes[] = { pic->getY(), pic->getU(), pic->getV() };
@@ -234,7 +252,10 @@ int JPEGEncoderImpl::encode(YUVPicture* pic, uint8* target, int targetLength, in
 	if (_tmpbuf)
 		free(_tmpbuf);
 
-	return compressedSize;
+	/*
+	 * Return compressedSize as set by the destination manager
+	 */
+	return dest.compressedSize;
 }
 
 JPEGEncoderImpl::~JPEGEncoderImpl() {

@@ -26,34 +26,51 @@ import us.ihmc.codecs.builder.MovieBuilder;
 import us.ihmc.codecs.generated.YUVPicture;
 import us.ihmc.codecs.yuv.JPEGDecoder;
 
-public class CreateMP4WithJPEGExample
+public class CreateMP4WithJPEGExample extends Thread
 {
+   private static final int THREADS = 4;
+
+   private final String filename;
+
+   public CreateMP4WithJPEGExample(String filename)
+   {
+      this.filename = filename;
+   }
+
+   public void run()
+   {
+      try
+      {
+         int width = 1280;
+         int height = 720;
+         int framerate = 10;
+
+         MovieBuilder builder = new MP4MJPEGMovieBuilder(new File(filename), width, height, framerate, 95);
+
+         JPEGDecoder decoder = new JPEGDecoder();
+         System.out.println("Writing movie " + filename);
+         for (int i = 1; i < 1000; i += 1)
+         {
+            YUVPicture pic = decoder.readJPEG(new File("data/image_" + i + ".jpg"));
+            builder.encodeFrame(pic);
+            pic.delete();
+         }
+         System.out.println("Done writing " + filename);
+
+         decoder.delete();
+         builder.close();
+      }
+      catch (IOException e)
+      {
+         throw new RuntimeException(e);
+      }
+   }
+
    public static void main(String[] args) throws IOException
    {
-      int width = 1280;
-      int height = 720;
-      int framerate = 10;
-
-      MovieBuilder builder = new MP4MJPEGMovieBuilder(new File("testMJPEG.mp4"), width, height, framerate, 95);
-            
-      JPEGDecoder decoder = new JPEGDecoder();
-      System.out.println("Writing movie");
-      for (int i = 1; i < 1000; i += 1)
+      for (int i = 0; i < THREADS; i++)
       {
-         System.out.print(".");
-         System.out.flush();
-         if(i % 100 == 0)
-         {
-            System.out.println();
-         }
-         
-         YUVPicture pic = decoder.readJPEG(new File("data/image_" + i + ".jpg"));
-         builder.encodeFrame(pic);
-         pic.delete();
+         new CreateMP4WithJPEGExample("testMJPEG_" + i + ".mp4").start();
       }
-      System.out.println();
-      
-      decoder.delete();
-      builder.close();
    }
 }
