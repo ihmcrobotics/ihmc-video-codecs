@@ -33,6 +33,16 @@ public class ihmcVideoCodecsJNI {
   public final static native long JPEGDecoderImpl_decode(long jarg1, JPEGDecoderImpl jarg1_, java.nio.ByteBuffer jarg2, int jarg3);
   public final static native long new_JPEGDecoderImpl();
   public final static native void delete_JPEGDecoderImpl(long jarg1);
+  public final static native void mem_destination_mgr_destinationManager_set(long jarg1, mem_destination_mgr jarg1_, long jarg2);
+  public final static native long mem_destination_mgr_destinationManager_get(long jarg1, mem_destination_mgr jarg1_);
+  public final static native void mem_destination_mgr_outputBuffer_set(long jarg1, mem_destination_mgr jarg1_, long jarg2);
+  public final static native long mem_destination_mgr_outputBuffer_get(long jarg1, mem_destination_mgr jarg1_);
+  public final static native void mem_destination_mgr_bufferSize_set(long jarg1, mem_destination_mgr jarg1_, long jarg2);
+  public final static native long mem_destination_mgr_bufferSize_get(long jarg1, mem_destination_mgr jarg1_);
+  public final static native void mem_destination_mgr_compressedSize_set(long jarg1, mem_destination_mgr jarg1_, long jarg2);
+  public final static native long mem_destination_mgr_compressedSize_get(long jarg1, mem_destination_mgr jarg1_);
+  public final static native long new_mem_destination_mgr();
+  public final static native void delete_mem_destination_mgr(long jarg1);
   public final static native long new_JPEGEncoderImpl();
   public final static native long JPEGEncoderImpl_maxSize(long jarg1, JPEGEncoderImpl jarg1_, long jarg2, YUVPicture jarg2_);
   public final static native int JPEGEncoderImpl_encode(long jarg1, JPEGEncoderImpl jarg1_, long jarg2, YUVPicture jarg2_, java.nio.ByteBuffer jarg3, int jarg4, int jarg5);

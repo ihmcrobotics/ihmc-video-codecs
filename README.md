@@ -90,9 +90,9 @@ For your convenience compiled libraries are placed in the resources directory. I
 
 May the force be with you.
 
-- Install Visual Studio Express 2013 for Windows Desktop
+- Install Visual Studio Community 2013
 	- Continue while this is downloading and get some coffee
-- Install the 64 bit JDK for Windows (>6)
+- Install the 64 bit JDK for Windows (>=7)
 - Install CMake using the installer http://www.cmake.org/download/
 - Download and unpack swigwin 3.0.3
 	- http://sourceforge.net/projects/swig/files/swigwin/swigwin-3.0.3/
@@ -100,6 +100,7 @@ May the force be with you.
 	- Follow instructions on https://code.google.com/p/libyuv/wiki/GettingStarted
 		- Do not use cygwin
 		- Dowloading the windows sdk takes forever, just have patience
+		- run "set DEPOT_TOOLS_WIN_TOOLCHAIN=0" before gclient sync (else it fails on landmines)
 - Install MinGW (you only need to select msys-base)
 	- Use mingw-get-setup.exe from http://sourceforge.net/projects/mingw/files/Installer/
 	- Setup %PATH to point to MinGW and MSYS

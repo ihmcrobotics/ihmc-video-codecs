@@ -29,7 +29,7 @@ if(APPLE)
 	# clang complains about missing lookups, which are a lot in libyuv
 	SET(CMAKE_MODULE_LINKER_FLAGS "-undefined dynamic_lookup")
 ELSEIF(WIN32)
-	SET(CMAKE_MODULE_LINKER_FLAGS "/FORCE:UNRESOLVED")
+	SET(CMAKE_MODULE_LINKER_FLAGS "/FORCE:UNRESOLVED /NODEFAULTLIB:libcmt.lib")
 ELSEIF(UNIX)
 	SET(CMAKE_INSTALL_RPATH "\$ORIGIN")
 ENDIF(APPLE)

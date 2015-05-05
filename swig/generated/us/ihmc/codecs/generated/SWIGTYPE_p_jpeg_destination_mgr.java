@@ -8,5 +8,19 @@
 
 package us.ihmc.codecs.generated;
 
-public class ihmcVideoCodecs {
+public class SWIGTYPE_p_jpeg_destination_mgr {
+  private long swigCPtr;
+
+  protected SWIGTYPE_p_jpeg_destination_mgr(long cPtr, boolean futureUse) {
+    swigCPtr = cPtr;
+  }
+
+  protected SWIGTYPE_p_jpeg_destination_mgr() {
+    swigCPtr = 0;
+  }
+
+  protected static long getCPtr(SWIGTYPE_p_jpeg_destination_mgr obj) {
+    return (obj == null) ? 0 : obj.swigCPtr;
+  }
 }
+
