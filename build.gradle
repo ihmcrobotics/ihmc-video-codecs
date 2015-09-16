@@ -4,7 +4,7 @@ apply from: 'gradleScripts/util.gradle'
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
-version = '2.0'
+version = '2.0.10'
 
 setupDefaultDirectoryStructure()
 
@@ -16,14 +16,54 @@ task sourceJar(type: Jar) {
 	from sourceSets.main.allJava
 }
 
+jar {
+   manifest {
+      attributes(
+      "Created-By": "IHMC Gradle Build Script",
+      "Implementation-Title": project.name,
+      "Implementation-Version": project.version,
+      "Implementation-Vendor": "IHMC",
+      
+      "Bundle-Name": project.name,
+      "Bundle-Version": project.version,
+      "Bundle-License": "http://www.apache.org/licenses/LICENSE-2.0.txt",
+      "Bundle-Vendor": "IHMC")
+   }
+}
+
+
 publishing {
 	publications {
 		mavenJava(MavenPublication) {
 
 			groupId 'us.ihmc'
 			artifactId 'IHMCVideoCodecs'
-			version '2.0.9'
+			version "$version"
 			from components.java
+			
+			pom.withXml {
+                            asNode().children().last() + {
+                                resolveStrategy = Closure.DELEGATE_FIRST
+                                name 'IHMCVideoCodecs'
+                                url 'https://stash.ihmc.us/projects/JNI/repos/ihmcvideocodecs'
+                                licenses {
+                                    license {
+                                        name 'The Apache Software License, Version 2.0'
+                                        url 'http://www.apache.org/license/LICENSE-2.0.txt'
+                                        distribution 'repo'
+                                    }
+                                }
+                                developers {
+                                    developer {
+                                        id 'jsmith'
+                                        name 'Jesper Smith'
+                                        email 'jsmith@ihmc.us'
+                                    }
+                                }
+                            }
+
+                            }
+
 			
 			artifact sourceJar {
 				classifier "sources"
