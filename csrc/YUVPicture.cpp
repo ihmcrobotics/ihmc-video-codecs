@@ -30,9 +30,26 @@ YUVPicture::YUVSubsamplingType YUVPicture::getSubsamplingType(int yWidth, int yH
 }
 YUVPicture::YUVPicture(YUVSubsamplingType type, int width, int height, int yStride, int uStride, int vStride, uint8 *Yin, uint8 *Uin, uint8 *Vin) :
 		type(type), width(width), height(height), yStride(yStride), uStride(uStride), vStride(vStride) {
-	int ySize = yStride * height;
-	int uSize = uStride * YUVPicture::divideByTwoRoundUp(height);
-	int vSize = vStride * YUVPicture::divideByTwoRoundUp(height);
+
+
+    int ySize;
+    int uSize;
+    int vSize;
+    switch (type) {
+    case YUV420: {
+        ySize = yStride * height;
+        uSize = uStride * YUVPicture::divideByTwoRoundUp(height);
+        vSize = vStride * YUVPicture::divideByTwoRoundUp(height);
+        break;
+    }
+    case YUV422:
+    case YUV444: {
+        ySize = yStride * height;
+        uSize = uStride * height;
+        vSize = vStride * height;
+        break;
+    }
+    }
 
 	Y = (uint8*) malloc(ySize);
 	U = (uint8*) malloc(uSize);
