@@ -26,6 +26,7 @@ import org.jcodec.common.DemuxerTrackMeta;
 import org.jcodec.common.NIOUtils;
 import org.jcodec.common.SeekableByteChannel;
 import org.jcodec.common.model.Packet;
+import org.jcodec.containers.mp4.MP4Packet;
 import org.jcodec.containers.mp4.boxes.VideoSampleEntry;
 import org.jcodec.containers.mp4.demuxer.AbstractMP4DemuxerTrack;
 import org.jcodec.containers.mp4.demuxer.FramesMP4DemuxerTrack;
@@ -104,6 +105,12 @@ public class MP4VideoDemuxer
       {
          return null;
       }
+   }
+   
+   public MP4Packet getNextPacket() throws IOException
+   {
+      buffer.clear();
+      return videoTrack.nextFrame(buffer);
    }
 
    /**
@@ -239,6 +246,14 @@ public class MP4VideoDemuxer
    public long getCurrentFrame()
    {
       return videoTrack.getCurFrame();
+   }
+   
+   /**
+    * @return Current PTS of the video track
+    */
+   public long getCurrentPTS()
+   {
+      return videoTrack.getPts();
    }
 
    /**

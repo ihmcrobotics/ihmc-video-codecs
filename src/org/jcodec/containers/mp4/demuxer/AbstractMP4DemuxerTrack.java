@@ -225,6 +225,11 @@ public abstract class AbstractMP4DemuxerTrack implements SeekableDemuxerTrack {
         result.flip();
         return result;
     }
+    
+    public long getPts()
+    {
+       return this.pts;
+    }
 
     public abstract MP4Packet nextFrame(ByteBuffer storage) throws IOException;
 }
