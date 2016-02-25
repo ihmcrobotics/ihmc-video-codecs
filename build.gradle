@@ -1,16 +1,41 @@
+plugins {
+   id 'us.ihmc.gradle.ihmc-build' version '0.0.9'
+}
+
 apply plugin: 'java'
 apply plugin: 'maven-publish'
-apply from: 'gradleScripts/util.gradle'
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 version = '2.0.12'
 
-setupDefaultDirectoryStructure()
+project.ext.fullVersion = version
+project.ext.vcsUrl = "https://github.com/ihmcrobotics/ihmc-hierarchical-kinematics"
+project.ext.licenseURL = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+project.ext.licenseName = "Apache License, Version 2.0"
+project.ext.bintrayLicenseName = "Apache-2.0"
 
-setupDefaultRepositories()
+repositories {
+  jcenter()
+  mavenCentral()
+  maven {
+      url  "http://dl.bintray.com/ihmcrobotics/maven-release"
+  }
+}
 
-setupProjectSpecificDependencies()
+dependencies {
+	compile group: 'junit', name: 'junit', version: '4.11'
+	compile group: 'org.apache.commons', name: 'commons-compress', version: '1.8.1'
+}
+
+sourceSets {
+	main {
+		java {
+			srcDirs += 'examples'
+			srcDirs += 'swig/generated'
+		}
+	}
+}
 
 task sourceJar(type: Jar) {
 	from sourceSets.main.allJava
@@ -23,7 +48,7 @@ jar {
       "Implementation-Title": project.name,
       "Implementation-Version": project.version,
       "Implementation-Vendor": "IHMC",
-      
+
       "Bundle-Name": project.name,
       "Bundle-Version": project.version,
       "Bundle-License": "http://www.apache.org/licenses/LICENSE-2.0.txt",
@@ -40,7 +65,7 @@ publishing {
 			artifactId project.name
 			version "$version"
 			from components.java
-			
+
 			pom.withXml {
                             asNode().children().last() + {
                                 resolveStrategy = Closure.DELEGATE_FIRST
@@ -64,21 +89,13 @@ publishing {
 
                             }
 
-			
+
 			artifact sourceJar {
 				classifier "sources"
 			}
 		}
-
-	}
-
-	repositories {
-		maven {
-			credentials {	
-                                username project.hasProperty('nexus_username')?"${nexus_username}":"invalid"
-                                password project.hasProperty('nexus_password')?"${nexus_password}":"invalid"
-			}
-			url "https://bengal.ihmc.us/nexus/content/repositories/releases"
-		}
 	}
 }
+
+def labels = ['ihmc', 'robotics', 'java', 'video']
+ihmc.configureForIHMCOpenSourceBintrayPublish(false, "mavenJava", "maven-release", labels)

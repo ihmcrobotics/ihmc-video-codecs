@@ -1,4 +1,0 @@
-dependencies {
-	compile group: 'junit', name: 'junit', version: '4.11'
-	compile group: 'org.apache.commons', name: 'commons-compress', version: '1.8.1'
-}
