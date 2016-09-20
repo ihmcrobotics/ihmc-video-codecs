@@ -6,4 +6,4 @@ prior to merging, and passes after merging.
 <!-- If this pull request resolves any open issues, provide a link: -->
 Resolves [issue#](https://github.com/ihmcrobotics/ihmc-video-codecs/issues).
 
-Make sure code is formatted with the relevant template(s) at IHMCJavaToolkit/CodeFormatTemplates.
+Make sure code is formatted with the relevant template(s) at ihmc-open-robotics-software/IHMCJavaToolkit/CodeFormatTemplates.
