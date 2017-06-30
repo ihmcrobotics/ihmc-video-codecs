@@ -26,6 +26,23 @@ Only video is supported.
 
 
 ## Usage
+A pre-compiled version is avaiable on [https://bintray.com/ihmcrobotics/maven-release/IHMCVideoCodecs](https://bintray.com/ihmcrobotics/maven-release/IHMCVideoCodecs). You can either use Gradle or Maven to add IHMC Video codecs to your project.
+
+### Gradle
+Add the IHMC Video Codecs library as dependency
+```
+repositories {
+    maven {
+        url  "http://dl.bintray.com/ihmcrobotics/maven-release"
+    }
+}
+	
+dependencies {
+	compile group: 'us.ihmc', name: 'IHMCVideoCodecs', version: '2.0.12'
+}
+```
+
+### Examples
 See the examples directory
 
 ## Headless systems
