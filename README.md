@@ -61,15 +61,9 @@ For your convenience compiled libraries are placed in the resources directory. I
 - Swig 3.0.3 or higher
 
 ### Linux
-- Install OpenJDK (>6)
+- Install OpenJDK (>=8)
 - Compile LibYUV following https://chromium.googlesource.com/libyuv/libyuv/+/master/docs/getting_started.md
-	- export PATH=`pwd`/depot_tools:"$PATH"
-	- mkdir libyuv
-	- cd libyuv
-	- gclient config --name src https://chromium.googlesource.com/libyuv/libyuv
-	- gclient sync
-	- gn gen out/Release "--args=is_debug=false"
-	- ninja -v -C out/Release
+	- 64 Bit release build
 - Download and compile the openH264 sources (version 1.7) from https://github.com/cisco/openh264
 	- git clone https://github.com/cisco/openh264.git
 	- cd openh264
@@ -80,37 +74,30 @@ For your convenience compiled libraries are placed in the resources directory. I
 	- mkdir build
 	- cd build
 	- ccmake ..
+		- Set CMAKE_BUILD_TYPE to Release
 		- Set LIBYUV_HOME to the libyuv trunk directory
 		- Set OPENH264_HOME to the openh264 source directory
 	- make
 	- make install
 
 ### Mac
-- Install the JDK for Mac (>6)
+- Install the JDK for Mac (>=8)
 - Install homebrew
-	- brew install nasm automake pcre cmake
-- Add /usr/local/bin to the start of your path (for nasm)
-- Install swig 3.0.3 from homebrew
+	- brew install nasm automake pcre cmake swig
 - Download and compile the openH264 sources (version 1.7) from https://github.com/cisco/openh264
 	- git clone https://github.com/cisco/openh264.git
-	- git checkout openh264v1.7
 	- cd openh264
+	- git checkout openh264v1.7
 	- make
 - Compile LibYUV following https://chromium.googlesource.com/libyuv/libyuv/+/master/docs/getting_started.md
-	- mkdir libyuv
-	- cd libyuv
-	- gclient config --name src https://chromium.googlesource.com/libyuv/libyuv
-	- gclient sync
-	- export PATH=`pwd`/depot_tools:"$PATH"
-	- GYP_DEFINES="clang=1 target_arch=x64" ./gyp_libyuv -fninja --depth=. libyuv_test.gyp
-	- ninja -j7 -C out/Release
-
+	- 64Bit release build
 - Go to IHMCVideoCodecs directory
 	- mkdir build
 	- cd build
 	- ccmake ..
+		- Set CMAKE_BUILD_TYPE to Release
 		- Set LIBYUV_HOME to the libyuv trunk directory
-		- Set OPENH264_HOMe to the openh264 source directory
+		- Set OPENH264_HOME to the openh264 source directory
 	- make
 	- make install
 
@@ -119,54 +106,48 @@ For your convenience compiled libraries are placed in the resources directory. I
 
 May the force be with you.
 
-- Install Visual Studio Community 2013
+- Install Visual Studio Community 2017
 	- Continue while this is downloading and get some coffee
-- Install the 64 bit JDK for Windows (>=7)
+- Install Windows SDK for WIndows 10
+	- https://developer.microsoft.com/en-us/windows/hardware/windows-driver-kit
+	- You only need the "Debugging tools for windows"
+- Install the 64 bit JDK for Windows (>=8)
 - Install CMake using the installer http://www.cmake.org/download/
-- Download and unpack swigwin 3.0.3
+- Download and unpack swigwin 3.0.3 or higher
 	- http://sourceforge.net/projects/swig/files/swigwin/swigwin-3.0.3/
 - Install Libyuv
-	- Follow instructions on https://code.google.com/p/libyuv/wiki/GettingStarted
-		- Do not use cygwin
-		- Dowloading the windows sdk takes forever, just have patience
-		- run "set DEPOT_TOOLS_WIN_TOOLCHAIN=0" before gclient sync (else it fails on landmines)
+	- Follow instructions on https://chromium.googlesource.com/libyuv/libyuv/+/master/docs/getting_started.md
+		- Use the Windows Release build for x64
+		- Before running "gclient sync" set the following env variables
+			- set GYP_MSVS_VERSION=2017
+			- set DEPOT_TOOLS_WIN_TOOLCHAIN=0
 - Install MinGW (you only need to select msys-base)
 	- Use mingw-get-setup.exe from http://sourceforge.net/projects/mingw/files/Installer/
-	- Setup %PATH to point to MinGW and MSYS
-- Download the openh264 sources, tag v1.3
+- Install nasm for windows 64 bit from http://www.nasm.us/
+- Setup %Path% variables, add the following directories
+	- C:\MinGW\msys\1.0\bin
+	- C:\Program Files\NASM
+- Download the openh264 sources, tag v1.7
 	- Use git
 		- git clone https://github.com/cisco/openh264.git
-		- git checkout openh264v1.3
+		- cd openh264
+		- git checkout openh264v1.7
 	- Read the instructions in the openh264 README.md
-	- Start the VS2013 x64 Cross Tools Command Prompt (Start -> Visual Studio 2013 -> Visual Studio Tools)
+	- Start the 64 Native  Tools Command Prompt for VS 2017 (Start -> Visual Studio 2017 -> Visual Studio Tools)
 	- cd to the openh264 dir 
 	- make OS=msvc ENABLE64BIT=Yes
 - Start the cmake-gui
 	- Point source directory to IHMCVideoCodecs sources
 	- Point build directory to [sources]/build
 	- Configure
-		- Choose the Visual Studio 12 2013 Win64 generator
-		- Choose native toolchain
+		- Choose the Visual Studio 15 2017 Win64 generator
+		- Choose Default native toolchain
 		- Set all paths (LIBYUV_HOME, OPENH264_HOME, SWIG_EXECUTABLE) correctly
 		- Configure
 	- Generate
-- Go to IHMCVideoCodecs/build
-	- Double click on ALL_BUILD.vcxproj
-	- Wait for VS2013 to start
-	- Select "Release" build type
-	- Right click ALL_BUILD and select build
-	- Right click INSTALL and select build
-
+- In the command prompt go to IHMCVideoCodecs/build
+	- Run "C:\Program Files\CMake\bin\cmake.exe" --build . --config Release --target install
 ## Publishing
 
-To publish to Nexus, add the following lines to ~/.gradle/gradle.properties
-
-nexus_username=[username]
-nexus_password=[password]
-
-
-Replace [username] and [password] with your nexus credentials
-
-Then execute 
-
-gradle publish
+To publish to bintray run 
+- gradle bintrayUpload

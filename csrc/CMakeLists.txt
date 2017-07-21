@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 2.8)
 
 IF(WIN32)
-	LINK_DIRECTORIES("${LIBYUV_HOME}/out/Release_x64")
-	LINK_DIRECTORIES("${LIBYUV_HOME}/out/Release_x64/obj/third_party/libjpeg_turbo")
+	LINK_DIRECTORIES("${LIBYUV_HOME}/out/Release/clang_x64/obj")
+	LINK_DIRECTORIES("${LIBYUV_HOME}/out/Release/obj/third_party/libjpeg_turbo")
 ELSE()
 	LINK_DIRECTORIES("${LIBYUV_HOME}/out/Release")
 	LINK_DIRECTORIES("${LIBYUV_HOME}/out/Release/obj/third_party/libjpeg_turbo")
