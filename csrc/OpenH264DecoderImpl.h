@@ -27,6 +27,7 @@ private:
 	ISVCDecoder *isvcDecoder;
 	SBufferInfo info;
 	unsigned char* pData[3];
+        SDecodingParam pParam;
 
 public:
 	OpenH264DecoderImpl();

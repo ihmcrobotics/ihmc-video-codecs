@@ -65,7 +65,14 @@ void OpenH264EncoderImpl::setIntraPeriod(int period) {
 }
 
 void OpenH264EncoderImpl::setEnableSpsPpsIdAddition(bool enable) {
-	param.bEnableSpsPpsIdAddition = enable;
+        if(enable)
+        {
+            param.eSpsPpsIdStrategy = INCREASING_ID;
+        }
+        else
+        {
+            param.eSpsPpsIdStrategy = CONSTANT_ID;
+        }
 	setOptionParamext();
 }
 

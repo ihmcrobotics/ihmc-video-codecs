@@ -2,14 +2,12 @@
 #include <iostream>
 #include <string.h>
 
-OpenH264DecoderImpl::OpenH264DecoderImpl() {
+OpenH264DecoderImpl::OpenH264DecoderImpl() : pParam({0}) {
 	WelsCreateDecoder(&isvcDecoder);
-	SDecodingParam pParam = { 0 };
-	pParam.eOutputColorFormat = videoFormatI420;
 	pParam.uiTargetDqLayer = 255;
 	pParam.eEcActiveIdc = ERROR_CON_SLICE_COPY;
 	pParam.bParseOnly = false;
-	pParam.sVideoProperty.eVideoBsType = VIDEO_BITSTREAM_DEFAULT;
+	pParam.sVideoProperty.eVideoBsType = VIDEO_BITSTREAM_AVC;
 	isvcDecoder->Initialize(&pParam);
 
 	memset(&info, 0, sizeof(SBufferInfo));
