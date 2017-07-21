@@ -35,7 +35,7 @@ public class PlayMP4FileExample
 {
    public static void main(String[] args) throws IOException
    {
-      MP4VideoDemuxer demuxer = new MP4VideoDemuxer(new File("/home/jesper/test.mov"));
+      MP4VideoDemuxer demuxer = new MP4VideoDemuxer(new File("/home/jesper/scratch/aap.mp4"));
 //      MP4VideoDemuxer demuxer = new MP4VideoDemuxer(new File("/home/jesper/robotLogs/20150130_095820_DRCSimulationFactory/NetworkStreamVideo.mov"));
       
 

@@ -22,21 +22,21 @@ import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
 
 public class OpenH264Downloader
 {
-   public static final String openH264Version = "1.3.0";
+   public static final String openH264Version = "1.7.0";
    
-   private static final String repository = "http://ciscobinary.openh264.org/";
+   private static final String repository = "https://c7ab4fbd1155b1257820-fefb1450afc680271ea365edabf976ea.ssl.cf1.rackcdn.com/";
    private static final String ext = ".bz2";
 
    public static final String android = "libopenh264-" + openH264Version + "-android19.so";
-   public static final String linux32 = "libopenh264-" + openH264Version + "-linux32.so";
-   public static final String linux64 = "libopenh264-" + openH264Version + "-linux64.so";
-   public static final String osx32 = "libopenh264-" + openH264Version + "-osx32.dylib";
-   public static final String osx64 = "libopenh264-" + openH264Version + "-osx64.dylib";
+   public static final String linux32 = "libopenh264-" + openH264Version + "-linux32.4.so";
+   public static final String linux64 = "libopenh264-" + openH264Version + "-linux64.4.so";
+   public static final String osx32 = "libopenh264-" + openH264Version + "-osx32.4.dylib";
+   public static final String osx64 = "libopenh264-" + openH264Version + "-osx64.4.dylib";
    public static final String win32 = "openh264-" + openH264Version + "-win32msvc.dll";
    public static final String win64 = "openh264-" + openH264Version + "-win64msvc.dll";
 
-   public static final String osxDisk = "libopenh264.0.dylib";
-   public static final String linuxDisk = "libopenh264.so.0";
+   public static final String osxDisk = "libopenh264.4.dylib";
+   public static final String linuxDisk = "libopenh264.so.4";
    public static final String winDisk = "openh264.dll";
 
    private static boolean openH264HasBeenLoaded;
