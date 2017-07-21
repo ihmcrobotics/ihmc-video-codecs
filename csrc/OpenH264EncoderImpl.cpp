@@ -149,7 +149,7 @@ bool OpenH264EncoderImpl::encodeFrameImpl(YUVPicture* frame) {
 
 	int e = isvcEncoder->EncodeFrame(&pic, &info);
 	if (e != 0) {
-		std::cerr << "Cannot encode frame: " + e << std::endl;
+		std::cerr << "Cannot encode frame: " << e << std::endl;
 		return false;
 	}
 
