@@ -1832,6 +1832,32 @@ SWIGEXPORT void JNICALL Java_us_ihmc_codecs_generated_ihmcVideoCodecsJNI_OpenH26
 }
 
 
+SWIGEXPORT void JNICALL Java_us_ihmc_codecs_generated_ihmcVideoCodecsJNI_OpenH264EncoderImpl_1setLevelIDC(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+  OpenH264EncoderImpl *arg1 = (OpenH264EncoderImpl *) 0 ;
+  ELevelIdc arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenH264EncoderImpl **)&jarg1; 
+  arg2 = (ELevelIdc)jarg2; 
+  (arg1)->setLevelIDC(arg2);
+}
+
+
+SWIGEXPORT void JNICALL Java_us_ihmc_codecs_generated_ihmcVideoCodecsJNI_OpenH264EncoderImpl_1setProfileIdc(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+  OpenH264EncoderImpl *arg1 = (OpenH264EncoderImpl *) 0 ;
+  EProfileIdc arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(OpenH264EncoderImpl **)&jarg1; 
+  arg2 = (EProfileIdc)jarg2; 
+  (arg1)->setProfileIdc(arg2);
+}
+
+
 SWIGEXPORT void JNICALL Java_us_ihmc_codecs_generated_ihmcVideoCodecsJNI_delete_1OpenH264EncoderImpl(JNIEnv *jenv, jclass jcls, jlong jarg1) {
   OpenH264EncoderImpl *arg1 = (OpenH264EncoderImpl *) 0 ;
   

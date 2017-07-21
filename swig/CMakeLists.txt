@@ -29,7 +29,7 @@ ADD_DEPENDENCIES(ihmcVideoCodecs version)
 IF(WIN32)
 	SWIG_LINK_LIBRARIES(ihmcVideoCodecs openh264 libyuv.lib libjpeg.lib)
 ELSE()
-	SWIG_LINK_LIBRARIES(ihmcVideoCodecs openh264 libyuv_internal.a libjpeg.a)
+	SWIG_LINK_LIBRARIES(ihmcVideoCodecs openh264 libyuv_internal.a libjpeg.a libsimd.a libsimd_asm.a)
 ENDIF(WIN32)
 INSTALL(TARGETS ihmcVideoCodecs RUNTIME DESTINATION resources LIBRARY DESTINATION resources)
 

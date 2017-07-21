@@ -138,7 +138,6 @@ public class AVCDemuxerHelper implements DemuxerHelper
       }
       else
       {
-         System.out.println("NON_DIRECT_BUFFER");
          while (dup.remaining() >= nls)
          {
             int len = readLen(dup, nls);

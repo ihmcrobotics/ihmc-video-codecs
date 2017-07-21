@@ -43,6 +43,48 @@ typedef enum {
   RC_OFF_MODE = -1         ///< rate control off mode
 } RC_MODES;
 
+/**
+* @brief Enumerate the type of profile id
+*/
+typedef enum {
+  PRO_UNKNOWN   = 0,
+  PRO_BASELINE  = 66,
+  PRO_MAIN      = 77,
+  PRO_EXTENDED  = 88,
+  PRO_HIGH      = 100,
+  PRO_HIGH10    = 110,
+  PRO_HIGH422   = 122,
+  PRO_HIGH444   = 144,
+  PRO_CAVLC444  = 244,
+
+  PRO_SCALABLE_BASELINE = 83,
+  PRO_SCALABLE_HIGH     = 86
+} EProfileIdc;
+
+/**
+* @brief Enumerate the type of level id
+*/
+typedef enum {
+  LEVEL_UNKNOWN = 0,
+  LEVEL_1_0 = 10,
+  LEVEL_1_B = 9,
+  LEVEL_1_1 = 11,
+  LEVEL_1_2 = 12,
+  LEVEL_1_3 = 13,
+  LEVEL_2_0 = 20,
+  LEVEL_2_1 = 21,
+  LEVEL_2_2 = 22,
+  LEVEL_3_0 = 30,
+  LEVEL_3_1 = 31,
+  LEVEL_3_2 = 32,
+  LEVEL_4_0 = 40,
+  LEVEL_4_1 = 41,
+  LEVEL_4_2 = 42,
+  LEVEL_5_0 = 50,
+  LEVEL_5_1 = 51,
+  LEVEL_5_2 = 52
+} ELevelIdc;
+
 
 %include "OpenH264DecoderImpl.h"
 %include "OpenH264EncoderImpl.h"

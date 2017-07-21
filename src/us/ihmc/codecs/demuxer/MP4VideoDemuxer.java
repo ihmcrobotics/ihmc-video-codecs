@@ -99,7 +99,19 @@ public class MP4VideoDemuxer
       Packet nextFrame = videoTrack.nextFrame(buffer);
       if (nextFrame != null)
       {
-         return demuxerHelper.getFrame(nextFrame);
+         YUVPicture picture;
+         
+         while((picture = demuxerHelper.getFrame(nextFrame)) == null)
+         {
+            buffer.clear();
+            nextFrame = videoTrack.nextFrame(buffer);
+            if(nextFrame == null)
+            {
+               return null;
+            }
+         }
+         
+         return picture;
       }
       else
       {

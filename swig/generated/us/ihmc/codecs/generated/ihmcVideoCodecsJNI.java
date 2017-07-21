@@ -71,5 +71,7 @@ public class ihmcVideoCodecsJNI {
   public final static native int OpenH264EncoderImpl_getNALSize(long jarg1, OpenH264EncoderImpl jarg1_);
   public final static native void OpenH264EncoderImpl_getNAL(long jarg1, OpenH264EncoderImpl jarg1_, java.nio.ByteBuffer jarg2, int jarg3);
   public final static native void OpenH264EncoderImpl_sendIntraFrame(long jarg1, OpenH264EncoderImpl jarg1_);
+  public final static native void OpenH264EncoderImpl_setLevelIDC(long jarg1, OpenH264EncoderImpl jarg1_, int jarg2);
+  public final static native void OpenH264EncoderImpl_setProfileIdc(long jarg1, OpenH264EncoderImpl jarg1_, int jarg2);
   public final static native void delete_OpenH264EncoderImpl(long jarg1);
 }

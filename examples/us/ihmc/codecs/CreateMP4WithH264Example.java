@@ -21,9 +21,10 @@ package us.ihmc.codecs;
 import java.io.File;
 import java.io.IOException;
 
+import us.ihmc.codecs.builder.H264Settings;
 import us.ihmc.codecs.builder.MP4H264MovieBuilder;
 import us.ihmc.codecs.builder.MovieBuilder;
-import us.ihmc.codecs.generated.EUsageType;
+import us.ihmc.codecs.generated.EProfileIdc;
 import us.ihmc.codecs.generated.YUVPicture;
 import us.ihmc.codecs.yuv.JPEGDecoder;
 
@@ -34,14 +35,17 @@ public class CreateMP4WithH264Example
       int width = 1280;
       int height = 720;
       int framerate = 30;
-      int bitrate = 8000;
+      
+      H264Settings settings = new H264Settings();
+      settings.setProfileIdc(EProfileIdc.PRO_HIGH);
 
-      MovieBuilder builder = new MP4H264MovieBuilder(new File("testH264.mp4"), width, height, framerate, bitrate, EUsageType.CAMERA_VIDEO_REAL_TIME);
+
+      MovieBuilder builder = new MP4H264MovieBuilder(new File("testH264.mp4"), width, height, framerate, settings);
 
       JPEGDecoder decoder = new JPEGDecoder();
       System.out.println("Writing movie");
 
-      for (int i = 1; i < 1000; i += 1)
+      for (int i = 1; i < 261; i += 1)
       {
          System.out.print(".");
          System.out.flush();

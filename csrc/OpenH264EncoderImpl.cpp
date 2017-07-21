@@ -33,6 +33,23 @@ void OpenH264EncoderImpl::setSize(int width, int height) {
 	setOptionParamext();
 }
 
+void OpenH264EncoderImpl::setLevelIDC(ELevelIdc level)
+{
+	for (int i = 0; i < param.iSpatialLayerNum; i++) 
+	{
+		param.sSpatialLayers[i].uiLevelIdc = level;
+	}
+}
+
+void OpenH264EncoderImpl::setProfileIdc(EProfileIdc profile)
+{
+	for (int i = 0; i < param.iSpatialLayerNum; i++) 
+	{
+		param.sSpatialLayers[i].uiProfileIdc = profile;
+	}
+}
+
+
 void OpenH264EncoderImpl::setBitRate(int bitrate) {
 	for (int i = 0; i < param.iSpatialLayerNum; i++) {
 		param.sSpatialLayers[i].iSpatialBitrate = bitrate / param.iSpatialLayerNum;

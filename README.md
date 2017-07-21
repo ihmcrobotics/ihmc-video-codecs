@@ -38,14 +38,25 @@ Contributions are welcome. We are a robot lab, supporting video codecs is not ou
 
 For your convenience compiled libraries are placed in the resources directory. It's only necessary to compile native code if you want to change native code or port to different platforms.
 
+### Dependencies
+- LibYUV git #d0ed025447622c570a76bcf2ac88c30209c780a0
+- OpenH264 v1.7 
+- Swig 3.0.3 or higher
+
 ### Linux
 - Install OpenJDK (>6)
-- Compile LibYUV following https://code.google.com/p/libyuv/wiki/GettingStarted
-	- When ninja complains about tools/sanitizer_options/sanitizer_options.cc get it from the chromium git: https://chromium.googlesource.com/chromium/src/base/+/f64188fb60c527d54bb54f1d107a5b5890a49c89/debug/sanitizer_options.cc
-- Download and compile the openH264 sources (version 1.3) from https://github.com/cisco/openh264
+- Compile LibYUV following https://chromium.googlesource.com/libyuv/libyuv/+/master/docs/getting_started.md
+	- export PATH=`pwd`/depot_tools:"$PATH"
+	- mkdir libyuv
+	- cd libyuv
+	- gclient config --name src https://chromium.googlesource.com/libyuv/libyuv
+	- gclient sync
+	- gn gen out/Release "--args=is_debug=false"
+	- ninja -v -C out/Release
+- Download and compile the openH264 sources (version 1.7) from https://github.com/cisco/openh264
 	- git clone https://github.com/cisco/openh264.git
 	- cd openh264
-	- git checkout openh264v1.3
+	- git checkout openh264v1.7
 	- make
 - Install swig 3.0.3 or higher 
 - Go to IHMCVideoCodecs directory
@@ -63,15 +74,16 @@ For your convenience compiled libraries are placed in the resources directory. I
 	- brew install nasm automake pcre cmake
 - Add /usr/local/bin to the start of your path (for nasm)
 - Install swig 3.0.3 from homebrew
-- Download and compile the openH264 sources (version 1.3) from https://github.com/cisco/openh264
+- Download and compile the openH264 sources (version 1.7) from https://github.com/cisco/openh264
 	- git clone https://github.com/cisco/openh264.git
-	- git checkout openh264v1.3
+	- git checkout openh264v1.7
 	- cd openh264
 	- make
-- Compile LibYUV following https://code.google.com/p/libyuv/wiki/GettingStarted
+- Compile LibYUV following https://chromium.googlesource.com/libyuv/libyuv/+/master/docs/getting_started.md
 	- mkdir libyuv
 	- cd libyuv
-	- git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
+	- gclient config --name src https://chromium.googlesource.com/libyuv/libyuv
+	- gclient sync
 	- export PATH=`pwd`/depot_tools:"$PATH"
 	- GYP_DEFINES="clang=1 target_arch=x64" ./gyp_libyuv -fninja --depth=. libyuv_test.gyp
 	- ninja -j7 -C out/Release

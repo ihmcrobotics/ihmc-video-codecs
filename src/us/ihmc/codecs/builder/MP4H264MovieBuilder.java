@@ -23,8 +23,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
-import us.ihmc.codecs.generated.EUsageType;
-import us.ihmc.codecs.generated.RC_MODES;
 import us.ihmc.codecs.generated.YUVPicture;
 import us.ihmc.codecs.generated.YUVPicture.YUVSubsamplingType;
 import us.ihmc.codecs.h264.OpenH264Encoder;
@@ -33,7 +31,7 @@ import us.ihmc.codecs.yuv.YUVPictureConverter;
 
 public class MP4H264MovieBuilder implements MovieBuilder
 {
-
+   
    private final int width;
    private final int height;
 
@@ -48,22 +46,24 @@ public class MP4H264MovieBuilder implements MovieBuilder
     * @param width Width of the movie. Input frames automatically get resized
     * @param height Height of the movie. Input frames automatically get resized
     * @param framerate The number of frames per second of the resulting movie
-    * @param bitrate Desired bitrate in kbit. Recommend 8000 kbits for full HD 
+    * @param settings Settings for the H264 encoder
     * 
     * @throws IOException 
     */
-   public MP4H264MovieBuilder(File file, int width, int height, int framerate, int bitrate, EUsageType usageType) throws IOException
+   public MP4H264MovieBuilder(File file, int width, int height, int framerate, H264Settings settings) throws IOException
    {
       this.width = width;
       this.height = height;
 
       encoder = new OpenH264Encoder();
-      encoder.setIntraPeriod(100);
+      encoder.setIntraPeriod(settings.getIntraPeriod());
       encoder.setEnableSpsPpsIdAddition(false);
-      encoder.setUsageType(usageType);
-      encoder.setRCMode(RC_MODES.RC_QUALITY_MODE);
+      encoder.setUsageType(settings.getUsageType());
+      encoder.setRCMode(settings.getRcMode());
       encoder.setEnableDenoise(true);
-      encoder.initialize(width, height, framerate, bitrate * 1024, usageType);
+      encoder.setLevelIDC(settings.getLevelIdc());
+      encoder.setProfileIdc(settings.getProfileIdc());
+      encoder.initialize(width, height, framerate, settings.getBitrate() * 1024, settings.getUsageType());
 
       muxer = new MP4H264Muxer(file, framerate, width, height);
 
@@ -81,7 +81,7 @@ public class MP4H264MovieBuilder implements MovieBuilder
    public void encodeFrame(YUVPicture picture) throws IOException
    {
       encoder.encodeFrame(picture);
-      while(encoder.nextNAL())
+      while (encoder.nextNAL())
       {
          ByteBuffer stream = encoder.getNAL();
          muxer.processNal(stream);

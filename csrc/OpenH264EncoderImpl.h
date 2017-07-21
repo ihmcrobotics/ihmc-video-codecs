@@ -65,6 +65,9 @@ public:
 	void getNAL(uint8* buffer, int bufferSize);
 
 	void sendIntraFrame();
+	
+	void setLevelIDC(ELevelIdc level);
+	void setProfileIdc(EProfileIdc profile);
 
 	~OpenH264EncoderImpl();
 

@@ -118,4 +118,12 @@ public class OpenH264EncoderImpl {
     ihmcVideoCodecsJNI.OpenH264EncoderImpl_sendIntraFrame(swigCPtr, this);
   }
 
+  public void setLevelIDC(ELevelIdc level) {
+    ihmcVideoCodecsJNI.OpenH264EncoderImpl_setLevelIDC(swigCPtr, this, level.swigValue());
+  }
+
+  public void setProfileIdc(EProfileIdc profile) {
+    ihmcVideoCodecsJNI.OpenH264EncoderImpl_setProfileIdc(swigCPtr, this, profile.swigValue());
+  }
+
 }
