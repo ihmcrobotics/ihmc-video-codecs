@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string.h>
 
-OpenH264DecoderImpl::OpenH264DecoderImpl() : pParam({0}) {
+OpenH264DecoderImpl::OpenH264DecoderImpl() : pParam() {
 	WelsCreateDecoder(&isvcDecoder);
 	pParam.uiTargetDqLayer = 255;
 	pParam.eEcActiveIdc = ERROR_CON_SLICE_COPY;
