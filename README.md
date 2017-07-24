@@ -1,6 +1,15 @@
-# Java wrapper for common video encoding format
+# IHMC Java Video Codecs
 
-This library enables the use of common video encoding formats used at IHMC in Java. Native code is bridged using SWIG.
+This library provides Java support for the following video formats
+- MP4 (Based on JCodec)
+- MJPEG (libJPEG-Turbo)
+- H264 (OpenH264)
+
+Native code is used for the actual encoding and decoding of the video formats. Only video support is provided for now. 
+
+H264 support is provided using OpenH264. A downloader for the OpenH264 library is included, and will prompt the user to accept the license. This means all royalities for the H264 codec are taken care off by Cisco. 
+
+
 
 ## Philosophy
 
@@ -38,7 +47,7 @@ repositories {
 }
 	
 dependencies {
-	compile group: 'us.ihmc', name: 'IHMCVideoCodecs', version: '2.0.12'
+	compile group: 'us.ihmc', name: 'IHMCVideoCodecs', version: '2.1'
 }
 ```
 
@@ -53,7 +62,13 @@ Contributions are welcome. We are a robot lab, supporting video codecs is not ou
 
 ## Compile native code
 
-For your convenience compiled libraries are placed in the resources directory. It's only necessary to compile native code if you want to change native code or port to different platforms.
+For your convenience compiled libraries are placed in the resources directory. Compiled libraries are available for
+- Windows (64 bit) (You might need to install [Microsoft Visual C++ Redistributable for Visual Studio 2017](https://go.microsoft.com/fwlink/?LinkId=746572])
+- Mac OS X (64 bit)
+- Linux (64 bit) 
+
+
+If you want to use this library on another platform, you have to compile it yourself. Follow the instructions most appropriatly for your platform.
 
 ### Dependencies
 - LibYUV git #d0ed025447622c570a76bcf2ac88c30209c780a0
@@ -103,8 +118,6 @@ For your convenience compiled libraries are placed in the resources directory. I
 
 
 ### Windows
-
-May the force be with you.
 
 - Install Visual Studio Community 2017
 	- Continue while this is downloading and get some coffee
