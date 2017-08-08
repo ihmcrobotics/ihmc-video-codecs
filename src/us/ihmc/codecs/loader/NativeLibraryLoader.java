@@ -16,7 +16,8 @@ import us.ihmc.codecs.Version;
  */
 public class NativeLibraryLoader
 {
-   public final static String LIBRARY_LOCATION = new File(System.getProperty("user.home"), ".ihmc" + File.separator + "lib" + File.separator + OpenH264Downloader.openH264Version).getAbsolutePath();
+   private final static String archString = isX86_64() ? "64" : "32";
+   public final static String LIBRARY_LOCATION = new File(System.getProperty("user.home"), ".ihmc" + File.separator + "lib" + File.separator + "openh264-" + OpenH264Downloader.openH264Version + "-" + archString).getAbsolutePath();
    
    private final static String LIBYUV_MAC_64 = "libihmcVideoCodecs.jnilib";
    private final static String LIBYUV_LINUX_64 = "libihmcVideoCodecs.so";
@@ -42,7 +43,7 @@ public class NativeLibraryLoader
          }
       }
       
-      throw new RuntimeException(System.getProperty("os.name") + "/" + System.getProperty("os.arch")
+      throw new UnsatisfiedLinkError(System.getProperty("os.name") + "/" + System.getProperty("os.arch")
             + " unsupported. Only 64bit Linux/Mac/Windows supported for now.");
    }
    
@@ -65,13 +66,20 @@ public class NativeLibraryLoader
          }
       }
       
-      throw new RuntimeException("OS/Arch unsupported. Only 64bit Linux/Mac/Windows supported for now.");
+      throw new UnsatisfiedLinkError("OS/Arch unsupported. Only 64bit Linux/Mac/Windows supported for now.");
       
    }
    
    public static void loadIHMCVideoCodecsLibrary()
    {
-      OpenH264Downloader.loadOpenH264();
+      try
+      {
+         OpenH264Downloader.loadOpenH264();
+      }
+      catch (IOException e)
+      {
+         throw new UnsatisfiedLinkError(e.getMessage());
+      }
       String libyuv = getIHMCVideoCodecsLibraryName();
       loadLibraryFromClassPath(libyuv, Version.VERSION);  
    }
@@ -128,7 +136,7 @@ public class NativeLibraryLoader
       }
       catch (IOException e)
       {
-         throw new RuntimeException(e);
+         throw new RuntimeException("Cannot write library to file", e);
       }
       
    }

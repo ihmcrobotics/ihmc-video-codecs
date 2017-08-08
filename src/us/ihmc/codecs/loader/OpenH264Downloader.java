@@ -24,7 +24,7 @@ public class OpenH264Downloader
 {
    public static final String openH264Version = "1.7.0";
    
-   private static final String repository = "https://c7ab4fbd1155b1257820-fefb1450afc680271ea365edabf976ea.ssl.cf1.rackcdn.com/";
+   private static final String repository = "http://ciscobinary.openh264.org/";
    private static final String ext = ".bz2";
 
    public static final String android = "libopenh264-" + openH264Version + "-android19.so";
@@ -32,8 +32,8 @@ public class OpenH264Downloader
    public static final String linux64 = "libopenh264-" + openH264Version + "-linux64.4.so";
    public static final String osx32 = "libopenh264-" + openH264Version + "-osx32.4.dylib";
    public static final String osx64 = "libopenh264-" + openH264Version + "-osx64.4.dylib";
-   public static final String win32 = "openh264-" + openH264Version + "-win32msvc.dll";
-   public static final String win64 = "openh264-" + openH264Version + "-win64msvc.dll";
+   public static final String win32 = "openh264-" + openH264Version + "-win32.dll";
+   public static final String win64 = "openh264-" + openH264Version + "-win64.dll";
 
    public static final String osxDisk = "libopenh264.4.dylib";
    public static final String linuxDisk = "libopenh264.so.4";
@@ -100,29 +100,31 @@ public class OpenH264Downloader
       throw new RuntimeException("Cannot write archive for " + System.getProperty("os.name"));
    }
 
-   private static void downloadOpenH264(File target, String libraryName)
+   private static void downloadOpenH264(File target, String libraryName) throws UnsatisfiedLinkError
    {
       try
       {
-         URL url = new URL(repository + libraryName + ext);
-         InputStream remote = url.openStream();
+         URL url = getVersionURL(libraryName);
          System.out.println("Downloading " + url + " to " + target);
+         InputStream remote = url.openStream();
          BZip2CompressorInputStream decompressor = new BZip2CompressorInputStream(remote);
          NativeLibraryLoader.writeStreamToFile(decompressor, target);
          remote.close();
 
       }
-      catch (MalformedURLException e)
-      {
-         throw new RuntimeException(e);
-      }
       catch (IOException e)
       {
-         new RuntimeException(e);
+         throw new UnsatisfiedLinkError("Cannot download OpenH264 binary " + libraryName + " to " + target + ". Are you connected to the internet?");
       }
    }
 
-   public static void loadOpenH264()
+   private static URL getVersionURL(String libraryName) throws MalformedURLException
+   {
+      URL url = new URL(repository + libraryName + ext);
+      return url;
+   }
+
+   public static void loadOpenH264() throws IOException
    {
       loadOpenH264(true);
    }
@@ -194,7 +196,7 @@ public class OpenH264Downloader
             JOptionPane.PLAIN_MESSAGE, null, null, null) != JOptionPane.YES_OPTION)
       {
          JOptionPane.showMessageDialog(null, "User did not accept OpenH264 license", "License not accepted", JOptionPane.ERROR_MESSAGE);
-         System.exit(-1);
+         throw new UnsatisfiedLinkError("User did accept OpenH264 license. Cannot download OpenH264 binary");
       }
 
    }
@@ -210,7 +212,7 @@ public class OpenH264Downloader
       if (!in.toLowerCase().equals("y"))
       {
          System.err.println("License not accepted");
-         System.exit(-1);
+         throw new UnsatisfiedLinkError("User did accept OpenH264 license. Cannot download OpenH264 binary.");
       }
    }
 
@@ -242,6 +244,7 @@ public class OpenH264Downloader
 
    /**
     * Shows an about dialog for the license with disable button, as per license terms
+    * @throws IOException 
     */
    public static void showAboutCiscoDialog()
    {
@@ -308,9 +311,19 @@ public class OpenH264Downloader
       }
    }
 
-   public static void main(String[] args)
+   public static void main(String[] args) throws MalformedURLException
    {
+      System.out.println("Native libraries are located at the following URLs: ");
+      
+      String versions[] = {android, linux32, linux64, osx32, osx64, win32, win64};
+      for(String version : versions)
+      {
+         System.out.println(getVersionURL(version));
+      }
+      
       showAboutCiscoDialog();
+      
+      
    }
 
 }

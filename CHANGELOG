@@ -1,3 +1,9 @@
+version 2.1.2
+	- Updated OpenH264 download locations
+
+version 2.1.0
+	- Updated to OpenH264 1.7.0
+
 version 1.0.5
 	- Added delete() methods to YUVPicture to clear direct bytebuffers
 

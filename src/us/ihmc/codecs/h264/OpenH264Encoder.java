@@ -23,7 +23,6 @@ import java.nio.ByteBuffer;
 
 import us.ihmc.codecs.generated.EUsageType;
 import us.ihmc.codecs.generated.OpenH264EncoderImpl;
-import us.ihmc.codecs.generated.RC_MODES;
 import us.ihmc.codecs.generated.YUVPicture;
 import us.ihmc.codecs.loader.NativeLibraryLoader;
 import us.ihmc.codecs.util.ByteBufferProvider;
