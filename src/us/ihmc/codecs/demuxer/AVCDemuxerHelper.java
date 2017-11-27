@@ -36,9 +36,9 @@ import us.ihmc.codecs.h264.OpenH264Decoder;
 
 public class AVCDemuxerHelper implements DemuxerHelper
 {
-   private static final byte[] NAL_HEADER = { 0, 0, 0, 1 };
-   private static final byte[] SPS_HEADER = { 0, 0, 0, 1, 0x67 };
-   private static final byte[] PPS_HEADER = { 0, 0, 0, 1, 0x68 };
+   public static final byte[] NAL_HEADER = { 0, 0, 0, 1 };
+   public static final byte[] SPS_HEADER = { 0, 0, 0, 1, 0x67 };
+   public static final byte[] PPS_HEADER = { 0, 0, 0, 1, 0x68 };
 
    private OpenH264Decoder decoder;
    private final SampleEntry[] sampleEntries;
@@ -92,7 +92,7 @@ public class AVCDemuxerHelper implements DemuxerHelper
       }
    }
 
-   private ByteBuffer toDirectByteBuffer(ByteBuffer src, byte[] lead)
+   public static ByteBuffer toDirectByteBuffer(ByteBuffer src, byte[] lead)
    {
       ByteBuffer direct = ByteBuffer.allocateDirect(lead.length + src.remaining());
       direct.put(lead);
@@ -193,6 +193,12 @@ public class AVCDemuxerHelper implements DemuxerHelper
       {
          decoder.skipFrame(buffers.get(i));
       }
+   }
+
+   @Override
+   public AvcCBox getAvcCBox()
+   {
+      return avcCBox;
    }
 
 }

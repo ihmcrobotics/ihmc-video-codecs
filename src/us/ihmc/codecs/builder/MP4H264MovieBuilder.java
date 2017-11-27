@@ -89,6 +89,12 @@ public class MP4H264MovieBuilder implements MovieBuilder
    }
 
    @Override
+   public void encodeFrame(ByteBuffer buffer) throws IOException
+   {
+      muxer.processNal(buffer);
+   }   
+   
+   @Override
    public void close() throws IOException
    {
       encoder.delete();

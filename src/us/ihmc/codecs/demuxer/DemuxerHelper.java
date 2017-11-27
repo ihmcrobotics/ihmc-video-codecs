@@ -20,6 +20,7 @@ package us.ihmc.codecs.demuxer;
 
 import java.io.IOException;
 
+import org.jcodec.codecs.h264.mp4.AvcCBox;
 import org.jcodec.common.model.Packet;
 
 import us.ihmc.codecs.generated.YUVPicture;
@@ -29,4 +30,5 @@ public interface DemuxerHelper
    /* package-private */ YUVPicture getFrame(Packet frame) throws IOException;
    /* package-private */ void skipFrame(Packet frame) throws IOException;
    /* package-private */ void delete();
+   AvcCBox getAvcCBox();
 }

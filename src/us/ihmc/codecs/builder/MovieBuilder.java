@@ -20,6 +20,7 @@ package us.ihmc.codecs.builder;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 
 import us.ihmc.codecs.generated.YUVPicture;
 
@@ -46,6 +47,16 @@ public interface MovieBuilder
     * @throws IOException 
     */
    public void encodeFrame(YUVPicture frame) throws IOException;
+   
+   /**
+    * Encode a raw frame. 
+    * 
+    * This is implementation specific and not guaranteed to be implemented.
+    * 
+    * @param buffer
+    * @throws IOException
+    */
+   public void encodeFrame(ByteBuffer buffer) throws IOException;
    
    /**
     * Close the stream and write headers

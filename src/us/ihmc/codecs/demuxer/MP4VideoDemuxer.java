@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
+import org.jcodec.codecs.h264.mp4.AvcCBox;
 import org.jcodec.common.DemuxerTrackMeta;
 import org.jcodec.common.NIOUtils;
 import org.jcodec.common.SeekableByteChannel;
@@ -85,6 +86,12 @@ public class MP4VideoDemuxer
          throw new IOException("Cannot decode fourcc " + fourcc);
       }
    }
+   
+   public String getFourcc()
+   {
+      return videoTrack.getFourcc();
+   }
+   
 
    /**
     * Return the next frame in the video 
@@ -275,6 +282,18 @@ public class MP4VideoDemuxer
    public void delete()
    {
       demuxerHelper.delete();
+   }
+   
+   /**
+    * Get the AvcCBox for H264 videos
+    * 
+    * Throws runtime exception for other formats
+    * 
+    * @return AvcCBox
+    */
+   public AvcCBox getAvcCBox()
+   {
+      return demuxerHelper.getAvcCBox();
    }
 
 }

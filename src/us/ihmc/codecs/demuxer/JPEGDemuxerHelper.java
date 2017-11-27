@@ -21,6 +21,7 @@ package us.ihmc.codecs.demuxer;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
+import org.jcodec.codecs.h264.mp4.AvcCBox;
 import org.jcodec.common.model.Packet;
 import org.jcodec.containers.mp4.boxes.SampleEntry;
 
@@ -59,6 +60,12 @@ public class JPEGDemuxerHelper implements DemuxerHelper
    public void skipFrame(Packet frame) throws IOException
    {
       // Nothing to do here, all frames are complete
+   }
+
+   @Override
+   public AvcCBox getAvcCBox()
+   {  
+      throw new RuntimeException("Not supported for MJPEG");
    }
 
 }
