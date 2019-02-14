@@ -1,101 +1,20 @@
 plugins {
-   id 'us.ihmc.gradle.ihmc-build' version '0.0.9'
+   id("us.ihmc.ihmc-build") version "0.15.5"
+   id("us.ihmc.ihmc-ci") version "4.8"
 }
 
-apply plugin: 'java'
-apply plugin: 'maven-publish'
+ihmc {
+   group = "us.ihmc"
+   version = "2.1.5"
+   vcsUrl = "https://github.com/ihmcrobotics/ihmc-video-codecs"
+   openSource = true
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
-version = '2.1.4'
-
-project.ext.fullVersion = version
-project.ext.vcsUrl = "https://github.com/ihmcrobotics/ihmc-hierarchical-kinematics"
-project.ext.licenseURL = "http://www.apache.org/licenses/LICENSE-2.0.txt"
-project.ext.licenseName = "Apache License, Version 2.0"
-project.ext.bintrayLicenseName = "Apache-2.0"
-
-repositories {
-  jcenter()
-  mavenCentral()
-  maven {
-      url  "http://dl.bintray.com/ihmcrobotics/maven-release"
-  }
+   configureDependencyResolution()
+   javaDirectory("main", "examples")
+   javaDirectory("main", "swig/generated")
+   configurePublications()
 }
 
-dependencies {
-	compile group: 'junit', name: 'junit', version: '4.11'
-	compile group: 'org.apache.commons', name: 'commons-compress', version: '1.8.1'
+mainDependencies {
+	compile("org.apache.commons:commons-compress:1.8.1")
 }
-
-sourceSets {
-	main {
-		java {
-			srcDirs += 'examples'
-			srcDirs += 'swig/generated'
-		}
-	}
-}
-
-task sourceJar(type: Jar) {
-	from sourceSets.main.allJava
-}
-
-jar {
-   manifest {
-      attributes(
-      "Created-By": "IHMC Gradle Build Script",
-      "Implementation-Title": project.name,
-      "Implementation-Version": project.version,
-      "Implementation-Vendor": "IHMC",
-
-      "Bundle-Name": project.name,
-      "Bundle-Version": project.version,
-      "Bundle-License": "http://www.apache.org/licenses/LICENSE-2.0.txt",
-      "Bundle-Vendor": "IHMC")
-   }
-}
-
-
-publishing {
-	publications {
-		mavenJava(MavenPublication) {
-
-			groupId 'us.ihmc'
-			artifactId project.name
-			version "$version"
-			from components.java
-
-			pom.withXml {
-                            asNode().children().last() + {
-                                resolveStrategy = Closure.DELEGATE_FIRST
-                                name project.name
-                                url 'https://github.com/ihmcrobotics/ihmc-video-codecs'
-                                licenses {
-                                    license {
-                                        name 'The Apache Software License, Version 2.0'
-                                        url 'http://www.apache.org/license/LICENSE-2.0.txt'
-                                        distribution 'repo'
-                                    }
-                                }
-                                developers {
-                                    developer {
-                                        id 'jsmith'
-                                        name 'Jesper Smith'
-                                        email 'jsmith@ihmc.us'
-                                    }
-                                }
-                            }
-
-                            }
-
-
-			artifact sourceJar {
-				classifier "sources"
-			}
-		}
-	}
-}
-
-def labels = ['ihmc', 'robotics', 'java', 'video']
-ihmc.configureForIHMCOpenSourceBintrayPublish(false, "mavenJava", "maven-release", labels)

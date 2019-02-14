@@ -1,12 +1,12 @@
 package us.ihmc.codecs;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.Random;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import us.ihmc.codecs.generated.FilterModeEnum;
 import us.ihmc.codecs.generated.YUVPicture;
