@@ -42,7 +42,7 @@ Add the IHMC Video Codecs library as dependency
 ```
 repositories {
     maven {
-        url  "http://dl.bintray.com/ihmcrobotics/maven-release"
+        url  "https://dl.bintray.com/ihmcrobotics/maven-release"
     }
 }
 	
