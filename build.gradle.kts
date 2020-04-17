@@ -17,5 +17,5 @@ ihmc {
 }
 
 mainDependencies {
-	compile("org.apache.commons:commons-compress:1.8.1")
+	api("org.apache.commons:commons-compress:1.8.1")
 }
