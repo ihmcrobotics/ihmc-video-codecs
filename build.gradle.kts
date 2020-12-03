@@ -6,7 +6,7 @@ plugins {
 
 ihmc {
    group = "us.ihmc"
-   version = "2.1.5"
+   version = "2.1.6"
    vcsUrl = "https://github.com/ihmcrobotics/ihmc-video-codecs"
    openSource = true
 
