@@ -1,5 +1,6 @@
 package org.jcodec.containers.mp4.boxes;
 
+import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;
 
 /**
@@ -44,7 +45,20 @@ public class GenericMediaInfoBox extends FullBox {
         gOpColor = input.getShort();
         bOpColor = input.getShort();
         balance = input.getShort();
-        input.getShort();
+
+        if (input.position() == input.limit())
+            return;
+
+        System.out.println("Position that fails: " + input.get(input.position() - 1));
+        try
+        {
+            input.getShort();
+        }
+        catch (BufferUnderflowException e)
+        {
+            System.out.println("This input failed: ... " + input);
+//            System.out.println(e);
+        }
     }
 
     protected void doWrite(ByteBuffer out) {

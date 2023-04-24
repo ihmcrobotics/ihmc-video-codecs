@@ -77,6 +77,7 @@ public class NodeBox extends Box {
         Box box = newBox(childAtom, factory);
 
         if (childAtom.getBodySize() < MAX_BOX_SIZE) {
+            System.out.println(childAtom.getBodySize());
             box.parse(input);
             return box;
         } else {
