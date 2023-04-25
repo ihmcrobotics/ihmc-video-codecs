@@ -60,6 +60,8 @@ public class MP4VideoDemuxer
    public MP4VideoDemuxer(File file) throws IOException
    {
       SeekableByteChannel input = NIOUtils.readableFileChannel(file);
+      System.out.println(input.position() + "   .... current position");
+      System.out.println(input.size() + "   .... current size");
       MP4Demuxer demuxer = new MP4Demuxer(input);
       videoTrack = demuxer.getVideoTrack();
       if(videoTrack instanceof FramesMP4DemuxerTrack)
