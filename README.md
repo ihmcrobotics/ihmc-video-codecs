@@ -1,5 +1,9 @@
 # IHMC Java Video Codecs
 
+![realtime](https://maven-badges.herokuapp.com/maven-central/us.ihmc/ihmc-video-codecs/badge.svg?style=plastic)
+![buildstatus](https://github.com/ihmcrobotics/ihmc-video-codecs/actions/workflows/gradle-test.yml/badge.svg)
+
+
 This library provides Java support for the following video formats
 - MP4 (Based on JCodec)
 - MJPEG (libJPEG-Turbo)
